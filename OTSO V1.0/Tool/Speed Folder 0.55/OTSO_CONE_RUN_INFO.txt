@@ -1,0 +1,52 @@
+Date of OTSO computation: 2022-10-11
+Total computation time: 92.285 seconds
+
+Output Coordinate System:
+GEO
+
+Input Variables:
+
+Simulation Date: 13/12/2006, 03:00:00
+
+Max Time Step [% of gyrofrequency]: 0.55
+
+Start Altitude = 20.0km 
+Zenith = 0
+Azimuth = 0
+
+IOPT = 3
+
+Solar Wind Speed [km/s]:
+Vx = -500.0
+Vy = 0.0
+Vz = 0.0
+
+IMF [nT]:
+By = 5.0
+Bz = -5.0
+
+Density = 1.0 cm^-2
+
+Dst = 0.0 nT
+
+G1 = 0.0
+G2 = 0.0
+G3 = 0.0
+
+Atomic Number = 1
+
+Particle Type = anti-particle
+
+Magnetic Field Models:
+Internal Model = IGRF
+External Model = Tsyganenko 89
+
+Magnetopause Model = Kobel Model
+
+Rigidity
+Start = 20 [GV]
+End = 0 [GV]
+Step = 0.001 [GV]
+
+Stations:
+Oulu, Latitude: 65.05, Longitude: 25.47
