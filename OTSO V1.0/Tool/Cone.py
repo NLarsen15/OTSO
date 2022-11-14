@@ -15,6 +15,7 @@ from Classes import Date
 from Classes import Cores
 from Classes import fortrancallCone
 from Classes import READMECone
+from Classes import ParamCheck
 import os
 import shutil
 
@@ -23,10 +24,9 @@ if __name__ == '__main__':
 ################################################################################################################
 # Picking the stations to be tested.
 # Additional stations can be added via the .AddLocation("Name",Latitude,Longitude) function
-
  List = [
  "Oulu"]
- Alt = 20.0
+ Alt = 20
  Zenith = 0
  Azimuth = 0
  CreateStations = Stations(List, Alt, Zenith, Azimuth)
@@ -38,6 +38,14 @@ if __name__ == '__main__':
  UsedStations = random.shuffle(temp)
  UsedStations = temp
 
+################################################################################################################
+# Ending parameters
+# Input the values for the minimum altitude and maximum distance travelled by a particle. If either condition is
+# met then the computation is terminated and the trajectory is assumed forbidden. 
+ MinAlt = 20 #[km]
+ MaxDist = 50 #[Re]
+
+ EndParams = [MinAlt, MaxDist]
 ################################################################################################################
 # Solar Wind Conditions
  Vx = -500 #[km/s]
@@ -53,7 +61,6 @@ if __name__ == '__main__':
  G1 = 0
  G2 = 0
  G3 = 0
-
 
 
  WindCreate = SolarWind(Vx, Vy, Vz, By, Bz, Density, Dst, G1, G2, G3)
@@ -99,7 +106,7 @@ if __name__ == '__main__':
  Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in current directory
- FolderName = "Speed Folder 1"
+ FolderName = "Test End Param 2"
  FileName = "1"
  current_directory = os.getcwd()
  final_directory = os.path.join(current_directory, FolderName)
@@ -116,6 +123,8 @@ if __name__ == '__main__':
  ChildProcesses = []
 ###############################################################################################################
 
+ ParamCheck(Alt, EndParams)
+
  start = time.time()
 
  print("Parent Process started")
@@ -124,7 +133,7 @@ if __name__ == '__main__':
 # Create a shared message queue for the processes to produce/consume data
  ProcessQueue    = mp.Queue()
  for Data,Core in zip(Positionlists,CoreList):
-    Child = mp.Process(target=fortrancallCone,  args=(Data, Core, RigidityArray, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent))
+    Child = mp.Process(target=fortrancallCone,  args=(Data, Core, RigidityArray, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent, EndParams))
     ChildProcesses.append(Child)
 
  for a in ChildProcesses:
@@ -144,4 +153,4 @@ if __name__ == '__main__':
  Printtime = round((stop-start),3)
  print("Whole Program Took: " + str(Printtime) + " seconds")
 
- READMECone(UsedStationstemp, RigidityArray, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent)
+ READMECone(UsedStationstemp, RigidityArray, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams)

@@ -13,11 +13,11 @@ from scipy.interpolate import griddata
 Date = datetime(2006, 12, 13, 3, 00, 00)
 
 # Oulu
-Planet = pd.read_csv("PlanetNew.csv")
+Planet = pd.read_csv("Planet.csv")
 
 PlanetLat = Planet["Latitude"]
 PlanetLong = Planet["Longitude"]
-PlanetR = Planet["Re"]
+PlanetR = Planet["Rc"]
 
 PlanetLat = np.array([PlanetLat])
 PlanetLong = np.array([PlanetLong])
@@ -57,7 +57,7 @@ X_unique = np.sort(PlanetDf.x.unique())
 Y_unique = np.sort(PlanetDf.y.unique())
 X, Y = np.meshgrid(X_unique, Y_unique)
 
-plt.contourf(X, Y, Z, np.linspace(0.0, 20.0, 10000), cmap="jet", transform=ccrs.PlateCarree(), extend="both")
+plt.contourf(X, Y, Z, np.linspace(0.0, 20.0, 20), cmap="jet", transform=ccrs.PlateCarree(), extend="both")
 
 #plt.contourf(PlanetLong, PlanetLat, Z, np.linspace(vmin, vmax, 1000), cmap="jet", transform=ccrs.PlateCarree(), extend="max")
 #plt.colorbar(ax.tricontourf(PlanetLong, PlanetLat, PlanetR, 3000, cmap="jet", vmin=vmin, vmax=vmax))

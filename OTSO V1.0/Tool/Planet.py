@@ -18,6 +18,7 @@ from Classes import Cores
 from Classes import fortrancallPlanet
 from Classes import READMEPlanet
 from Classes import PlanetFile
+from Classes import ParamCheck
 import os
 import shutil
 
@@ -37,7 +38,7 @@ if __name__ == '__main__':
  Zenith = 0
  Azimuth = 0
 ################################################################################################################
-# Select the number of cores that the computation will be preformed over
+# Select the number of cores that the computation will be performed over
  CoreNum = 3
 
  LongLists = np.array_split(LongitudeList, CoreNum)
@@ -54,6 +55,14 @@ if __name__ == '__main__':
      i = i + 1
 
  ChildProcesses = []
+################################################################################################################
+# Ending parameters
+# Input the values for the minimum altitude and maximum distance travelled by a particle. If either condition is
+# met then the computation is terminated and the trajectory is assumed forbidden. 
+ MinAlt = 20 #[km]
+ MaxDist = 100 #[Re]
+
+ EndParams = [MinAlt, MaxDist]
 ################################################################################################################
 # Solar Wind Conditions
  Vx = -400.0616 #[km/s]
@@ -116,7 +125,8 @@ if __name__ == '__main__':
 
  FileDescriptors = [FolderName, final_directory]
 ###############################################################################################################
-
+ 
+ ParamCheck(Alt, EndParams)
 
  start = time.time()
 
@@ -126,7 +136,7 @@ if __name__ == '__main__':
 # Create a shared message queue for the processes to produce/consume data
  ProcessQueue    = mp.Queue()
  for RegionData in Data:
-     Child = mp.Process(target=fortrancallPlanet,  args=(RegionData, RigidityArray, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, MaxStepPercent))
+     Child = mp.Process(target=fortrancallPlanet,  args=(RegionData, RigidityArray, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, MaxStepPercent, EndParams))
      ChildProcesses.append(Child)
 
  for a in ChildProcesses:
@@ -148,4 +158,4 @@ if __name__ == '__main__':
 
  PlanetFile(final_directory)
 
- READMEPlanet(Data, RigidityArray, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent)
+ READMEPlanet(Data, RigidityArray, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent, EndParams)

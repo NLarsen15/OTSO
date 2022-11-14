@@ -113,7 +113,8 @@ class SolarWind:
     return self.WindArray
     
 
-def fortrancallCone(Data, Core, RigidityArray, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent):
+def fortrancallCone(Data, Core, RigidityArray, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent, EndParams):
+    
     for x in Data:
       
       newstart = time.time()
@@ -130,7 +131,7 @@ def fortrancallCone(Data, Core, RigidityArray, DateArray, model, AtomicNum, Anti
       RigidityStep = RigidityArray[2]
 
       FileName = NMname + FileGLE + ".csv"
-      OTSOLib.cone(Position, StartRigidity, EndRigidity, RigidityStep, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, CoordinateSystem, MaxStepPercent)
+      OTSOLib.cone(Position, StartRigidity, EndRigidity, RigidityStep, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, CoordinateSystem, MaxStepPercent, EndParams)
       print(Station + " " + Core)
       newstop = time.time()
       Printtime = round((newstop-newstart),3)
@@ -147,7 +148,7 @@ def fortrancallCone(Data, Core, RigidityArray, DateArray, model, AtomicNum, Anti
     
     return
 
-def fortrancallTrajectory(Data, Core, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent):
+def fortrancallTrajectory(Data, Core, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent, EndParams):
     for x in Data:
       
       newstart = time.time()
@@ -160,7 +161,7 @@ def fortrancallTrajectory(Data, Core, Rigidity, DateArray, model, AtomicNum, Ant
       NMname = Station
 
       FileName = NMname + FileGLE + ".csv"
-      OTSOLib.trajectory(Position, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, CoordinateSystem, MaxStepPercent)
+      OTSOLib.trajectory(Position, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, CoordinateSystem, MaxStepPercent, EndParams)
       print(Station + " " + Core)
       newstop = time.time()
       Printtime = round((newstop-newstart),3)
@@ -177,7 +178,7 @@ def fortrancallTrajectory(Data, Core, Rigidity, DateArray, model, AtomicNum, Ant
     
     return
 
-def fortrancallPlanet(Data, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, MaxStepPercent):
+def fortrancallPlanet(Data, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, MaxStepPercent, EndParams):
 
    final_directory = FileDescriptors[1]
    FileName = Data[0] + ".csv"
@@ -194,7 +195,7 @@ def fortrancallPlanet(Data, Rigidity, DateArray, model, AtomicNum, AntiCheck, IO
 
        Position = [Data[3],lat,lon,Data[4],Data[5]]
        Core = Data[6]
-       OTSOLib.planet(Position, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, MaxStepPercent)
+       OTSOLib.planet(Position, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, MaxStepPercent, EndParams)
        now = datetime.now()
        CurrentTime = now.strftime("%H:%M:%S")
        print(CurrentTime)
@@ -208,6 +209,11 @@ def fortrancallPlanet(Data, Rigidity, DateArray, model, AtomicNum, AntiCheck, IO
    final_directory = os.path.join(final_directory, FileName)
    shutil.move(os.path.join(current_directory, FileName), final_directory)
 
+def ParamCheck(Alt, EndParams):
+       if EndParams[0] > Alt:
+        print("Inputted minimum altitude is larger than starting altitude. Value must be less than or equal to the starting altitude. Please check inputs. \nProgram will now terminate.")
+        exit()
+
 def PlanetFile(final_directory):
 
  files = os.path.join(final_directory, "*.csv")
@@ -219,7 +225,7 @@ def PlanetFile(final_directory):
  for i in files:
    os.remove(i)    
 
-def READMECone(UsedStationstemp, RigidityArray, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent):
+def READMECone(UsedStationstemp, RigidityArray, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams):
       FileName = "OTSO_CONE_RUN_INFO.txt"
       file = open(FileName, "w")
 
@@ -277,6 +283,9 @@ def READMECone(UsedStationstemp, RigidityArray, EventDate, model, AtomicNum, Ant
       file.write("\n")
       file.write("Max Time Step [% of gyrofrequency]: " + str(MaxStepPercent)+ "\n")
       file.write("\n")
+      file.write("Minimum Altitude: " + str(EndParams[0])+ "\n")
+      file.write("Max Distance: " + str(EndParams[1])+ "\n")
+      file.write("\n")
       file.write("Start Altitude = " + str(UsedStationstemp[0][3]) + "km \n")
       file.write("Zenith = " + str(UsedStationstemp[0][4]) + "\n")
       file.write("Azimuth = " + str(UsedStationstemp[0][5]) + "\n")
@@ -331,7 +340,7 @@ def READMECone(UsedStationstemp, RigidityArray, EventDate, model, AtomicNum, Ant
       shutil.move(os.path.join(current_directory, FileName), final_directory )
       return
 
-def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent):
+def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams):
       FileName = "OTSO_TRAJECTORY_RUN_INFO.txt"
       file = open(FileName, "w")
 
@@ -389,6 +398,9 @@ def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, AtomicNum, An
       file.write("\n")
       file.write("Max Time Step [% of gyrofrequency]: " + str(MaxStepPercent)+ "\n")
       file.write("\n")
+      file.write("Minimum Altitude: " + str(EndParams[0])+ "\n")
+      file.write("Max Distance: " + str(EndParams[1])+ "\n")
+      file.write("\n")
       file.write("Start Altitude = " + str(UsedStationstemp[0][3]) + "km \n")
       file.write("Zenith = " + str(UsedStationstemp[0][4]) + "\n")
       file.write("Azimuth = " + str(UsedStationstemp[0][5]) + "\n")
@@ -441,7 +453,7 @@ def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, AtomicNum, An
       shutil.move(os.path.join(current_directory, FileName), final_directory )
       return
 
-def READMEPlanet(Data, Rigidity, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent):
+def READMEPlanet(Data, Rigidity, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent, EndParams):
       FileName = "OTSO_PLANET_RUN_INFO.txt"
       file = open(FileName, "w")
 
@@ -495,6 +507,9 @@ def READMEPlanet(Data, Rigidity, EventDate, model, AtomicNum, AntiCheck, IOPT, W
       file.write("Simulation Date: " + EventDate.strftime("%d/%m/%Y, %H:%M:%S")+ "\n")
       file.write("\n")
       file.write("Max Time Step [% of gyrofrequency]: " + str(MaxStepPercent)+ "\n")
+      file.write("\n")
+      file.write("Minimum Altitude: " + str(EndParams[0])+ "\n")
+      file.write("Max Distance: " + str(EndParams[1])+ "\n")
       file.write("\n")
       file.write("Start Altitude = " + str(Data[0][3]) + "km \n")
       file.write("Zenith = " + str(Data[0][4]) + "\n")

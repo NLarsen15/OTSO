@@ -15,6 +15,7 @@ from Classes import Date
 from Classes import Cores
 from Classes import fortrancallTrajectory
 from Classes import READMETrajectory
+from Classes import ParamCheck
 import os
 import shutil
 
@@ -41,6 +42,14 @@ if __name__ == '__main__':
 
  Positions = np.array_split(UsedStations, 7)
 
+################################################################################################################
+# Ending parameters
+# Input the values for the minimum altitude and maximum distance travelled by a particle. If either condition is
+# met then the computation is terminated and the trajectory is assumed forbidden. 
+ MinAlt = 20 #[km]
+ MaxDist = 100 #[Re]
+
+ EndParams = [MinAlt, MaxDist]
 ################################################################################################################
 # Solar Wind Conditions
  Vx = -1003 #[km/s]
@@ -114,6 +123,9 @@ if __name__ == '__main__':
  Positionlists = UsedCores.getPositions()
  ChildProcesses = []
 ###############################################################################################################
+
+ ParamCheck(Alt, EndParams)
+ 
  start = time.time()
 
  print("Parent Process started")
@@ -122,7 +134,7 @@ if __name__ == '__main__':
 # Create a shared message queue for the processes to produce/consume data
  ProcessQueue    = mp.Queue()
  for Data,Core in zip(Positionlists,CoreList):
-    Child = mp.Process(target=fortrancallTrajectory,  args=(Data, Core, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent))
+    Child = mp.Process(target=fortrancallTrajectory,  args=(Data, Core, Rigidity, DateArray, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent, EndParams))
     ChildProcesses.append(Child)
 
  for a in ChildProcesses:
@@ -142,4 +154,4 @@ if __name__ == '__main__':
  Printtime = round((stop-start),3)
  print("Whole Program Took: " + str(Printtime) + " seconds")
 
- READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent)
+ READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams)

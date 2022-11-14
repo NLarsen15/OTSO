@@ -81,7 +81,7 @@ subroutine CoordTrans(Pin, year, day, sec, CoordIN, CoordOUT, Pout)
 !            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
 !                                  - cosmic ray travels over 100Re without escaping or enountering Earth
 ! **********************************************************************************************************************
-subroutine trajectory(PositionIN, Rigidity, Date, mode, AtomicNumber, Anti, I, Wind, Pause, FileName, CoordSystem, GyroPercent)
+subroutine trajectory(PositionIN, Rigidity, Date, mode, AtomicNumber, Anti, I, Wind, Pause, FileName, CoordSystem, GyroPercent, End)
 USE Particle
 USE GEOPACK1
 USE GEOPACK2
@@ -91,7 +91,7 @@ USE MagnetopauseFunctions
 USE Magnetopause
 implicit none
 
-real(8) :: PositionIN(5), Rigidity, Date(6)
+real(8) :: PositionIN(5), Rigidity, Date(6), End(2)
 real(8) :: Wind(10), Re, Lat, Long, GyroPercent
 real(8) :: Xnew(3), Vnew(3), XnewGDZ(3), XnewConverted(3)
 integer(8) :: mode(2), Anti, AtomicNumber
@@ -151,7 +151,7 @@ call CoordinateTransform("GSM", CoordSystem, year, day, secondTotal, Xnew, XnewC
 
 write(10,'(*(G0.6,:,","))') XnewConverted
 
-IF ( Position(1) < 20.0 ) THEN
+IF ( Position(1) < End(1) ) THEN
     print *, "This is Forbidden", "      Encountered Earth"
     call AsymptoticDirection(Lat, Long)
     print *, Lat, Long
@@ -159,7 +159,7 @@ IF ( Position(1) < 20.0 ) THEN
     EXIT
 END IF
 
-IF ( DistanceTraveled/1000.0 > 100*Re) THEN
+IF ( DistanceTraveled/1000.0 > End(2)*Re) THEN
     print *, "This is Forbidden", "      Exceeded Travel Distance Without Escape"
     print *, DistanceTraveled
     call AsymptoticDirection(Lat, Long)
@@ -194,7 +194,7 @@ end subroutine trajectory
 !
 ! **********************************************************************************************************************
 subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, AtomicNumber, Anti, &
-    I, Wind, Pause, FileName, CoordSystem, GyroPercent)
+    I, Wind, Pause, FileName, CoordSystem, GyroPercent, End)
     USE Particle
     USE SolarWind
     USE MagneticFieldFunctions
@@ -204,7 +204,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
     USE Magnetopause
     implicit none
     
-    real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityStep, Date(6)
+    real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityStep, Date(6), End(2)
     real(8) :: Wind(10), Re, Lat, Long, GyroPercent
     real(8) :: Xnew(3), Vnew(3), XnewGDZ(3), Geofile(3)
     integer(8) :: mode(2), Anti, AtomicNumber
@@ -261,7 +261,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
 
     call EscapeCheck()
     
-    IF ( Position(1) < 20.0 ) THEN
+    IF ( Position(1) < End(1) ) THEN
         bool = -1
         Limit = 1
         forbiddencount = forbiddencount + 1
@@ -274,7 +274,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
         EXIT
     END IF
 
-    IF ( DistanceTraveled/1000.0 > 100.0 * Re) THEN
+    IF ( DistanceTraveled/1000.0 > End(2) * Re) THEN
         bool = 0
         Limit = 1
         forbiddencount = forbiddencount + 1
@@ -336,7 +336,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
 !            This code works with the Planet.py tool to assign large amounts of locations across multiple cores.
 !
 ! **********************************************************************************************************************
-subroutine planet(PositionIN, Rigidity, Date, mode, AtomicNumber, Anti, I, Wind, Pause, FileName, GyroPercent)
+subroutine planet(PositionIN, Rigidity, Date, mode, AtomicNumber, Anti, I, Wind, Pause, FileName, GyroPercent, End)
 USE Particle
 USE SolarWind
 USE MagneticFieldFunctions
@@ -344,7 +344,7 @@ USE MagnetopauseFunctions
 USE Magnetopause
 implicit none
             
-real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityStep, Date(6)
+real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityStep, Date(6), End(2)
 real(8) :: Wind(10), Re, Rigidity(3), GyroPercent
 real(8) :: Xnew(3), Vnew(3), XnewGDZ(3)
 integer(8) :: mode(2), Anti, AtomicNumber
@@ -405,7 +405,7 @@ do while (R > EndRigidity)
         
         call EscapeCheck()
             
-        IF ( Position(1) < 20.0 ) THEN
+        IF ( Position(1) < End(1) ) THEN
             bool = -1
             Limit = 1
             forbiddencount = forbiddencount + 1
@@ -414,7 +414,7 @@ do while (R > EndRigidity)
             EXIT
         END IF
         
-        IF ( DistanceTraveled/1000.0 > 100.0 * Re) THEN
+        IF ( DistanceTraveled/1000.0 > End(2) * Re) THEN
             bool = 0
             Limit = 1
             forbiddencount = forbiddencount + 1
