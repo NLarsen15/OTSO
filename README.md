@@ -12,3 +12,5 @@ OTSO is open-source. Therefore, additions and suggestions from the community are
 Instructions for how to install and use OTSO are located within the OTSO user manual.
 Note the instructions only apply to computers using the Windows operating system, installation steps for other operating systems will vary.
 Steps to install OTSO on different systems will be included within the manual in the future once succesfully implemented on different systems.
+
+This is a base release for the tool and bugs are to be expected. I ask the community to please inform me of any bugs they may encounter or provide solutions that can be added to the base code of OTSO.
