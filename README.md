@@ -7,6 +7,8 @@ that are needed by the cosmic ray research community.
 OTSO provides the user with free reign to select from a plethera of input parameters for tests, such as geomagetospheric conditions, 
 as well as offering various magnetospheric models to choose from. 
 
+OTSO is developed using fortran and python. A knowledge of fortran is not needed to use the tool, however it is required if the user wishes to edit the internal code of the tool (e.g. to add new magnetosphere models). 
+
 OTSO is open-source. Therefore, additions and suggestions from the community are welcome. 
 
 Instructions for how to install and use OTSO are located within the OTSO user manual.
