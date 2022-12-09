@@ -43,7 +43,7 @@ if __name__ == '__main__':
 # Input the values for the minimum altitude and maximum distance travelled by a particle. If either condition is
 # met then the computation is terminated and the trajectory is assumed forbidden. 
  MinAlt = 20 #[km]
- MaxDist = 50 #[Re]
+ MaxDist = 100 #[Re]
 
  EndParams = [MinAlt, MaxDist]
 ################################################################################################################
@@ -106,8 +106,8 @@ if __name__ == '__main__':
  Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in current directory
- FolderName = "Test End Param 2"
- FileName = "1"
+ FolderName = "OTSO_Example_Folder"
+ FileName = "_Example"
  current_directory = os.getcwd()
  final_directory = os.path.join(current_directory, FolderName)
  if not os.path.exists(final_directory):
