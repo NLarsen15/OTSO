@@ -59,6 +59,12 @@ X, Y = np.meshgrid(X_unique, Y_unique)
 
 plt.contourf(X, Y, Z, np.linspace(0.0, 20.0, 20), cmap="jet", transform=ccrs.PlateCarree(), extend="both")
 
-plt.title('Planetary Vertical Rigidity Cutoff', fontsize=15)
+#plt.contourf(PlanetLong, PlanetLat, Z, np.linspace(vmin, vmax, 1000), cmap="jet", transform=ccrs.PlateCarree(), extend="max")
+#plt.colorbar(ax.tricontourf(PlanetLong, PlanetLat, PlanetR, 3000, cmap="jet", vmin=vmin, vmax=vmax))
+
+#.clim(vmin, vmax)
+#plt.title('GLE70 Effective Cutoff Rigidity', fontsize=20)
+
+plt.title('Vertical Rigidity Cutoff During GLE70', fontsize=15)
 plt.colorbar(ticks=[0, 4, 8, 12, 16, 20, 24], label='Cutoff Rigidity GV')
 plt.show()

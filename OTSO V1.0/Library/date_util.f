@@ -384,9 +384,9 @@
       IMPLICIT NONE
       INTEGER*4 year, month, day, hour, minute
       INTEGER*4 sec, msec, yarr(23), marr(23)
-      INTEGER*4 jd, i, index0, yvar
+      INTEGER*4 jd, i, yvar
 
-      REAL*8 cdfepoin, deltat, theta, jsec, QCDFTDB
+      REAL*8 deltat, theta, jsec, QCDFTDB
 
       ! some of this may be repetative from above
       ! calculate Julian Date from J2000 (Seidelmann 12.92):
@@ -395,7 +395,7 @@
       jd=jd+((month-2-((month-14)/12)*12)*367)/12
       jd=jd-2451545 ! subtract jd2000.0 to keep numbers small
       yvar=yvar+100
-      jd=1D0*(jd-((yvar/100)*3)/4+day-32076)+0.5d0 ! for 00:00
+      jd=INT(1D0*(jd-((yvar/100)*3)/4+day-32076)+0.5d0) ! for 00:00
 
       ! convert to seconds and add seconds of day:
       jsec=jd*86400d0

@@ -22,7 +22,6 @@ USE GEOPACK1
 USE GEOPACK2
 USE MagnetopauseFunctions
 implicit none
-integer(4) :: Escape
 
 Result = PausePointer()
 

@@ -162,27 +162,27 @@ C
 C  NOW, LET US CHECK WHETHER WE HAVE THE CASE (1). IF YES - WE ARE DONE:
 C
        IF (SIGMA.LT.S0-DSIG) THEN
-         BX=FX
-         BY=FY
-         BZ=FZ
+         BX=real(FX,4)
+         BY=real(FY,4)
+         BZ=real(FZ,4)
                         ELSE  !  THIS IS THE MOST COMPLEX CASE: WE ARE INSIDE
 C                                         THE INTERPOLATION REGION
        FINT=0.5*(1.-(SIGMA-S0)/DSIG)
        FEXT=0.5*(1.+(SIGMA-S0)/DSIG)
 C
        CALL DIPOLE(PS,X,Y,Z,QX,QY,QZ)
-       BX=(FX+QX)*FINT+OIMFX*FEXT -QX
-       BY=(FY+QY)*FINT+OIMFY*FEXT -QY
-       BZ=(FZ+QZ)*FINT+OIMFZ*FEXT -QZ
+       BX=real((FX+QX)*FINT+OIMFX*FEXT -QX,4)
+       BY=real((FY+QY)*FINT+OIMFY*FEXT -QY,4)
+       BZ=real((FZ+QZ)*FINT+OIMFZ*FEXT -QZ,4)
 c
         ENDIF  !   THE CASES (1) AND (2) ARE EXHAUSTED; THE ONLY REMAINING
 C                      POSSIBILITY IS NOW THE CASE (3):
          ELSE
                 SubResult = 1
                 CALL DIPOLE(PS,X,Y,Z,QX,QY,QZ)
-                BX=OIMFX-QX
-                BY=OIMFY-QY
-                BZ=OIMFZ-QZ
+                BX=real(OIMFX-QX,4)
+                BY=real(OIMFY-QY,4)
+                BZ=real(OIMFZ-QZ,4)
          ENDIF
 C
        RETURN
@@ -523,7 +523,8 @@ C
 C
            DO 11 I=1,3
             RP(I)=1.D0/P(I)
-  11        RR(I)=1.D0/R(I)
+            RR(I)=1.D0/R(I)
+  11       ENDDO 
 C
   111   CONTINUE
 C
@@ -539,7 +540,7 @@ C
                   CYPI=DCOS(Y*RP(I))
                   SYPI=DSIN(Y*RP(I))
 C
-                DO 2 K=1,3
+                DO 222 K=1,3
                    SZRK=DSIN(Z*RR(K))
                    CZRK=DCOS(Z*RR(K))
                      SQPR=DSQRT(RP(I)**2+RR(K)**2)
@@ -553,6 +554,7 @@ c
           BX=BX+A(L)*HX
           BY=BY+A(L)*HY
           BZ=BZ+A(L)*HZ
+  222 CONTINUE        
   2   CONTINUE
 C
       RETURN
@@ -770,8 +772,9 @@ C
       BX=BX+F(I)*((2.D0*AS+Y*DASDY)*SPSS-XS*DASDZ
      *   +AS*DPSRR*(Y**2*CPSS+Z*ZS))
       BY=BY-F(I)*Y*(AS*DPSRR*XS+DASDZ*CPSS+DASDX*SPSS)
-  1   BZ=BZ+F(I)*((2.D0*AS+Y*DASDY)*CPSS+XS*DASDX
+      BZ=BZ+F(I)*((2.D0*AS+Y*DASDY)*CPSS+XS*DASDX
      *   -AS*DPSRR*(X*ZS+Y**2*SPSS))
+  1   ENDDO
 C
        RETURN
        END
@@ -858,8 +861,9 @@ C
      *   +AS*DPSRR*(Y**2*CPSS+Z*ZSWW))
 C
       BY=BY-F(I)*Y*(AS*DPSRR*XS+DASDZ*CPSS+DASDX*SPSS)
-  1   BZ=BZ+F(I)*((2.D0*AS+Y*DASDY)*CPSS+(XS-XSHIFT)*DASDX
+      BZ=BZ+F(I)*((2.D0*AS+Y*DASDY)*CPSS+(XS-XSHIFT)*DASDX
      *   -AS*DPSRR*(X*ZSWW+Y**2*SPSS))
+  1   ENDDO
 
        RETURN
        END
@@ -1205,7 +1209,8 @@ C      print *, '  LOC=1 (HIGH-LAT)'    !  (test printout; disabled now)
             DO 1 I=1,26
               BX=BX+C1(I)*D1(1,I)
               BY=BY+C1(I)*D1(2,I)
-  1           BZ=BZ+C1(I)*D1(3,I)
+              BZ=BZ+C1(I)*D1(3,I)
+  1         ENDDO
        ENDIF                                           !  END OF THE CASE 1
 C
        IF (LOC.EQ.2) THEN
@@ -1222,7 +1227,8 @@ C
             DO 2 I=1,79
               BX=BX+C2(I)*D2(1,I)
               BY=BY+C2(I)*D2(2,I)
-  2           BZ=BZ+C2(I)*D2(3,I)
+              BZ=BZ+C2(I)*D2(3,I)
+  2         ENDDO
        ENDIF                                           !   END OF THE CASE 2
 C
        IF (LOC.EQ.3) THEN
@@ -1252,7 +1258,8 @@ c                                                      BOUNDARY POINT
             DO 11 I=1,26
               BX1=BX1+C1(I)*D1(1,I) !   BX1,BY1,BZ1  ARE FIELD COMPONENTS
               BY1=BY1+C1(I)*D1(2,I)  !  IN THE NORTHERN BOUNDARY POINT
- 11           BZ1=BZ1+C1(I)*D1(3,I)  !
+              BZ1=BZ1+C1(I)*D1(3,I)  !
+ 11         ENDDO
 C
          XAS2=R*ST02AS*DCOS(PAS)
          Y2=  R*ST02AS*DSIN(PAS)
@@ -1271,7 +1278,8 @@ C                                        BOUNDARY POINT
             DO 12 I=1,79
               BX2=BX2+C2(I)*D2(1,I)!  BX2,BY2,BZ2  ARE FIELD COMPONENTS
               BY2=BY2+C2(I)*D2(2,I) !  IN THE SOUTHERN BOUNDARY POINT
-  12          BZ2=BZ2+C2(I)*D2(3,I)
+              BZ2=BZ2+C2(I)*D2(3,I)
+  12        ENDDO
 C
 C  NOW INTERPOLATE:
 C
@@ -1311,7 +1319,8 @@ C                                               BOUNDARY POINT
             DO 21 I=1,79
               BX1=BX1+C2(I)*D2(1,I) !  BX1,BY1,BZ1  ARE FIELD COMPONENTS
               BY1=BY1+C2(I)*D2(2,I)  !  IN THE NORTHERN BOUNDARY POINT
- 21           BZ1=BZ1+C2(I)*D2(3,I)  !
+              BZ1=BZ1+C2(I)*D2(3,I)  !
+ 21         ENDDO
 C
          XAS2=R*ST02AS*DCOS(PAS)
          Y2=  R*ST02AS*DSIN(PAS)
@@ -1330,7 +1339,8 @@ C                                          BOUNDARY POINT
             DO 22 I=1,26
               BX2=BX2+C1(I)*D1(1,I) !  BX2,BY2,BZ2  ARE FIELD COMPONENTS
               BY2=BY2+C1(I)*D1(2,I) !     IN THE SOUTHERN BOUNDARY POINT
-  22          BZ2=BZ2+C1(I)*D1(3,I)
+              BZ2=BZ2+C1(I)*D1(3,I)
+  22        ENDDO
 C
 C  NOW INTERPOLATE:
 C
@@ -1641,7 +1651,8 @@ C
 C
        D(1,M)=BXSM*CPS+BZSM*SPS
        D(2,M)=BY
-  1    D(3,M)=-BXSM*SPS+BZSM*CPS
+       D(3,M)=-BXSM*SPS+BZSM*CPS
+  1    ENDDO
 C
       XSM = X*CPS-Z*SPS
       ZSM = Z*CPS+X*SPS
@@ -1724,7 +1735,8 @@ C
 C
       D(1,IZ)=SPS*((BX1Z-BX2Z)*CPS+(BZ1Z-BZ2Z)*SPS)
       D(2,IZ)=SPS*(BY1Z-BY2Z)
-  3   D(3,IZ)=SPS*((BZ1Z-BZ2Z)*CPS-(BX1Z-BX2Z)*SPS)
+      D(3,IZ)=SPS*((BZ1Z-BZ2Z)*CPS-(BX1Z-BX2Z)*SPS)
+  3   ENDDO
 C
             RETURN
             END
@@ -1779,7 +1791,8 @@ C
           RP(I)=1.D0/P1(I)
           RR(I)=1.D0/R1(I)
           RQ(I)=1.D0/Q1(I)
- 11       RS(I)=1.D0/S1(I)
+          RS(I)=1.D0/S1(I)
+ 11      ENDDO
 C
           L=0
 C
@@ -1828,7 +1841,8 @@ C                                  AND N=2 IS FOR THE SECOND ONE
 c
        BX=BX+A(L)*HX
        BY=BY+A(L)*HY
-  4    BZ=BZ+A(L)*HZ
+       BZ=BZ+A(L)*HZ
+  4    ENDDO
   3   CONTINUE
   2   CONTINUE
   1   CONTINUE
@@ -2091,7 +2105,8 @@ C
          CNHM1=CNHM
        CBX(M)=BT*C*CF-BF*SF
        CBY(M)=BT*C*SF+BF*CF
-  1    CBZ(M)=-BT*S
+       CBZ(M)=-BT*S
+  1   ENDDO
 C
        RETURN
        END

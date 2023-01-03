@@ -59,24 +59,24 @@ if __name__ == '__main__':
 # Ending parameters
 # Input the values for the minimum altitude and maximum distance travelled by a particle. If either condition is
 # met then the computation is terminated and the trajectory is assumed forbidden. 
- MinAlt = 20 #[km]
+ MinAlt = 30 #[km]
  MaxDist = 100 #[Re]
 
  EndParams = [MinAlt, MaxDist]
 ################################################################################################################
 # Solar Wind Conditions
- Vx = -400.0616 #[km/s]
+ Vx = -500.0 #[km/s]
  Vy = 0.0 #[km/s]
  Vz = 0.0 #[km/s]
- By = 3.5541 #[nT]
- Bz = -0.3016 #[nT]
- Density = 3.6005 #[cm^-2]
- Dst = -33 #[nT]
+ By = 5 #[nT]
+ Bz = -5 #[nT]
+ Density = 1.0 #[cm^-2]
+ Dst = 0 #[nT]
 
 # G1 and G2 are only needed for TSY01 use (use external TSY01_Constants tool to calculate them)
 # or enter the average solar wind speed, By, and Bz over the 1 hour period prior to event
- G1 = -0.43939
- G2 = 2.48525
+ G1 = 0
+ G2 = 0
  G3 = 0
 
  WindCreate = SolarWind(Vx, Vy, Vz, By, Bz, Density, Dst, G1, G2, G3)
@@ -105,7 +105,7 @@ if __name__ == '__main__':
 # Pick the start and end rigidity for the computation, as well as the step
  StartRigidity = 20
  EndRigidity = 0
- RigidityStep = 1
+ RigidityStep = 0.1
  RigidityArray = [StartRigidity, EndRigidity, RigidityStep]
 ###############################################################################################################
 # Pick the maximum percentage of the particles gyrofrequency that can be used as the max time step in the
@@ -117,7 +117,7 @@ if __name__ == '__main__':
  Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in current directory
- FolderName = "Planet1"
+ FolderName = "Planet_Example"
  current_directory = os.getcwd()
  final_directory = os.path.join(current_directory, FolderName)
  if not os.path.exists(final_directory):

@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 
 Date = datetime(2021, 10, 28, 16, 00, 00)
 # Oulu
-Data = pd.read_csv("Oulu.csv")
+Data = pd.read_csv("Oulu_Seminar.csv")
 
 LastIndex = Data[Data['Filter'].lt(1)].index[0]
 CroppedData = Data[Data.index < LastIndex]
@@ -25,12 +25,12 @@ Long = CroppedData["Longitude"]
 Lat = pd.to_numeric(Lat, errors='coerce')
 
 #row = TOulu.iloc[10000]
-#Lat = row["Latitude"]
-#Lat = pd.to_numeric(Lat, errors='coerce')
-#Long = row["Longitude"]
+#OuluLat = row["Latitude"]
+#OuluLat = pd.to_numeric(OuluLat, errors='coerce')
+#OuluLong = row["Longitude"]
 
-#if (Long > 180):
-#    Long = Long - 360
+#if (OuluLong > 180):
+#    OuluLong = OuluLong - 360
 ##############################################################
 
 fig = plt.figure(figsize=(12,9))
@@ -53,7 +53,8 @@ ax.set_yticks([-90,-60,-30,0,30,60,90])
 # Plotting
 
 plt.scatter(Long, Lat, color='red', marker='.', s=0.5)
+#plt.text(OuluLong,OuluLat,"Oulu", color='black')
 
-plt.title('Oulu Asymptotic Cone', fontsize=20)
+plt.title('Oulu Asymptotic Cone GLE73', fontsize=20)
 
 plt.show()

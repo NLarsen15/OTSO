@@ -4,12 +4,16 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.patches as mpatches
 
-data = pd.read_csv("Oulu.csv")
+data = pd.read_csv("OuluOulu Example.csv")
 
 R = data["Rigidity(GV)"]
 data.loc[data['Filter'] == -1, 'Filter'] = 0
 filter = data["Filter"]
 filter2 = []
+
+Ru = 0.738
+Rl = 0.474
+Rc = 0.636
 
 current = 0
 

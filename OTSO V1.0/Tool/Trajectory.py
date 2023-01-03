@@ -23,10 +23,6 @@ if __name__ == '__main__':
 ################################################################################################################
 # Picking the stations to be tested.
 # Additional stations can be added via the .AddLocation("Name",Latitude,Longitude) function
- Alt_km = 20.0
- Zenith = 0.0
- Azimuth = 0.0
-
  List = ["Oulu"]
  Alt = 20.0
  Zenith = 0
@@ -52,20 +48,20 @@ if __name__ == '__main__':
  EndParams = [MinAlt, MaxDist]
 ################################################################################################################
 # Solar Wind Conditions
- Vx = -1003 #[km/s]
+ Vx = -500.0 #[km/s]
  Vy = 0.0 #[km/s]
  Vz = 0.0 #[km/s]
- By = 16.369 #[nT]
- Bz = -19.679 #[nT]
- Density = 1.9 #[cm^-2]
- Dst = -253 #[nT]
+ By = 5 #[nT]
+ Bz = -5 #[nT]
+ Density = 1.0 #[cm^-2]
+ Dst = 0 #[nT]
 
 # G1 and G2 are only needed for TSY01 use (use external TSY01_Constants tool to calculate them)
 # or enter the average solar wind speed, By, and Bz over the 1 hour period prior to event
 # G3 Used only in TSY01(Storm)
- G1 = 208.309
- G2 = 98.69018
- G3 = 18.7511
+ G1 = 0
+ G2 = 0
+ G3 = 0
 
 
  WindCreate = SolarWind(Vx, Vy, Vz, By, Bz, Density, Dst, G1, G2, G3)
@@ -91,8 +87,8 @@ if __name__ == '__main__':
 # External: 1 = TSY87(short), 2 = TSY87(long), 3 = TSY89, 4 = TSY96, 5 = TSY01, 6 = TSY01(Storm) (Second Number in model Array)
  model = np.array([1,3])
 ###############################################################################################################
-# Pick the start and end rigidity for the computation, as well as the step
- Rigidity = 0.65
+# Pick the rigidity for the computation
+ Rigidity = 20
 ###############################################################################################################
 # Pick the coordinate system desired for the output
 # GDZ, GEO, GSM , GSE, SM, GEI, MAG, SPH (GEO in spherical), RLL 
@@ -107,8 +103,8 @@ if __name__ == '__main__':
  Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in current directory
- FolderName = "Pause Test"
- FileName = "_Trajectory"
+ FolderName = "Oulu_Trajectory_Example"
+ FileName = "_Example_Trajectory"
  current_directory = os.getcwd()
  final_directory = os.path.join(current_directory, FolderName)
  if not os.path.exists(final_directory):

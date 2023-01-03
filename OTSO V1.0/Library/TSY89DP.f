@@ -128,7 +128,8 @@ C
 C
        IOP=IOPT
        DO 1 I=1,30
-   1   A(I)=PARAM(I,IOPT)
+       A(I)=PARAM(I,IOPT)
+1      END DO
 C      
 
        DYC=A(30)

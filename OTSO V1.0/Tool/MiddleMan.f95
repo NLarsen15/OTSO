@@ -30,11 +30,11 @@ subroutine MagStrength(Pin, Date, CoordIN, mode, I, Wind, Bfield)
     !f2py intent(in) Pin, Date, CoordIN, I, Wind
     !f2py intent(out) Bfield
 
-    year = Date(1)
-    day = Date(2)
-    hour = Date(3)
-    minute = Date(4)
-    secondINT = Date(5)
+    year = INT(Date(1))
+    day = INT(Date(2))
+    hour = INT(Date(3))
+    minute = INT(Date(4))
+    secondINT = INT(Date(5))
     secondTotal = real(Date(6))
 
     call initializeWind(Wind, I, mode)

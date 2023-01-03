@@ -16,9 +16,9 @@
 subroutine AsymptoticDirection(Lat, Long)
 USE Particle
 implicit none
-real(8) :: Lat, Long, E, top, bottom, Zenith, Azimuth
-real(8) :: GSW(3), GEO(3), XGEO(3), theta, t1, t2, t3
-real(8) :: GEOsph(3), NewLat, LocalGEO(3), LocalGEOv(3), tr, tTHETA, tPHI
+real(8) :: Lat, Long, E, top, bottom
+real(8) :: GSW(3), GEO(3), XGEO(3), theta
+real(8) :: GEOsph(3), NewLat, tr, tTHETA, tPHI
 real(8), parameter :: pi  = 4 * atan(1.0_8)
 
 call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, Position, XGEO)

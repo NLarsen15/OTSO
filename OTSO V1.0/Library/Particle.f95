@@ -37,11 +37,11 @@ Position(1) = StartPosition(1)
 Position(2) = StartPosition(2)
 Position(3) = StartPosition(3)
 R = Rigidity
-year = Date(1)
-day = Date(2)
-hour = Date(3)
-minute = Date(4)
-secondINT = Date(5)
+year = INT(Date(1))
+day = INT(Date(2))
+hour = INT(Date(3))
+minute = INT(Date(4))
+secondINT = INT(Date(5))
 secondTotal = real(Date(6))
 
 IF (Anti == 1) THEN

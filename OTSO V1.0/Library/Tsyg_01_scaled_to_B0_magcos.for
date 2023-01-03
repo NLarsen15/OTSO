@@ -99,7 +99,7 @@ C
      * .98751,.21824,41.60182,1.12761,.01376,1.02751,.02969,.15790,
      * 8.94335,28.31280,1.24364,.38013/
       
-      COMMON /BDIP/ BOLD
+      !COMMON /BDIP/ BOLD
 C
 C      IF (X.LT.-20.) THEN
 C      PRINT *,
@@ -108,7 +108,7 @@ C      PRINT *,'              WHILE YOU ARE TRYING TO USE IT AT X=', X
 C      PAUSE
 C      ENDIF
 C
-      PS=PSI
+      PS=real(PSI,4)
       PDYN=PARMOD(1)
       DST_AST=PARMOD(2)*0.8-13.*SQRT(PDYN)
       BYIMF=PARMOD(3)
@@ -133,9 +133,9 @@ c      print*,BXCF,BYCF,BZCF,BXT1,BYT1,BZT1,BXT2,BYT2,BZT2,
 c     *  BXSRC,BYSRC,BZSRC,BXPRC,BYPRC,BZPRC, BXR11,BYR11,BZR11,
 c     *  BXR12,BYR12,BZR12,BXR21,BYR21,BZR21,BXR22,BYR22,BZR22,HXIMF,
 c     *  HYIMF,HZIMF
-      BX=BBX
-      BY=BBY
-      BZ=BBZ
+      BX=real(BBX,4)
+      BY=real(BBY,4)
+      BZ=real(BBZ,4)
       
       
 c      print*,BX,BY,BZ
@@ -1168,7 +1168,8 @@ C
 C
       DBX=DBX-F(I)*X*DASDZ
       DBY=DBY-F(I)*Y*DASDZ
-  1   DBZ=DBZ+F(I)*(2.D0*AS+X*DASDX+Y*DASDY)
+      DBZ=DBZ+F(I)*(2.D0*AS+X*DASDX+Y*DASDY)
+1     ENDDO
 
       BX=DBX
       BY=DBY
@@ -1207,7 +1208,7 @@ C
          CYPI=DCOS(Y*RP)
          SYPI=DSIN(Y*RP)
 C
-         DO 2 K=1,5
+         DO 3 K=1,5
          RR=1.D0/A(55+K)
          SZRK=DSIN(Z*RR)
          CZRK=DCOS(Z*RR)
@@ -1225,6 +1226,7 @@ C
          DHY=DHY+COEF*DBY
          DHZ=DHZ+COEF*DBZ
 c
+  3      CONTINUE
   2      CONTINUE
 
          HX=DHX
@@ -1682,7 +1684,8 @@ C
       ENDIF
 
       BTN(M)=M*T*CCOS(M)/RO
-  2   BPN(M)=-DTT*SSIN(M)/R
+      BPN(M)=-DTT*SSIN(M)/R
+  2   ENDDO
 
       BTHETA=BTN(N) *800.
       BPHI  =BPN(N) *800.
@@ -1813,7 +1816,8 @@ C                                         TO TAKE INTO ACCOUNT THE SCALE FACTOR 
 
        GX=GX+HXR*A(L)
        GY=GY+HY *A(L)
-  5    GZ=GZ+HZR*A(L)
+       GZ=GZ+HZR*A(L)
+  5    CONTINUE
 
   4   CONTINUE
   3   CONTINUE
@@ -2642,7 +2646,8 @@ C                                         TO TAKE INTO ACCOUNT THE SCALE FACTOR 
 
        GX=GX+HXR*A(L)
        GY=GY+HY *A(L)
-  5    GZ=GZ+HZR*A(L)
+       GZ=GZ+HZR*A(L)
+  5    CONTINUE
 
   4   CONTINUE
   3   CONTINUE
@@ -2688,7 +2693,7 @@ c      IF(M.EQ.1.AND.DABS(PS-PSI).LT.1.D-5) GOTO 1   !   THIS IS TO AVOID MULTIP
       CPS=DCOS(PS)                                  !   REMAINS UNCHANGED
       PSI=PS
       M=1
-  1   P=X**2
+      P=X**2
       U=Z**2
       V=3.D0*Z*X
       T=Y**2

@@ -107,37 +107,17 @@ end interface
     return
   end function function89
 
-  function function89Mag(x) ! Tsyganenko 1989
-    real(8) :: function89Mag(3), TSYGSM(3)
-    real, dimension(10) :: parmod2
-    real(8), intent (in) :: x(3)
-    real :: GSMx(3), PSItemp, TSYfield(3)
-
-    parmod2 = parmod
-    GSMx(1) = x(1) 
-    GSMx(2) = x(2)
-    GSMx(3) = x(3)
-    PSItemp = PSI
-    call T89C_M(IOPT, parmod2, PSItemp, GSMx(1), GSMx(2), GSMx(3), TSYfield(1), TSYfield(2), TSYfield(3))
-    TSYGSM(1) = TSYfield(1)
-    TSYGSM(2) = TSYfield(2)
-    TSYGSM(3) = TSYfield(3)
-    function89Mag = TSYGSM
-  
-    return
-  end function function89Mag
-
   function function96(x) ! Tsyganenko 1996
     real(8) :: function96(3), TSYGSM(3)
     real(8), intent (in) :: x(3)
     real, dimension(10) :: parmod2
     real :: GSMx(3), PSItemp, TSYfield(3)
 
-    parmod2 = parmod
-    GSMx(1) = x(1) 
-    GSMx(2) = x(2)
-    GSMx(3) = x(3)
-    PSItemp = PSI
+    parmod2 = real(parmod,4)
+    GSMx(1) = real(x(1),4) 
+    GSMx(2) = real(x(2),4)
+    GSMx(3) = real(x(3),4)
+    PSItemp = real(PSI,4)
   
     call T96_01(IOPT, parmod2, PSItemp, GSMx(1), GSMx(2), GSMx(3), TSYfield(1), TSYfield(2), TSYfield(3))
     TSYGSM(1) = TSYfield(1)
@@ -154,11 +134,11 @@ end interface
     real, dimension(10) :: parmod2
     real :: GSMx(3), PSItemp, TSYfield(3)
 
-    parmod2 = parmod
-    GSMx(1) = x(1) 
-    GSMx(2) = x(2)
-    GSMx(3) = x(3)
-    PSItemp = PSI
+    parmod2 = real(parmod,4)
+    GSMx(1) = real(x(1),4) 
+    GSMx(2) = real(x(2),4)
+    GSMx(3) = real(x(3),4)
+    PSItemp = real(PSI,4)
   
     call T01_01(IOPT, parmod2, GSMx(1), GSMx(2), GSMx(3), TSYfield(1), TSYfield(2), TSYfield(3))
     TSYGSM(1) = TSYfield(1)
@@ -219,8 +199,6 @@ end interface
     ExternalMagPointer => function01   ! TSYGANENKO 01
   ELSE IF (mode(2) == 6) THEN
     ExternalMagPointer => function01S  ! TSYGANENKO 01 STORM
-  ELSE IF (mode(2) == 7) THEN
-    ExternalMagPointer => function89Mag  ! TSYGANENKO 01 STORM
   ELSE
     print *, "Please enter valid external magnetic field model"
   END IF

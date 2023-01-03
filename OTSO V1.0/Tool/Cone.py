@@ -24,13 +24,11 @@ if __name__ == '__main__':
 ################################################################################################################
 # Picking the stations to be tested.
 # Additional stations can be added via the .AddLocation("Name",Latitude,Longitude) function
- List = [
- "Oulu"]
+ List = ["Oulu"]
  Alt = 20
  Zenith = 0
  Azimuth = 0
  CreateStations = Stations(List, Alt, Zenith, Azimuth)
- #CreateStations.AddLocation("Anomoly", -32, 222)
 
  UsedStationstemp = CreateStations.GetStations()
 
@@ -48,7 +46,7 @@ if __name__ == '__main__':
  EndParams = [MinAlt, MaxDist]
 ################################################################################################################
 # Solar Wind Conditions
- Vx = -500 #[km/s]
+ Vx = -500.0 #[km/s]
  Vy = 0.0 #[km/s]
  Vz = 0.0 #[km/s]
  By = 5 #[nT]
@@ -66,12 +64,12 @@ if __name__ == '__main__':
  WindCreate = SolarWind(Vx, Vy, Vz, By, Bz, Density, Dst, G1, G2, G3)
  WindArray = WindCreate.GetWind()
 ################################################################################################################
-# IOPT is Picked depending on the Kp index at the time picked
+# IOPT is picked depending on the Kp index at the time picked
 # Take IOPT = kp + 1
 # Exception if Kp>=6 IOPT = 7
- IOPT = 3
+ IOPT = 5
 ###############################################################################################################
-# Choose the atomic number of particle you want to test e.g 0 = electron, 1 = proton, 2 = helium
+# Choose the atomic number of the particle you want to test e.g 0 = electron, 1 = proton, 2 = helium
 # Choose if you want to reverse the charge 0 = particle, 1 = anti-particle
  AtomicNum = 1
  AntiCheck = 1
@@ -94,20 +92,20 @@ if __name__ == '__main__':
  RigidityArray = [StartRigidity, EndRigidity, RigidityStep]
 ###############################################################################################################
 # Pick the coordinate system desired for the output
-# GDZ, GEO, GSM , GSE, SM, GEI, MAG, SPH (GEO in spherical), RLL 
+# GDZ, GEO, GSM, GSE, SM, GEI, MAG, SPH (GEO in spherical), RLL 
  CoordinateSystem  = "GEO"
 ###############################################################################################################
-# Pick the maximum percentage of the particles gyrofrequency that can be used as the max time step in the
+# Pick the maximum percentage of the particle's gyrofrequency that can be used as the max time step in the
 # computation
- MaxStepPercent = 0.15
+ MaxStepPercent = 0.015
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel
  Magnetopause = 3
 ###############################################################################################################
-# Choose name of folder that output files will be sent to. Folder created in current directory
- FolderName = "OTSO_Example_Folder"
- FileName = "_Example"
+# Choose the name of the folder that output files will be sent to. Folder created in the current directory
+ FolderName = "Example Folder"
+ FileName = "_Example_File"
  current_directory = os.getcwd()
  final_directory = os.path.join(current_directory, FolderName)
  if not os.path.exists(final_directory):
@@ -115,7 +113,7 @@ if __name__ == '__main__':
 
  FileDescriptors = [FileName, FolderName, final_directory]
 ###############################################################################################################
-# Select number of cores for multicore processing
+# Select the number of cores for multicore processing
  CoreNum = 1
  UsedCores = Cores(UsedStations, CoreNum)
  CoreList = UsedCores.getCoreList()

@@ -1056,7 +1056,8 @@ C
 C
       DBX=DBX-F(I)*X*DASDZ
       DBY=DBY-F(I)*Y*DASDZ
-  1   DBZ=DBZ+F(I)*(2.D0*AS+X*DASDX+Y*DASDY)
+      DBZ=DBZ+F(I)*(2.D0*AS+X*DASDX+Y*DASDY)
+  1   ENDDO
 
       BX=DBX
       BY=DBY
@@ -1095,7 +1096,7 @@ C
          CYPI=DCOS(Y*RP)
          SYPI=DSIN(Y*RP)
 C
-         DO 2 K=1,5
+         DO 3 K=1,5
          RR=1.D0/A(55+K)
          SZRK=DSIN(Z*RR)
          CZRK=DCOS(Z*RR)
@@ -1113,6 +1114,7 @@ C
          DHY=DHY+COEF*DBY
          DHZ=DHZ+COEF*DBZ
 c
+  3      ENDDO
   2      CONTINUE
 
          HX=DHX
@@ -1604,7 +1606,8 @@ C
       ENDIF
 
       BTN(M)=M*T*CCOS(M)/RO
-  2   BPN(M)=-DTT*SSIN(M)/R
+      BPN(M)=-DTT*SSIN(M)/R
+  2   ENDDO
 
       BTHETA=BTN(N) *800.D0
       BPHI  =BPN(N) *800.D0
@@ -1735,7 +1738,8 @@ C                                         TO TAKE INTO ACCOUNT THE SCALE FACTOR 
 
        GX=GX+HXR*A(L)
        GY=GY+HY *A(L)
-  5    GZ=GZ+HZR*A(L)
+       GZ=GZ+HZR*A(L)
+  5    ENDDO
 
   4   CONTINUE
   3   CONTINUE
@@ -2619,7 +2623,8 @@ C                                         TO TAKE INTO ACCOUNT THE SCALE FACTOR 
 
        GX=GX+HXR*A(L)
        GY=GY+HY *A(L)
-  5    GZ=GZ+HZR*A(L)
+       GZ=GZ+HZR*A(L)
+  5    ENDDO
 
   4   CONTINUE
   3   CONTINUE

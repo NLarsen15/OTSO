@@ -99,7 +99,7 @@ end interface
 
   function functionSibeck() ! Sibeck Model
     integer(4) :: functionSibeck
-    real(8) :: a11, a22, a33, a13, a23, a34, a14, a12, a24, a44
+    real(8) :: a11, a22, a33, a14
     real(8) :: GSMPosition(3), x1, y1, z1, TestResult, p, Rvalue
 
     call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, Position, GSMPosition)
