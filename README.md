@@ -46,4 +46,7 @@ The easiest way to install OTSO on windows is outlined below.
   - Find the location of the `f2py-script.py` file on your computer and copy the complete path to this file (it should be located in your anaconda3 directory similar to `c:\User\anaconda3\Scripts\f2py-script.py`). We recommend copying this path to a `.txt` file within the OTSO folder for future reference. 
   - Open a new anaconda prompt, or change the directory in the already open one, to the Tool folder within OTSO and run the command `python [YOUR F2PY FILE PATH] -c --fcompiler=gnu95 --compiler=mingw32 -m MiddleMan MiddleMan.f95 OTSOlib.a`, replacing the [YOUR F2PY FILE PATH] with the path to the `f2py-script.py` file on your computer.
 
-OTSO should now be ready to use
+# How to Use
+If the compilation process has been completed without issue OTSO should now be ready to use. Within the Tool folder there are python scripts that the user should edit to fit the simulations they wish to conduct, please refer to the OTSO user manual for a more detailed decription. Once the input variables have been edited the user should run the python script in an anaconda prompt within the Tool folder directory.
+e.g. `python Cone.py` will run the cone script.
+
