@@ -1,5 +1,5 @@
-@setlocal enableextensions enabledelayedexpansion
 echo off
+@setlocal enableextensions enabledelayedexpansion
 
 if not defined in_subprocess (cmd /k set in_subprocess=y ^& %0 %*) & exit
 
@@ -12,6 +12,7 @@ call xcopy ".\Library\*.a" ".\Tool\" /Y
 
 set searchVal=\anaconda3\Scripts\activate.bat
 set f2pysearchVal=\anaconda3\Scripts\f2py-script.py
+set "UserPath=\All Users\"
 set activate_path=\
 set f2py_path=\
 set count=0
@@ -31,22 +32,25 @@ set count=0
     del *.a
 ) else (
     for %%a in (c d e f g h) do (
-        if exist "%%a:" dir "%%a:\activate.bat"2>NUL /b /s /a-d do echo > Activate_Text.txt
+        if exist "%%a:" dir "%%a:\activate.bat"2>NUL /b /s /a-d do echo >> Activate_Text.txt
     )
     for /F "tokens=*" %%I in (Activate_Text.txt) do (
-        set str=%%I
-        Echo.!str! | findstr /C:"!searchVal!">nul
-        if !errorlevel!==0 ( set activate_path=!str! & echo !activate_path!)
-    )
+    set str=%%I 
+    Echo.!str! | findstr /R /I /C:"All Users">nul
+    if not !errorlevel!==0 ( Echo.!str! | findstr /I /C:"!searchVal!">nul
+    if !errorlevel!==0 ( set activate_path=!str! & echo !activate_path!)
+    ))
+    
 
     for %%b in (c d e f g h) do (
-        if exist "%%b:" dir "%%b:\f2py-script.py"2>NUL /b /s /a-d do echo > F2PY_Text.txt
+        if exist "%%b:" dir "%%b:\f2py-script.py"2>NUL /b /s /a-d do echo >> F2PY_Text.txt
     )
-        for /F "tokens=*" %%C in (F2PY_Text.txt) do (
-        set str=%%C
-        Echo.!str! | findstr /C:"!f2pysearchVal!">nul
-        if !errorlevel!==0 ( set f2py_path=!str! & echo !f2py_path!)
-    )
+    for /F "tokens=*" %%C in (F2PY_Text.txt) do (
+    set str=%%C
+    Echo.!str! | findstr /R /I /C:"All Users">nul
+    if not !errorlevel!==0 ( Echo.!str! | findstr /I /C:"!f2pysearchVal!">nul
+    if !errorlevel!==0 ( set f2py_path=!str! & echo !f2py_path!)
+    ))
 
     call !activate_path!
     Echo.!activate_path! > Recompile.TXT
