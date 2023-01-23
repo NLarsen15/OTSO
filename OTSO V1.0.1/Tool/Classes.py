@@ -10,7 +10,6 @@ import multiprocessing as mp
 from multiprocessing import Process
 import random
 import os
-import csv
 import glob
 import shutil
 import pandas as pd
