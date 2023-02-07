@@ -35,7 +35,7 @@ The easiest way to install OTSO on windows is outlined below.
 3. In order to run on your computer, OTSO needs to be compiled. This can either be done automatically or manually. We suggest using the automatic compilation first and only attempting the manual way if the former method fails.
 
 **Automatic**
-  - Run the `OTSOCompiler.cmd` file located within the OTSO folder downloaded. If the previous steps have been completed correctly this should compile OTSO and it will be usable.
+  - Run the `Windows_OTSO_Compiler.cmd` file located within the OTSO folder downloaded. If the previous steps have been completed correctly this should compile OTSO and it will be usable.
 
 **Manual**
   - Open up an anaconda prompt to the Library folder directory.
@@ -43,7 +43,7 @@ The easiest way to install OTSO on windows is outlined below.
   - Within the same terminal enter `ar cr OTSOlib.a *.o` to create the static library.
   - Copy the `OTSOlib.a` file and all the `.mod` files into the Tool folder.
   - Find the location of the `f2py-script.py` file on your computer and copy the complete path to this file (it should be located in your anaconda3 directory similar to `c:\User\anaconda3\Scripts\f2py-script.py`). We recommend copying this path to a `.txt` file within the OTSO folder for future reference. 
-  - Open a new anaconda prompt, or change the directory in the already open one, to the Tool folder within OTSO and run the command `python [YOUR F2PY FILE PATH] -c --fcompiler=gnu95 --compiler=mingw32 -m MiddleMan MiddleMan.f95 OTSOlib.a`, replacing the [YOUR F2PY FILE PATH] with the path to the `f2py-script.py` file on your computer.
+  - Open a new anaconda prompt, or change the directory in the already open one, to the Tool folder within OTSO and run the command `python [YOUR F2PY FILE PATH] -c --fcompiler=gnu95 --compiler=mingw32 -m MiddleMan MiddleMan.f95 OTSOlib.a`, replacing [YOUR F2PY FILE PATH] with the path to the `f2py-script.py` file on your computer.
   
 ## Linux
 
