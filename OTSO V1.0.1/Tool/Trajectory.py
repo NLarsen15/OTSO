@@ -1,13 +1,7 @@
 import numpy as np
 import time
-import math
-from scipy import constants
-import MiddleMan as OTSOLib
-from datetime import datetime, timedelta
-import csv
-from dateutil import parser 
+from datetime import datetime
 import multiprocessing as mp
-from multiprocessing import Process
 import random
 from Classes import Stations
 from Classes import SolarWind
@@ -17,7 +11,6 @@ from Classes import fortrancallTrajectory
 from Classes import READMETrajectory
 from Classes import ParamCheck
 import os
-import shutil
 
 if __name__ == '__main__':
 ################################################################################################################

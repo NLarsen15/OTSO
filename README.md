@@ -67,7 +67,7 @@ Note OTSO was tested on the Ubuntu OS and the following instructions will be for
 3. OTSO must now be compiled in order to run. This can be done automatically via the provided bash file or manually.
 
 **Automatic**
-  - Open a terminal to the main OTSO directory and run the bash `Linux_OTSO_Compiler.sh` file. Enter `bash Linux_OTSO_Compiler.sh` in the terminal and run. 
+  - Open a terminal to the main OTSO directory and run the bash `Linux&Mac_OTSO_Compiler.sh` file. Enter `bash Linux&Mac_OTSO_Compiler.sh` in the terminal and run. 
 
 **Manual**
   - Open a terminal in the Library folder within OTSO. Enter `gfortran -c *Module.f95 *Functions.f95 *.for *.f95 *.f -fPIC` into the terminal and run.

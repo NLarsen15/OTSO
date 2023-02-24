@@ -1,14 +1,9 @@
 import numpy as np
 import time
-import math
-from scipy import constants
 import MiddleMan as OTSOLib
 from datetime import datetime, timedelta, date
 import csv
-from dateutil import parser 
 import multiprocessing as mp
-from multiprocessing import Process
-import random
 import os
 import glob
 import shutil
@@ -32,9 +27,11 @@ class Cores:
 
               print("You have entered an invalid number of cores")
               print("You have " + str(psutil.cpu_count(logical=False)) + " and have tried to use " + str(self.CoreNum) + " cores")
-              print("To ensure operational integrity of your computer OTSO will run using 2 less than the max cores available")
+              print("To ensure operational integrity of your computer OTSO will run using 2 less than the max cores available, with a minumum value of 1.")
 
               self.CoreNum = mp.cpu_count() - 2
+              if self.CoreNum <= 0:
+                  self.CoreNum = 1
 
    def CreateCoreList(self):
          i = 1
