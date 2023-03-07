@@ -13,7 +13,7 @@ OTSO is open-source. Therefore, additions and suggestions from the community are
 
 This is a base release for the tool and bugs are to be expected. I ask the community to please inform me of any bugs they may encounter or provide solutions that can be added to the base code of OTSO.
 
-OTSO works on Windows, Linux and MAc OS. Instructions for installing OTSO on each of these are located below.
+OTSO works on Windows, Linux and Mac OS. Instructions for installing OTSO on each of these are located below.
 
 ## Installation
 
