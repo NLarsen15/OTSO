@@ -48,7 +48,7 @@ The easiest way to install OTSO on windows is outlined below.
 ## Linux
 
 Easiest way to install OTSO on Linux is outlined below. Links to online tutorials are provided as well as plain summaries for each step bellow.
-Note OTSO was tested on the Ubuntu OS and the following instructions will be for installing OTSO on this OS. It is possible the use of a different Linux OS could change the installation proceedure. 
+Note OTSO was tested on the Ubuntu OS and the following instructions will be for installing OTSO on this OS. It is possible the use of a different Linux OS could change the installation procedure. 
 
 1. Install Gfortran onto your Linux system. Follow these [instructions](https://fortran-lang.org/en/learn/os_setup/install_gfortran/). A Summary is given bellow.
    - Open a terminal, enter in the command `sudo apt install gfortran` and run.
@@ -72,9 +72,31 @@ Note OTSO was tested on the Ubuntu OS and the following instructions will be for
 **Manual**
   - Open a terminal in the Library folder within OTSO. Enter `gfortran -c *Module.f95 *Functions.f95 *.for *.f95 *.f -fPIC` into the terminal and run.
   - Next run the command `ar cr OTSOlib.a *.o` in the same terminal.
-  - Copy all files that end with `.mod` and the `OTSOlib.a` into the Tool folder within the OTSO directory.
+  - Copy all files that end with `.mod` and the `OTSOlib.a` file into the Tool folder within the OTSO directory.
+  - Lastly, open a terminal within the Tool folder and run the command `f2py -c -m MiddleMan MiddleMan.f95 OTSOlib.a`
+  
+## Mac
+
+Easiest way to install OTSO on Mac is outlined below. Links to online tutorials are provided as well as plain summaries for each step bellow.
+Note OTSO was tested on the Monterey and Ventura OS releases, as such the following instructions will be for installing OTSO on these versions of Mac OS. It is possible the use of older Mac OS releases could change the installation procedure. 
+
+1. Install Anaconda on your Mac system. Follow these [instructions](https://docs.anaconda.com/anaconda/install/mac-os/) to download Anaconda on Mac. The Anaconda installer can be found [here](https://www.anaconda.com/products/distribution#macos).
+
+2. Install Gfortran onto your Mac system using Anaconda. Follow these [instructions](https://anaconda.org/conda-forge/gfortran). A Summary is given bellow.
+   - Open a terminal, enter in the command `conda install -c conda-forge gfortran` and run.
+   - Gfortran should now be installed on your OS.
+
+3. OTSO must now be compiled in order to run. This can be done automatically via the provided bash file or manually.
+
+**Automatic**
+  - Open a terminal to the main OTSO directory and run the bash `Linux&Mac_OTSO_Compiler.sh` file. Enter `bash Linux&Mac_OTSO_Compiler.sh` in the terminal and run. 
+
+**Manual**
+  - Open a terminal in the Library folder within OTSO. Enter `gfortran -c *Module.f95 *Functions.f95 *.for *.f95 *.f -fPIC` into the terminal and run.
+  - Next run the command `ar cr OTSOlib.a *.o` in the same terminal.
+  - Copy all files that end with `.mod` and the `OTSOlib.a` file into the Tool folder within the OTSO directory.
   - Lastly, open a terminal within the Tool folder and run the command `f2py -c -m MiddleMan MiddleMan.f95 OTSOlib.a`
 
 ## How to Use
-If the compilation process has been completed without issue OTSO should now be ready to use. Within the Tool folder there are python scripts that the user should edit to fit the simulations they wish to conduct, please refer to the OTSO user manual for a more detailed decription. Once the input variables have been edited the user should run the python script in an anaconda prompt within the Tool folder directory (e.g. `python Cone.py` will run the cone script).
+If the compilation process has been completed without issue OTSO should now be ready to use. Within the Tool folder there are python scripts that the user should edit to fit the simulations they wish to conduct, please refer to the OTSO user manual for a more detailed decription. Once the input variables have been edited the user should run the python script in an Anaconda prompt / terminal within the Tool folder directory (e.g. `python Cone.py` will run the cone script used to compute asymptotic cones).
 
