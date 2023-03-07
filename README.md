@@ -13,12 +13,12 @@ OTSO is open-source. Therefore, additions and suggestions from the community are
 
 This is a base release for the tool and bugs are to be expected. I ask the community to please inform me of any bugs they may encounter or provide solutions that can be added to the base code of OTSO.
 
-OTSO currently works on both the Windows and Linux OS. Instructions for MacOS will be added in the future once OTSO has been succesfully implimented on the OS.
+OTSO works on Windows, Linux and MAc OS. Instructions for installing OTSO on each of these are located below.
 
 ## Installation
 
 In order for OTSO to be installed and operate correctly, one must have a fortran compiler and python installed.
-OTSO has been designed to work alongside the anaconda python software as this makes OTSO much easier to use.
+OTSO has been designed to work alongside the Anaconda python software as this makes OTSO much easier to use.
 
 ## Windows OS
 
