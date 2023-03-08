@@ -20,7 +20,7 @@ OTSO works on Windows, Linux and Mac OS. Instructions for installing OTSO on eac
 In order for OTSO to be installed and operate correctly, one must have a fortran compiler and python installed.
 OTSO has been designed to work alongside the Anaconda python software as this makes OTSO much easier to use.
 
-## Windows OS
+## Windows
 
 The easiest way to install OTSO on windows is outlined below.
 
