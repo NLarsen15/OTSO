@@ -20,6 +20,8 @@ OTSO works on Windows, Linux, and Mac OS. Instructions for installing OTSO on ea
 In order for OTSO to be installed and operate correctly, one must have a fortran compiler and python installed.
 OTSO has been designed to work alongside the Anaconda python software as this makes OTSO much easier to use.
 
+Installation instructions for OTSO outside of the anaconda environment will be provided in an update in the near future.
+
 ## Windows OS
 
 The easiest way to install OTSO on windows is outlined below.
@@ -98,5 +100,10 @@ Note OTSO was tested on the Monterey, Ventura, and Sonoma OS releases, as such t
   - Lastly, open a terminal within the Tool folder and run the command `f2py -c -m MiddleMan MiddleMan.f95 OTSOlib.a`
 
 ## How to Use
-If the compilation process has been completed without issue OTSO should now be ready to use. Within the `Tool/Parameters` folder there are python scripts that the user should edit to fit the simulations they wish to conduct (cone_params.py, trajectory_params.py, and planet_params.py), please refer to the OTSO user manual for a more detailed decription. Once the input variables have been edited the user should run the python script in an Anaconda prompt / terminal within the Tool folder directory (e.g. `python Cone.py` will run the cone script used to compute asymptotic cones). Results from OTSO will be stored in a created folder called Results.
+If the compilation process has been completed without issue OTSO should now be ready to use. Within the `Tool/Parameters` folder there are python scripts that the user should edit to fit the simulations they wish to conduct (cone_params.py, trajectory_params.py, cutoff_params.py, and planet_params.py), please refer to the OTSO user manual for a more detailed decription. Once the input variables have been edited the user should run the python script in an Anaconda prompt / terminal within the Tool folder directory (e.g. `python Cone.py` will run the cone script used to compute asymptotic cones). Results from OTSO will be stored in a created folder called Results.
+
+## Troubleshooting
+- If there are errors in the compilation step for OTSO double check you have an up to date version of your fortran compiler, this may involve uninstalling your current version and re-instaling from scratch.
+- Another issue you may encounter is a python 2 and python 3 conflict. If you are using python 3 for example f2py may need you to specify python 3 by typing `f2py3` during the compilation process, instead of just f2py`.
+- (As more issues are found I will endevour to keep this troubleshooting section up to date with any fixes for potential issues users may encounter)
 
