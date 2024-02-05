@@ -29,7 +29,7 @@ real(8) :: LocalVector(3), RotatedVelocity(3), GEOVelocity(3), Re, w
 
 Re = 6371.2
 
-call Reset
+call Reset()
 
 call initialize()
 

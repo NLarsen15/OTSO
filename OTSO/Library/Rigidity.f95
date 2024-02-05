@@ -34,12 +34,12 @@ IF (NeverFail == 0) THEN
     RL = 0
 END IF
 
-IF (NeverFail == 1) THEN
-    Ref = RU - (Acount*Rstep)
-    IF (Acount == 0) THEN
-        Ref = RU
-        RU = RU
-        RL = RU
+IF (RU /= RL) THEN
+    IF (NeverFail == 1) THEN
+        IF (Acount /= 0) THEN
+            Acount = Acount
+            Ref = RU - (Acount*Rstep)
+        END IF
     END IF
 END IF
 

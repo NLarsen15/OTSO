@@ -38,3 +38,16 @@ Accel(3) = (Q*(vnew(1)*b(2) - b(1)*vnew(2)))/(lam*M)
     
     
 end subroutine Lorentz
+
+
+subroutine TimeCheck(Vabs)
+USE Particle
+implicit none
+
+real(8) :: Vabs, lam
+
+lam = (1 - ((Vabs/c)**2))**(-0.5)
+    
+TimeElapsed = TimeElapsed + h*lam        
+        
+end subroutine TimeCheck

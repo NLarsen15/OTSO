@@ -6,11 +6,12 @@
 ! ***************************************************************************************************************
 
 module Particle
-real(8) :: Position(3), Velocity(3)
-real(8) :: M, Q, Z, A, q_0, m_0, E_0, R, lambda, c
-integer(8) :: year, day, hour, minute, secondINT, model(2), Acount, forbiddencount, NeverFail, FailCheck
-real(8) :: secondTotal, DistanceTraveled, h, hOLD, RU, RL, Ref, MaxT, step, MaxGyroPercent
-integer(4) :: Result
+real(8) :: Position(3), Velocity(3), XnewTemp(3)
+real(8) :: M, Q, Z, A, q_0, m_0, E_0, R, lambda, c, OLDsecondTotal, Lasth
+integer(8) :: year, day, hour, minute, secondINT, model(2), Acount, forbiddencount, NeverFail, FailCheck, FinalStep
+real(8) :: secondTotal, DistanceTraveled, TimeElapsed, h, hOLD, RU, RL, Ref, MaxT, step, Firsth, MaxGyroPercent
+real(8) :: OLDPosition(3), OLDVelocity(3), NEWPosition(3), NEWVelocity(3), HALFPosition(3), HALFVelocity(3)
+integer(4) :: Result, MidLoop
 SAVE
 contains
 
@@ -28,6 +29,8 @@ q_0 = 1.6021766208e-19
 m_0 = 1.672621898e-27
 c = 299792458.0
 hOLD = 0.0
+h = 0
+FinalStep = 0
 
 end subroutine initialize
 
@@ -52,6 +55,7 @@ c = 0
 h = 0
 hOLD = 0
 MaxT = 0
+FinalStep = 0
 
 end subroutine Reset
       
@@ -71,9 +75,25 @@ lambda = (((R*Z/(E_0 * A))**2) + 1)**(0.5)
 M = m_0 * A
 Q = q_0 * Z
 DistanceTraveled = 0.0
+TimeElapsed = 0.0
 model(1) = mode(1)
 model(2) = mode(2)
           
 end subroutine update
+
+subroutine OldVariables(Position1, Velocity1)
+real(8) :: Position1(3), Velocity1(3)
+
+OLDPosition(1) = Position1(1)
+OLDPosition(2) = Position1(2)
+OLDPosition(3) = Position1(3)
+
+OLDVelocity(1) = Velocity1(1)
+OLDVelocity(2) = Velocity1(2)
+OLDVelocity(3) = Velocity1(3)
+
+OLDsecondTotal = secondTotal
+
+end subroutine OldVariables
 
 end module Particle

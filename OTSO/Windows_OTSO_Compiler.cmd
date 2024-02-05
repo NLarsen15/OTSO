@@ -4,11 +4,12 @@ echo off
 if not defined in_subprocess (cmd /k set in_subprocess=y ^& %0 %*) & exit
 
 call cd Library/
-call gfortran -c *Module.f95 *Functions.f95 *.for *.f95 *.f
+call gfortran -c *Module.f95 *Functions.f95 *.for *.f95 *.f -fPIC
 call ar cr OTSOlib.a *.o
 call cd ..
-call xcopy ".\Library\*.mod" ".\Tool\" /Y
-call xcopy ".\Library\*.a" ".\Tool\" /Y
+call xcopy ".\Library\*.mod" ".\Tool\Parameters\functions" /Y
+call xcopy ".\Library\*.a" ".\Tool\Parameters\functions" /Y
+
 
 set searchVal=\anaconda3\Scripts\activate.bat
 set f2pysearchVal=\anaconda3\Scripts\f2py-script.py
@@ -23,8 +24,17 @@ set count=0
     set RecompileVar[!count!]=%%a
     )
     call !RecompileVar[1]!
-    call cd Tool/
-    call python !RecompileVar[2]! -c --fcompiler=gnu95 --compiler=mingw32 -m MiddleMan MiddleMan.f95 OTSOlib.a
+    call cd Tool/Parameters/functions
+    call python !RecompileVar[2]!  -c --fcompiler=gnu95 --compiler=mingw32 -m MiddleMan MiddleMan.f95 OTSOlib.a
+    if errorlevel 1 (
+    echo OTSO compilation failed
+    ) else (
+    echo OTSO compilation complete
+    )
+    del *.mod
+    del *.a
+    call cd ..
+    call cd ..
     call cd ..
     call cd Library/
     del *.o
@@ -55,8 +65,17 @@ set count=0
     call !activate_path!
     Echo.!activate_path! > Recompile.TXT
     Echo.!f2py_path! >> Recompile.TXT
-    call cd Tool/
+    call cd Tool/Parameters/functions
     call python !f2py_path! -c --fcompiler=gnu95 --compiler=mingw32 -m MiddleMan MiddleMan.f95 OTSOlib.a
+    if errorlevel 1 (
+    echo OTSO compilation failed
+    ) else (
+    echo OTSO compilation complete
+    )
+    del *.mod
+    del *.a
+    call cd ..
+    call cd ..
     call cd ..
     del Activate_Text.txt
     del F2PY_Text.txt

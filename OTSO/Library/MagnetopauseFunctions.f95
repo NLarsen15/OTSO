@@ -54,8 +54,12 @@ end interface
       functionSphere = 0
     ELSE IF (TestResult >= 0) THEN
       functionSphere = 1
+      IF (FinalStep == 0) THEN
+        FinalStep = 1
+        TestResult = -1
+      END IF
     END IF
-
+    
     return
   end function functionSphere
 
@@ -86,6 +90,10 @@ end interface
     TestResult = a11*(x1**2) + a22*(y1**2) + a33*(z1**2) + a12*(x1*y1) + a13*x1*z1 + a23*y1*z1 + a14*x1 + a24*y1 + a34*z1 + (a44)
     IF (x1 < -60) THEN
         TestResult = 1
+        IF (FinalStep == 0) THEN
+          FinalStep = 1
+          TestResult = -1
+        END IF
     END IF
 
     IF (TestResult < 0) THEN
@@ -151,6 +159,10 @@ end interface
 
     IF (x1 < -50) THEN
         TestResult = 1
+        IF (FinalStep == 0) THEN
+          FinalStep = 1
+          TestResult = -1
+        END IF
     END IF
 
     IF (TestResult < 0) THEN
@@ -198,10 +210,18 @@ end interface
 
     if (rho2 > 900) THEN
         TestResult = 1
+        IF (FinalStep == 0) THEN
+          FinalStep = 1
+          TestResult = -1
+        END IF
     end if
 
     if (x1 < -60) THEN
         TestResult = 1
+        IF (FinalStep == 0) THEN
+          FinalStep = 1
+          TestResult = -1
+        END IF
     end if
 
     kpar = DIP/Fk(IOPT)
@@ -214,8 +234,14 @@ end interface
 
     rhorot = y1rot*y1rot + z1rot*z1rot
 
+    
+
     IF (x1rot > Ak*rhorot + Bk(IOPT)) THEN
         TestResult = 1
+        IF (FinalStep == 0) THEN
+          FinalStep = 1
+          TestResult = -1
+        END IF
     END IF
 
     IF (TestResult < 0) THEN
@@ -240,10 +266,18 @@ end interface
   
     IF (SubResult == 1) THEN
       TestResult = 1
+      IF (FinalStep == 0) THEN
+        FinalStep = 1
+        TestResult = -1
+      END IF
     END IF
 
     IF (x1 < -50) THEN
       TestResult = 1
+      IF (FinalStep == 0) THEN
+        FinalStep = 1
+        TestResult = -1
+      END IF
     END IF
 
     IF (TestResult < 0) THEN

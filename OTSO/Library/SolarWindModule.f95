@@ -38,7 +38,7 @@ contains
 !
 !********************************************************************************************************************************
 subroutine initializeWind(X,D,model)
-real(8) :: X(10), Vmax
+real(8) :: X(16), Vmax
 integer(4) :: D
 integer(8) :: model(2)
 
@@ -82,6 +82,16 @@ IF (model(2) == 6) THEN
     parmod(5) = X(9)
     parmod(6) = X(10)
 END IF
+
+IF (model(2) == 7) THEN
+    parmod(5) = X(11)
+    parmod(6) = X(12)
+    parmod(7) = X(13)
+    parmod(8) = X(14)
+    parmod(9) = X(15)
+    parmod(10) = X(16)
+END IF
+
 
 end subroutine initializeWind
 

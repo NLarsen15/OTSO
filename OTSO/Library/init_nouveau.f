@@ -23,14 +23,13 @@ C
 C
        INTEGER*4 ierr
        REAL*8    year
-       REAL*8    g(66),h(66)
+       REAL*8    g(105),h(105)
        REAL*8    xc,yc,zc                  !Re
        REAL*8    thet,phit           !radian
        REAL*8    ct,st,cp,sp
        REAL*8    Bo
 C
        COMMON /dipigrf/Bo,xc,yc,zc,ct,st,cp,sp
-       COMMON /dgrf/g,h
 C
        call get_igrf_coeffs(year,g,h,ierr)
 c

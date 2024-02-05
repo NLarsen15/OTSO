@@ -48,7 +48,6 @@ end interface
   
     call IGRF_GSW_08(x(1), x(2), x(3), INTERNALGSW(1), INTERNALGSW(2), INTERNALGSW(3))
     call GSWGSM_08(INTERNALGSM(1), INTERNALGSM(2), INTERNALGSM(3), INTERNALGSW(1), INTERNALGSW(2), INTERNALGSW(3), 1)
-
     functionIGRF = INTERNALGSM
     return
   end function functionIGRF
@@ -63,6 +62,27 @@ end interface
     functionDIP = INTERNALGSM
     return
   end function functionDIP
+
+  function functionCustom(x) ! Custom Spherical Haormincs model
+    real(8) :: functionCustom(3), INTERNALSPH(3), INTERNALGSW(3), INTERNALGEO(3) 
+    real(8) :: INTERNALGSM(3), GEOPosition(3), GEOSPHPosition(3)
+    real(8) :: R, Theta, Phi
+    real(8), intent (in) :: x(3)
+
+    call CoordinateTransform("GSM", "GEO", year, day, secondTotal, x, GEOPosition)
+    call CoordinateTransform("CAR", "SPH", year, day, secondTotal, GEOPosition, GEOSPHPosition)
+    call SPHCAR_08(R,Theta,Phi,GEOPosition(1),GEOPosition(2),GEOPosition(3), -1)
+
+    call GAUSSCUSTOM(R, Theta, Phi, INTERNALSPH(1), INTERNALSPH(2), INTERNALSPH(3))
+
+    call BSPCAR_08(Theta,Phi,INTERNALSPH(1),INTERNALSPH(2), & 
+    INTERNALSPH(3), INTERNALGEO(1), INTERNALGEO(2), INTERNALGEO(3))
+    call GEOGSW_08(INTERNALGEO(1),INTERNALGEO(2),INTERNALGEO(3),INTERNALGSW(1),INTERNALGSW(2),INTERNALGSW(3),1)
+    call GSWGSM_08(INTERNALGSM(1), INTERNALGSM(2), INTERNALGSM(3), INTERNALGSW(1), INTERNALGSW(2), INTERNALGSW(3), 1)
+
+    functionCustom = INTERNALGSM
+    return
+  end function functionCustom
 
   function functionNoEx(x) !No external field
     real(8) :: functionNoEx(3), TSYGSM(3)
@@ -159,6 +179,16 @@ end interface
     return
   end function function01S
 
+  function function04(x) ! Tsyganenko 2004 
+    real(8) :: function04(3), TSYGSM(3)
+    real(8), intent (in) :: x(3)
+  
+    call T04_S(parmod, x(1), x(2), x(3), TSYGSM(1), TSYGSM(2), TSYGSM(3))
+    function04 = TSYGSM
+  
+    return
+  end function function04
+
 ! ************************************************************************************************************************************
 ! subroutine MagneticFieldAssign:
 ! Subroutine that assigns the functions for specific magnetic field models to an internal and external pointer. To be used within
@@ -181,6 +211,8 @@ end interface
     InternalMagPointer => functionIGRF ! IGRF
   ELSE IF (mode(1) == 2) THEN
     InternalMagPointer => functionDIP  ! DIPOLE
+  ELSE IF (mode(1) == 3) THEN
+    InternalMagPointer => functionCustom ! Custom Gauss
   ELSE
     print *, "Please enter valid internal magnetic field model"
   END IF
@@ -199,6 +231,8 @@ end interface
     ExternalMagPointer => function01   ! TSYGANENKO 01
   ELSE IF (mode(2) == 6) THEN
     ExternalMagPointer => function01S  ! TSYGANENKO 01 STORM
+  ELSE IF (mode(2) == 7) THEN
+    ExternalMagPointer => function04  ! TSYGANENKO 04
   ELSE
     print *, "Please enter valid external magnetic field model"
   END IF
@@ -207,4 +241,4 @@ end interface
     
   end subroutine MagneticFieldAssign
  
- end module MagneticFieldFunctions
+end module MagneticFieldFunctions

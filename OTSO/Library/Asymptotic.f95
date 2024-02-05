@@ -37,9 +37,9 @@ NewLat = 90 - (theta / (pi/180))
 top = -tTHETA*sin(theta) + tr*cos(theta)
 bottom = (tPHI**2 + (tTHETA*cos(theta) + tr*sin(theta))**2)**(0.5)
 
-Lat = atan(top/bottom)
+Lat = atan2(top,bottom)
 
-E = atan(tPHI/(tTHETA*cos(theta) + tr*sin(theta)))
+E = atan2(tPHI,(tTHETA*cos(theta) + tr*sin(theta)))
 
 Long = GEOsph(3) + E
 
