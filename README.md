@@ -107,3 +107,6 @@ If the compilation process has been completed without issue OTSO should now be r
 - Another issue you may encounter is a python 2 and python 3 conflict. If you are using python 3 for example f2py may need you to specify python 3 by typing `f2py3` during the compilation process, instead of just f2py`.
 - (As more issues are found I will endevour to keep this troubleshooting section up to date with any fixes for potential issues users may encounter)
 
+## Publications Using OTSO
+- Larsen, N., Mishev, A., & Usoskin, I. (2023). A new open-source geomagnetosphere propagation tool (OTSO) and its applications. Journal of Geophysical Research: Space Physics, 128, e2022JA031061. https://doi.org/10.1029/2022JA031061
+- Larsen, N., & Mishev, A. L. (2023). Analysis of the ground level enhancement GLE 60 on 15 April 2001, and its space weather effects: Comparison with dosimetric measurements. Space Weather, 21, e2023SW003488. https://doi.org/10.1029/2023SW003488
