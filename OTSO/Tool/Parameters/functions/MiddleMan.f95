@@ -602,9 +602,13 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     IF (scanchoice == 1) THEN
         scan = 0
         RigidityStep = RigidityScan
+        StartRigidity = Rigidity(1)
+        EndRigidity = Rigidity(2)
     ELSE
         scan = 1
         RigidityStep = Rigidity(3)
+        StartRigidity = Rigidity(1)
+        EndRigidity = Rigidity(2)
     END IF
 
     write(10,'(*(G0.6,:""))')PositionIN(4), ",", PositionIN(5), ",", Ru, ",", Ref, ",", Rl 
@@ -857,9 +861,13 @@ SubResult = 0
 IF (scanchoice == 1) THEN
     scan = 0
     RigidityStep = RigidityScan
+    StartRigidity = Rigidity(1)
+    EndRigidity = Rigidity(2)
 ELSE
     scan = 1
     RigidityStep = Rigidity(3)
+    StartRigidity = Rigidity(1)
+    EndRigidity = Rigidity(2)
 END IF
 
 
