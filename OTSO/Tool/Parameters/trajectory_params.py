@@ -70,7 +70,7 @@ External = 3
 IntModel = 1
 ###############################################################################################################
 # Pick the rigidity for the computation
-Rigidity = 10GV
+Rigidity = 10 #GV
 ###############################################################################################################
 # Pick the coordinate system desired for the output
 # GDZ, GEO, GSM , GSE, SM, GEI, MAG, SPH (GEO in spherical), RLL 
