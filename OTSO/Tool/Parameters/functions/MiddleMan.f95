@@ -1,10 +1,10 @@
 ! **********************************************************************************************************************
 ! OTSO Functions:
 !            This file contains the three main functions included within the OTSO tool.
-!            Trajectory - will output the trajectory of a particle within the magetosphere to a file
+!            Trajectory - will output the trajectory of a particle within the magnetosphere to a file
 !            Cone - Will compute effective cutoff rigidity and asymptotic cone of any given location.
 !                   All data is output into a file with a name of the user's choosing.
-!            Planet -  Calcuates the effective cutoff rigidity for any location on the Earth without doing
+!            Planet -  Calculates the effective cutoff rigidity for any location on the Earth without doing
 !                      asymptotic computations. Should be used with the Planet.py script.
 !
 ! **********************************************************************************************************************
@@ -79,9 +79,9 @@ subroutine CoordTrans(Pin, year, day, sec, CoordIN, CoordOUT, Pout)
 !            magnetic field models. The trajectory is output in a csv file named "Trajectory".
 !            The output data is in the Cartesian Geocentric coordinate system.
 !            Will also state if the cosmic ray has an allowed or forbidden trajectory.
-!            Accepted Condition: cosmic ray encounters the magetopause
+!            Accepted Condition: cosmic ray encounters the magnetopause
 !            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
-!                                  - cosmic ray travels over 100Re without escaping or enountering Earth
+!                                  - cosmic ray travels over 100Re without escaping or encountering Earth
 ! **********************************************************************************************************************
 subroutine trajectory(PositionIN, Rigidity, Date, mode, IntMode, & 
     AtomicNumber, Anti, I, Wind, Pause, FileName, CoordSystem, GyroPercent, End)
@@ -121,11 +121,11 @@ IF (PositionIN(4) > 90.0) THEN
 END IF
 
 IF (PositionIN(5) < 0) THEN
-    print *, "ERROR: Please enter a azimuth angle between 0 and 360 degrees"
+    print *, "ERROR: Please enter an azimuth angle between 0 and 360 degrees"
     print *, "N = 0, E = 90, S = 180, and W = 270 (degrees)"
     stop
 ELSE IF (PositionIN(5) > 360) THEN
-    print *, "ERROR: Please enter a azimuth angle between 0 and 360 degrees"
+    print *, "ERROR: Please enter an azimuth angle between 0 and 360 degrees"
     print *, "N = 0, E = 90, S = 180, and W = 270 (degrees)"
     stop
 END IF
@@ -203,12 +203,12 @@ end subroutine trajectory
 
 ! **********************************************************************************************************************
 ! Subroutine Cone:
-!            subroutine that calculates the trajectory of a cosmic rays across a range of rigidities
-!            within different input magnetic field models and determines the Asympototic Latitude and
+!            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
+!            within different input magnetic field models and determines the Asymptotic Latitude and
 !            Longitude. Will create a csv file in which the asymptotic cone data is stored.
 !            Accepted Condition: cosmic ray encounters the model magnetopause
 !            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
-!                                  - cosmic ray travels over 100Re without escaping or enountering Earth
+!                                  - cosmic ray travels over 100Re without escaping or encountering Earth
 !
 ! **********************************************************************************************************************
 subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, IntMode, & 
@@ -255,11 +255,11 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
     END IF
     
     IF (PositionIN(5) < 0) THEN
-        print *, "ERROR: Please enter a azimuth angle between 0 and 360 degrees"
+        print *, "ERROR: Please enter an azimuth angle between 0 and 360 degrees"
         print *, "N = 0, E = 90, S = 180, and W = 270 (degrees)"
         stop
     ELSE IF (PositionIN(5) > 360) THEN
-        print *, "ERROR: Please enter a azimuth angle between 0 and 360 degrees"
+        print *, "ERROR: Please enter an azimuth angle between 0 and 360 degrees"
         print *, "N = 0, E = 90, S = 180, and W = 270 (degrees)"
         stop
     END IF
@@ -380,12 +380,12 @@ end subroutine cone
 
 ! **********************************************************************************************************************
 ! Subroutine Cutoff:
-!            subroutine that calculates the trajectory of a cosmic rays across a range of rigidities
-!            within different input magnetic field models and determines the Asympototic Latitude and
+!            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
+!            within different input magnetic field models and determines the Asymptotic Latitude and
 !            Longitude. Will create a csv file in which the asymptotic cone data is stored.
 !            Accepted Condition: cosmic ray encounters the model magnetopause
 !            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
-!                                  - cosmic ray travels over 100Re without escaping or enountering Earth
+!                                  - cosmic ray travels over 100Re without escaping or encountering Earth
 !
 ! **********************************************************************************************************************
 subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, IntMode, & 
@@ -648,10 +648,10 @@ end subroutine cutoff
 
 ! **********************************************************************************************************************
 ! Subroutine Planet:
-!            subroutine that calculates the trajectory of a cosmic rays across a range of rigidities
+!            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
 !            within different input magnetic field models and determines the effective cutoff rigidity for
 !            a range of latitude and longitudes. Typically done over the entire planet.
-!            Will create a csv file and will in the calculated rigidities for the locations.
+!            Will create a csv file with the calculated rigidities for the locations.
 !            This code works with the Planet.py tool to assign large amounts of locations across multiple cores.
 !
 ! **********************************************************************************************************************
@@ -762,7 +762,7 @@ do while (loop <= EndLoop)
 
         call FinalStepCheck()
             
-        IF ( Position(1) < End(1) ) THEN
+        IF (Position(1) < End(1)) THEN
             bool = -1
             Limit = 1
             forbiddencount = forbiddencount + 1
