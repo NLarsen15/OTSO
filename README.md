@@ -64,7 +64,7 @@ Note OTSO was tested on the Ubuntu OS and the following instructions will be for
    - To check the integrity of the package enter `sha256sum Anaconda3-2022.05-Linux-x86_64.sh` into the terminal. If no errors are produced then proceed to the next step.
    - To install Anaconda run the command `bash Anaconda3-2022.05-Linux-x86_64.sh` in the same terminal.
    - You will now be prompted to read the licence agreement and accept the terms as well as choose the installation directory. Your home directory should already be selected and it is recommended you select this directory to install Anaconda too.
-   - The installation is now complete. Close the terminal yo uare using. Future terminals that you open should have `(base)` at the start of the command line, this means that Anaconda is working and that you have access to all the packages within Anaconda.
+   - The installation is now complete. Close the terminal you are using. Future terminals that you open should have `(base)` at the start of the command line, this means that Anaconda is working and that you have access to all the packages within Anaconda.
 
 3. OTSO must now be compiled in order to run. This can be done automatically via the provided bash file or manually.
 
@@ -105,7 +105,7 @@ If the compilation process has been completed without issue OTSO should now be r
 ## Troubleshooting
 - If there are errors in the compilation step for OTSO double check you have an up to date version of your fortran compiler, this may involve uninstalling your current version and re-instaling from scratch.
 - Another issue you may encounter is a python 2 and python 3 conflict. If you are using python 3 for example f2py may need you to specify python 3 by typing `f2py3` during the compilation process, instead of just f2py`.
-- (As more issues are found I will endevour to keep this troubleshooting section up to date with any fixes for potential issues users may encounter)
+- (As more issues are found I will endeavour to keep this troubleshooting section up to date with any fixes for potential issues users may encounter)
 
 ## Publications Using OTSO
 - Larsen, N., Mishev, A., & Usoskin, I. (2023). A new open-source geomagnetosphere propagation tool (OTSO) and its applications. Journal of Geophysical Research: Space Physics, 128, e2022JA031061. https://doi.org/10.1029/2022JA031061
