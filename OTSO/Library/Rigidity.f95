@@ -29,13 +29,10 @@ IF (RU == RL) THEN
 END IF
 
 IF (NeverFail == 0) THEN
-    IF (R - Rstep <= 0) THEN
-        Ref = 0
-        RU = 0
-        RL = 0
-    END IF
+    Ref = 0
+    RU = 0
+    RL = 0
 END IF
-
 
 IF (RU /= RL) THEN
     IF (NeverFail == 1) THEN
@@ -44,6 +41,12 @@ IF (RU /= RL) THEN
             Ref = RU - (Acount*Rstep)
         END IF
     END IF
+END IF
+
+IF (FailCheck == 0) THEN
+    Ref = 0
+    RU = 0
+    RL = 0
 END IF
 
 end subroutine EffectiveRigidity

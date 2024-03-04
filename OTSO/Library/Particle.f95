@@ -82,8 +82,10 @@ IF (Atomic == 0) THEN ! Electron
  call NormalVector(StartPosition, Norm)
 
  call VelocityComponents(V, Norm)
- 
- call CoordinateTransform("GSM", "GEO", year, day, secondTotal, Velocity, VelocityGEO)
+
+ if (model(1) /= 4) then
+   call CoordinateTransform("GSM", "GEO", year, day, secondTotal, Velocity, VelocityGEO)
+ end if
 
  call Vector_Geo2Local(VelocityGEO, StartPosition(2), StartPosition(3), LocalVector)
 
@@ -91,9 +93,12 @@ IF (Atomic == 0) THEN ! Electron
 
  call Vector_Local2Geo(RotatedVelocity, StartPosition(2), StartPosition(3), GEOVelocity)
 
- call CoordinateTransform("GEO", "GSM", year, day, secondTotal, GEOVelocity, Velocity)
+ if (model(1) /= 4) then
+   call CoordinateTransform("GEO", "GSM", year, day, secondTotal, GEOVelocity, Velocity)
+ end if
 
  w = (velocity(1)*velocity(1) + velocity(2)*velocity(2) + velocity(3)*velocity(3))**(0.5)
  MaxT = Re*1000**(-2.0) / (w/1000)
+
 
 end subroutine CreateParticle

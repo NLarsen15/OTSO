@@ -6,17 +6,6 @@
 ! papers listed below:
 !
 ! ************************************************************************************************************************************
-! subroutine MagneticField:
-! Subroutine that computes the external and internal magnetic field strengths and combines them to obtain a total magnetic field
-! strength at any given point within the magnetosphere.
-!
-! INPUT:
-! X1 - Position of the CR [GDZ coordinates]
-!
-! OUTPUT:
-! BfieldFinal - Magnetic field strength [T]
-!
-! ************************************************************************************************************************************
 module MagnetopauseFunctions
 USE Particle
 USE GEOPACK1
@@ -41,6 +30,10 @@ end interface
     real(8) :: GSEPosition(3), x1, y1, z1, TestResult
 
     call CoordinateTransform("GDZ", "GSE", year, day, secondTotal, Position, GSEPosition)
+
+    if (model(1) == 4) then
+      call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, Position, GSEPosition)
+    end if
     
     TestResult = -1
     Result = 0

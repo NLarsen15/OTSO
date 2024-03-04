@@ -25,6 +25,10 @@ real(8) :: BfieldFinal(3), X1(3), EXTERNALGSM(3), Bfield(3), INTERNALGSM(3), xGS
 
 call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, X1, xGSM)
 
+if (model(1) == 4) then
+    call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, X1, xGSM)
+end if
+
 INTERNALGSM = InternalMagPointer(xGSM)
 EXTERNALGSM = ExternalMagPointer(xGSM)
 

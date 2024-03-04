@@ -70,7 +70,7 @@ Minute = 0
 Second = 0
 ###############################################################################################################
 # Pick the magnetosphere models that you want to use. 
-# Internal: 1 = IGRF, 2 = Dipole, 3 = Custom IGRF
+# Internal: 1 = IGRF, 2 = Dipole, 3 = Custom Gauss, 4 = Non-Standard Custom Gauss
 # External: 1 = TSY87(short), 2 = TSY87(long), 3 = TSY89, 4 = TSY96, 5 = TSY01, 6 = TSY01(Storm), 7 = TSY04
 Internal = 1
 External = 3
@@ -80,9 +80,9 @@ External = 3
 IntModel = 1
 ###############################################################################################################
 # Pick the start and end rigidity for the computation, as well as the step
-StartRigidity = 20
-EndRigidity = 0
-RigidityStep = 0.01
+StartRigidity = 20 #[GV]
+EndRigidity = 0 #[GV]
+RigidityStep = 0.01 #[GV]
 ###############################################################################################################
 # Rigidity Scan (will quickly scan the rigidity range for an estimate of the effective cutoff, then will
 # start the main computation around the estimated effective cutoff)

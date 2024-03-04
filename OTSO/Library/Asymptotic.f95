@@ -29,6 +29,12 @@ call GEOGSW_08 (GEO(1),GEO(2),GEO(3),GSW(1),GSW(2),GSW(3),-1)
 
 call SPHCAR_08(GEOsph(1),GEOsph(2),GEOsph(3),XGEO(1), XGEO(2), XGEO(3), -1)
 
+if (model(1) == 4) then
+    GEO(1) = Velocity(1)
+    GEO(2) = Velocity(2)
+    GEO(3) = Velocity(3)
+end if
+
 call BCARSP_08(XGEO(1),XGEO(2),XGEO(3),GEO(1),GEO(2),GEO(3),tr,tTHETA,tPHI)
 
 theta = GEOsph(2)

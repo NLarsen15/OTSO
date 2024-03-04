@@ -82,6 +82,11 @@ xDT(3) = StartPosition(3)
 call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, StartPosition, xINConvert)
 call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, xDT, xDTConvert)
 
+if (model(1) == 4) THEN
+    call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, StartPosition, xINConvert)
+    call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, xDT, xDTConvert)
+end if
+
 NormOUT(1) = (xDTConvert(1) - xINConvert(1))*Earth
 NormOUT(2) = (xDTConvert(2) - xINConvert(2))*Earth
 NormOUT(3) = (xDTConvert(3) - xINConvert(3))*Earth

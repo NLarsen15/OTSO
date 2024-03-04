@@ -1,6 +1,7 @@
 ################################################################################################################
 # Picking the stations to be tested.
 # Additional stations can be added via the .AddLocation("Name",Latitude,Longitude) function
+# If you just want to use custom locations leave List empty.
 List = ["Oulu"]
 Alt = 20.0
 Zenith = 0
@@ -60,7 +61,7 @@ Minute = 0
 Second = 0
 ###############################################################################################################
 # Pick the magnetosphere models that you want to use. 
-# Internal: 1 = IGRF, 2 = Dipole, 3 = Custom Gauss
+# Internal: 1 = IGRF, 2 = Dipole, 3 = Custom Gauss, 4 = Non-Standard Custom Gauss
 # External: 0 = No External Field 1 = TSY87(short), 2 = TSY87(long), 3 = TSY89, 4 = TSY96, 5 = TSY01, 6 = TSY01(Storm), 7 = TSY04
 Internal = 1
 External = 3
@@ -69,10 +70,10 @@ External = 3
 # 1 = 4th Order Runge-Kutta, 2 = Boris, 3 = Vay, 4 = Higuera-Cary
 IntModel = 1
 ###############################################################################################################
-# Pick the start and end rigidity for the computation, as well as the step
-StartRigidity = 20
-EndRigidity = 0
-RigidityStep = 0.01
+# Pick the start and end rigidity for the computation, as well as the step in GV
+StartRigidity = 20 #[GV]
+EndRigidity = 0 #[GV]
+RigidityStep = 0.01 #[GV]
 ###############################################################################################################
 # Pick the coordinate system desired for the output
 # GDZ, GEO, GSM, GSE, SM, GEI, MAG, SPH (GEO in spherical), RLL 
@@ -84,11 +85,11 @@ MaxStepPercent = 0.1
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel
-Magnetopause = 3
+Magnetopause = 0
 ###############################################################################################################
 # Choose the name of the folder that output files will be sent to. Folder created in the current directory
 FolderName = "Cone Example Folder"
-FileName = "_Cone"
+FileName = "_Cone_Custom"
 ###############################################################################################################
 # Select the number of cores for multicore processing
 CoreNum = 1

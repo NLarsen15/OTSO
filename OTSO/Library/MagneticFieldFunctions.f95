@@ -70,19 +70,27 @@ end interface
     real(8), intent (in) :: x(3)
 
     call CoordinateTransform("GSM", "GEO", year, day, secondTotal, x, GEOPosition)
-    call CoordinateTransform("CAR", "SPH", year, day, secondTotal, GEOPosition, GEOSPHPosition)
-    call SPHCAR_08(R,Theta,Phi,GEOPosition(1),GEOPosition(2),GEOPosition(3), -1)
 
-    call GAUSSCUSTOM(R, Theta, Phi, INTERNALSPH(1), INTERNALSPH(2), INTERNALSPH(3))
+    call GAUSSCUSTOM(GEOPosition(1), GEOPosition(2), GEOPosition(3), INTERNALGEO(1), INTERNALGEO(2), INTERNALGEO(3))
 
-    call BSPCAR_08(Theta,Phi,INTERNALSPH(1),INTERNALSPH(2), & 
-    INTERNALSPH(3), INTERNALGEO(1), INTERNALGEO(2), INTERNALGEO(3))
     call GEOGSW_08(INTERNALGEO(1),INTERNALGEO(2),INTERNALGEO(3),INTERNALGSW(1),INTERNALGSW(2),INTERNALGSW(3),1)
     call GSWGSM_08(INTERNALGSM(1), INTERNALGSM(2), INTERNALGSM(3), INTERNALGSW(1), INTERNALGSW(2), INTERNALGSW(3), 1)
 
     functionCustom = INTERNALGSM
     return
   end function functionCustom
+
+  function functionCustomNonStandard(x) ! Custom Spherical Haormincs model
+    real(8) :: functionCustomNonStandard(3), INTERNALSPH(3), INTERNALGSW(3), INTERNALGEO(3) 
+    real(8) :: INTERNALGSM(3), GEOPosition(3), GEOSPHPosition(3)
+    real(8) :: R, Theta, Phi
+    real(8), intent (in) :: x(3)
+  
+    call GAUSSCUSTOM(x(1), x(2), x(3), INTERNALGEO(1), INTERNALGEO(2), INTERNALGEO(3))
+
+    functionCustomNonStandard = INTERNALGEO
+    return
+  end function functionCustomNonStandard
 
   function functionNoEx(x) !No external field
     real(8) :: functionNoEx(3), TSYGSM(3)
@@ -213,6 +221,8 @@ end interface
     InternalMagPointer => functionDIP  ! DIPOLE
   ELSE IF (mode(1) == 3) THEN
     InternalMagPointer => functionCustom ! Custom Gauss
+  ELSE IF (mode(1) == 4) THEN
+    InternalMagPointer => functionCustomNonStandard ! Custom Gauss Non-Standard
   ELSE
     print *, "Please enter valid internal magnetic field model"
   END IF

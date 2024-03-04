@@ -29,6 +29,8 @@ integer(8) :: model(2)
               
 IF (model(1) == 3) THEN
     CUSTGAUSS = 1
+ELSE IF (model(1) == 4) THEN
+    CUSTGAUSS = 1
 ELSE
     CUSTGAUSS = 0
 END IF

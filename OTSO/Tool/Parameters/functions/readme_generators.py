@@ -24,8 +24,12 @@ def READMECone(UsedStationstemp, RigidityArray, EventDate, model, IntModel, Atom
 
       if (model[0] == 1):
          Internal = "IGRF"
-      else:
+      elif (model[0] == 2):
          Internal = "Dipole"
+      elif (model[0] == 3):
+         Internal = "Custom Gaussian Coefficients"
+      elif (model[0] == 4):
+         Internal = "Custom Gaussian Coefficients Non-Standard Geomagnetic Field"
 
       if (model[1] == 0):
          External = "No External Field"
@@ -167,8 +171,12 @@ def READMECutoff(UsedStationstemp, RigidityArray, EventDate, model, IntModel, At
 
       if (model[0] == 1):
          Internal = "IGRF"
-      else:
+      elif (model[0] == 2):
          Internal = "Dipole"
+      elif (model[0] == 3):
+         Internal = "Custom Gaussian Coefficients"
+      elif (model[0] == 4):
+         Internal = "Custom Gaussian Coefficients Non-Standard Geomagnetic Field"
 
       if (model[1] == 0):
          External = "No External Field"
@@ -307,8 +315,12 @@ def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, IntModel, Ato
 
       if (model[0] == 1):
          Internal = "IGRF"
-      else:
+      elif (model[0] == 2):
          Internal = "Dipole"
+      elif (model[0] == 3):
+         Internal = "Custom Gaussian Coefficients"
+      elif (model[0] == 4):
+         Internal = "Custom Gaussian Coefficients Non-Standard Geomagnetic Field"
 
       if (model[1] == 0):
          External = "No External Field"
@@ -446,8 +458,12 @@ def READMEPlanet(Data, Rigidity, EventDate, model, IntModel, AtomicNum, AntiChec
 
       if (model[0] == 1):
          Internal = "IGRF"
-      else:
+      elif (model[0] == 2):
          Internal = "Dipole"
+      elif (model[0] == 3):
+         Internal = "Custom Gaussian Coefficients"
+      elif (model[0] == 4):
+         Internal = "Custom Gaussian Coefficients Non-Standard Geomagnetic Field"
 
       if (model[1] == 0):
          External = "No External Field"

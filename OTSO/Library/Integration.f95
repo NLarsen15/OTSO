@@ -54,6 +54,10 @@ call AccelerationCalc(Position, velocity, a0)
 a0MAG = ((a0(1)**2.0 + a0(2)**2.0 + a0(3)**2.0))**(0.5)
 call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, x0, xGSM)
 
+if (model(1) == 4) then
+    call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, x0, xGSM)
+end if
+
 ! particle position in geocentric
 
 xGSM(1) = xGSM(1)*6371200.0
@@ -93,6 +97,11 @@ x1GSM(2) = x1(2)/6371200.0
 x1GSM(3) = x1(3)/6371200.0
 
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, x1GSM, x1GDZ)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, x1GSM, x1GDZ)
+end if
+
 call AccelerationCalc(x1GDZ, v1, a1)
 a1MAG = ((a1(1)**2.0 + a1(2)**2.0 + a1(3)**2.0))**(0.5)
 
@@ -136,6 +145,11 @@ x2GSM(2) = x2(2)/6371200.0
 x2GSM(3) = x2(3)/6371200.0
 
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, x2GSM, x2GDZ)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, x2GSM, x2GDZ)
+end if
+
 call AccelerationCalc(x2GDZ, v2, a2)
 a2MAG = ((a2(1)**2.0 + a2(2)**2.0 + a2(3)**2.0))**(0.5)
 
@@ -179,6 +193,11 @@ x3GSM(2) = x3(2)/6371200.0
 x3GSM(3) = x3(3)/6371200.0
 
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, x3GSM, x3GDZ)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, x3GSM, x3GDZ)
+end if
+
 call AccelerationCalc(x3GDZ, v3, a3)
 a3MAG = ((a3(1)**2.0 + a3(2)**2.0 + a3(3)**2.0))**(0.5)
 
@@ -215,6 +234,10 @@ XnewTemp(2) = Xnew(2)/6371200.0
 XnewTemp(3) = Xnew(3)/6371200.0
 
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, XnewTemp, XnewGDZ)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, XnewTemp, XnewGDZ)
+end if
 
 Vabs = ((Velocity(1)**2.0 + Velocity(2)**2.0 + Velocity(3)**2.0))**(0.5)
 call TimeCheck(Vabs)
@@ -277,6 +300,11 @@ x0(2) = Position(2) !Xy
 x0(3) = Position(3) !Xz
 
 call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, x0, xGSM)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, x0, xGSM)
+end if
+
 xGSM(1) = xGSM(1)*6371200.0
 xGSM(2) = xGSM(2)*6371200.0
 xGSM(3) = xGSM(3)*6371200.0
@@ -307,6 +335,10 @@ x_half_GSM_Temp(3) = x_half_GSM(3)/6371200.0
 
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, x_half_GSM_Temp, xGDZ_half)
 
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, x_half_GSM_Temp, xGDZ_half)
+end if
+
 call MagneticField(xGDZ_half, Bfield)
 call VecScale(scaler,Bfield,tb)
     
@@ -336,6 +368,12 @@ XnewTemp(2) = Xnew(2)/6371200.0
 XnewTemp(3) = Xnew(3)/6371200.0
     
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, XnewTemp, XnewGDZ)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, XnewTemp, XnewGDZ)
+end if
+
+
 call TimeCheck(Vabs1)
 DistanceTraveled = DistanceTraveled + (h * Vabs1)
     
@@ -409,6 +447,11 @@ x0(2) = Position(2) !Xy
 x0(3) = Position(3) !Xz
     
 call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, x0, xGSM)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, x0, xGSM)
+end if
+
 xGSM(1) = xGSM(1)*6371200.0
 xGSM(2) = xGSM(2)*6371200.0
 xGSM(3) = xGSM(3)*6371200.0
@@ -442,6 +485,10 @@ x_half_GSM_Temp(2) = x_half_GSM(2)/6371200.0
 x_half_GSM_Temp(3) = x_half_GSM(3)/6371200.0
 
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, x_half_GSM_Temp, xGDZ_half)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, x_half_GSM_Temp, xGDZ_half)
+end if
 
 call MagneticField(xGDZ_half, Bfield)
 
@@ -507,6 +554,10 @@ XnewTemp(2) = Xnew(2)/6371200.0
 XnewTemp(3) = Xnew(3)/6371200.0
     
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, XnewTemp, XnewGDZ)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, XnewTemp, XnewGDZ)
+end if
 
 call TimeCheck(Vabs1)
 DistanceTraveled = DistanceTraveled + (h * Vabs1)
@@ -582,6 +633,11 @@ x0(2) = Position(2) !Xy
 x0(3) = Position(3) !Xz
     
 call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, x0, xGSM)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, x0, xGSM)
+end if
+
 xGSM(1) = xGSM(1)*6371200.0
 xGSM(2) = xGSM(2)*6371200.0
 xGSM(3) = xGSM(3)*6371200.0
@@ -615,6 +671,10 @@ x_half_GSM_Temp(2) = x_half_GSM(2)/6371200.0
 x_half_GSM_Temp(3) = x_half_GSM(3)/6371200.0
 
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, x_half_GSM_Temp, xGDZ_half)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, x_half_GSM_Temp, xGDZ_half)
+end if
 
 call MagneticField(xGDZ_half, Bfield)
 
@@ -664,6 +724,10 @@ XnewTemp(2) = Xnew(2)/6371200.0
 XnewTemp(3) = Xnew(3)/6371200.0
     
 call CoordinateTransform("GSM", "GDZ", year, day, secondTotal, XnewTemp, XnewGDZ)
+
+if (model(1) == 4) then
+    call CoordinateTransform("GEO", "GDZ", year, day, secondTotal, XnewTemp, XnewGDZ)
+end if
 
 call TimeCheck(Vabs1)
 DistanceTraveled = DistanceTraveled + (h * Vabs1)

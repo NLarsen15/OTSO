@@ -154,6 +154,14 @@ Xnew(3) = XnewTemp(3)/1000
 
 call CoordinateTransform("GSM", CoordSystem, year, day, secondTotal, Xnew, XnewConverted)
 
+if (model(1) == 4) then
+    if (CoordSystem == "GEO") then
+        XnewConverted = Xnew
+    else
+        call CoordinateTransform("GEO", CoordSystem, year, day, secondTotal, Xnew, XnewConverted)
+    end if
+end if
+
 write(10,'(*(G0.6,:,","))') XnewConverted
 
 IF (Position(1) < End(1) ) THEN
@@ -602,13 +610,9 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     IF (scanchoice == 1) THEN
         scan = 0
         RigidityStep = RigidityScan
-        StartRigidity = Rigidity(1)
-        EndRigidity = Rigidity(2)
     ELSE
         scan = 1
         RigidityStep = Rigidity(3)
-        StartRigidity = Rigidity(1)
-        EndRigidity = Rigidity(2)
     END IF
 
     write(10,'(*(G0.6,:""))')PositionIN(4), ",", PositionIN(5), ",", Ru, ",", Ref, ",", Rl 
@@ -861,13 +865,9 @@ SubResult = 0
 IF (scanchoice == 1) THEN
     scan = 0
     RigidityStep = RigidityScan
-    StartRigidity = Rigidity(1)
-    EndRigidity = Rigidity(2)
 ELSE
     scan = 1
     RigidityStep = Rigidity(3)
-    StartRigidity = Rigidity(1)
-    EndRigidity = Rigidity(2)
 END IF
 
 
