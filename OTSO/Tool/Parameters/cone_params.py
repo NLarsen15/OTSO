@@ -85,7 +85,7 @@ MaxStepPercent = 0.1
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel
-Magnetopause = 0
+Magnetopause = 3
 ###############################################################################################################
 # Choose the name of the folder that output files will be sent to. Folder created in the current directory
 FolderName = "Cone Example Folder"

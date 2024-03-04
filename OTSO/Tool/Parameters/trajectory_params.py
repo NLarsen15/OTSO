@@ -83,7 +83,7 @@ MaxStepPercent = 0.1
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel
-Magnetopause = 0
+Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in current directory
 FolderName = "Example Trajectory Folder"
