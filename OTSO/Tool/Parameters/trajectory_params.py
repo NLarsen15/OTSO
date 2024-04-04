@@ -3,9 +3,9 @@
 # Additional stations can be added via the .AddLocation("Name",Latitude,Longitude) function
 # If you just want to use custom locations leave List empty.
 List = ["Oulu"]
-Alt = 20.0
-Zenith = 0
-Azimuth = 0
+Alt = 20.0 #[km]
+Zenith = 0 #[degrees]
+Azimuth = 0 #[degrees]
 
 #Custom_Locations = [["Custom_Location_Name", Latitude, Longitude]]
 ################################################################################################################
@@ -24,6 +24,7 @@ Vz = 0.0 #[km/s]
 By = 5 #[nT]
 Bz = 5 #[nT]
 Density = 1.0 #[cm^-2]
+Pdyn = 1.0 #[nPa]
 Dst = 0 #[nT]
 
 # G1 and G2 are only needed for TSY01 use (use external TSY01_Constants tool to calculate them)
@@ -79,7 +80,7 @@ CoordinateSystem  = "GEO"
 ###############################################################################################################
 # Pick the maximum percentage of the particles gyrofrequency that can be used as the max time step in the
 # computation
-MaxStepPercent = 0.1
+MaxStepPercent = 10 #[%]
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel

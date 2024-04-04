@@ -23,7 +23,7 @@ subroutine MagStrength(Pin, Date, CoordIN, mode, I, Wind, Bfield)
     USE CUSTOMGAUSS
     implicit none
     
-    real(8) :: Pin(3), Pout(3), Wind(16), Bfield(3), Date(6)
+    real(8) :: Pin(3), Pout(3), Wind(17), Bfield(3), Date(6)
     character(len = 3) :: CoordIN
     integer(4) :: I
     integer(8) :: mode(2)
@@ -97,7 +97,7 @@ USE CUSTOMGAUSS
 implicit none
 
 real(8) :: PositionIN(5), Rigidity, Date(6), End(3)
-real(8) :: Wind(16), Re, Lat, Long, GyroPercent
+real(8) :: Wind(17), Re, Lat, Long, GyroPercent
 real(8) :: Xnew(3), XnewConverted(3)
 integer(8) :: mode(2), IntMode, Anti, AtomicNumber
 integer(4) :: I, Limit, Pause
@@ -233,7 +233,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
     implicit none
     
     real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityStep, Date(6), End(3)
-    real(8) :: Wind(16), Re, Lat, Long, GyroPercent
+    real(8) :: Wind(17), Re, Lat, Long, GyroPercent
     real(8) :: Geofile(3)
     integer(8) :: mode(2), IntMode, Anti, AtomicNumber
     integer(4) :: I, Limit, bool, Pause, stepNum
@@ -410,7 +410,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     implicit none
     
     real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityScan, RigidityStep, Date(6), End(3)
-    real(8) :: Wind(16), Re, Lat, Long, GyroPercent, EndLoop
+    real(8) :: Wind(17), Re, Lat, Long, GyroPercent, EndLoop
     real(8) :: Geofile(3), RuMemory(9), RlMemory(9), RefMemory(9), Rigidity(3)
     real(8) :: Zenith(9), Azimuth(9), sumrl, sumru, sumref
     integer(8) :: mode(2), IntMode, Anti, AtomicNumber
@@ -670,7 +670,7 @@ USE Magnetopause
 USE CUSTOMGAUSS
 implicit none
 real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityStep, Date(6), End(3)
-real(8) :: Wind(16), Re, Rigidity(3), GyroPercent, RigidityScan, Zenith(9), Azimuth(9)
+real(8) :: Wind(17), Re, Rigidity(3), GyroPercent, RigidityScan, Zenith(9), Azimuth(9)
 real(8) :: RuMemory(9), RlMemory(9), RefMemory(9), EndLoop, sumrl, sumru, sumref
 integer(8) :: mode(2), IntMode, Anti, AtomicNumber
 integer(4) :: I, Limit, bool, Pause, scan, stepNum, Rcomputation, loop, scanchoice

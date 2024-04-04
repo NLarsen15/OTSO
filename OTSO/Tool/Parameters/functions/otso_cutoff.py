@@ -17,7 +17,7 @@ def OTSO_cutoff():
     Magnetopause = CutoffInputArray[7]
     FileDescriptors = CutoffInputArray[8]
     CoordinateSystem = CutoffInputArray[9]
-    MaxStepPercent = CutoffInputArray[10]
+    MaxStepPercent = ConeInputArray[10]/100
     EndParams = CutoffInputArray[11]
     Station_Array = CutoffInputArray[12]
     InputtedStations = CutoffInputArray[13]
@@ -63,4 +63,4 @@ def OTSO_cutoff():
     print("Whole Program Took: " + str(Printtime) + " seconds")
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMECutoff(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams, Rcomp, Rscan)
+    readme_generators.READMECutoff(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, Rcomp, Rscan)

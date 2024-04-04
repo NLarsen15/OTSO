@@ -21,7 +21,7 @@ def OTSO_planet():
     WindArray = PlanetInputArray[8]
     Magnetopause = PlanetInputArray[9]
     FileDescriptors = PlanetInputArray[10]
-    MaxStepPercent = PlanetInputArray[11]
+    MaxStepPercent = ConeInputArray[10]/100
     EndParams = PlanetInputArray[12]
     Rcomp = PlanetInputArray[13]
     Rscan = PlanetInputArray[14]
@@ -76,4 +76,4 @@ def OTSO_planet():
     misc.PlanetFile(FileDescriptors[1])
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent, EndParams, Rcomp, Rscan)
+    readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent*100, EndParams, Rcomp, Rscan)

@@ -11,7 +11,7 @@ from datetime import datetime
 Date = datetime(2006, 12, 13, 3, 00, 00)
 
 # Oulu
-Planet = pd.read_csv("Planet2.csv")
+Planet = pd.read_csv("Planet.csv")
 
 PlanetLat = Planet["Latitude"]
 PlanetLong = Planet["Longitude"]

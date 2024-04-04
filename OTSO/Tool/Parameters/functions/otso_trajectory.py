@@ -18,7 +18,7 @@ def OTSO_trajectory():
     Magnetopause = TrajectoryInputArray[7]
     FileDescriptors = TrajectoryInputArray[8]
     CoordinateSystem = TrajectoryInputArray[9]
-    MaxStepPercent = TrajectoryInputArray[10]
+    MaxStepPercent = ConeInputArray[10]/100
     EndParams = TrajectoryInputArray[11]
     Station_Array = TrajectoryInputArray[12]
     InputtedStations = TrajectoryInputArray[13]
@@ -62,4 +62,4 @@ def OTSO_trajectory():
 
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMETrajectory(Station_Array, Rigidity, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams)
+    readme_generators.READMETrajectory(Station_Array, Rigidity, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams)

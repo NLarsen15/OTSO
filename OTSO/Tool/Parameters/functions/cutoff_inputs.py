@@ -10,7 +10,7 @@ def CutoffInputs():
     DateCreate = date.Date(EventDate)
     DateArray = DateCreate.GetDate()
 
-    WindCreate = solar_wind.Solar_Wind(Vx, Vy, Vz, By, Bz, Density, Dst, G1, G2, G3, W1, W2, W3, W4, W5, W6)
+    WindCreate = solar_wind.Solar_Wind(Vx, Vy, Vz, By, Bz, Density, Pdyn, Dst, G1, G2, G3, W1, W2, W3, W4, W5, W6)
     WindArray = WindCreate.GetWind()
 
     RigidityArray = [StartRigidity,EndRigidity,RigidityStep]

@@ -38,7 +38,7 @@ contains
 !
 !********************************************************************************************************************************
 subroutine initializeWind(X,D,model)
-real(8) :: X(16), Vmax
+real(8) :: X(17), Vmax
 integer(4) :: D
 integer(8) :: model(2)
 
@@ -58,9 +58,17 @@ IMF(1) = X(4)
 IMF(2) = X(5)
 
 B = (X(4)**2 + X(5)**2)**(0.5)
-Dst = X(7)
+
+
+Dst = X(8)
 Vmax = (SW(1)**2 + SW(2)**2 + SW(3)**2)**0.5
-PDYN = (X(6)*10**6.0) * (1.672621898e-27) * ((Vmax*1000)**2)
+
+IF (X(7) == 0) THEN
+    PDYN = (X(6)*10**6.0) * (1.672621898e-27) * ((Vmax*1000)**2)
+ELSE
+    PDYN = X(7)*10**(-9.0)
+END IF
+
 hb = ((B/40)**2 / (1 + (B/40)))
 
 
@@ -74,22 +82,22 @@ parmod(3) = X(4)
 parmod(4) = X(5)
 
 IF (model(2) == 5) THEN
-    parmod(5) = X(8)
-    parmod(6) = X(9)
-END IF
-
-IF (model(2) == 6) THEN
     parmod(5) = X(9)
     parmod(6) = X(10)
 END IF
 
+IF (model(2) == 6) THEN
+    parmod(5) = X(10)
+    parmod(6) = X(11)
+END IF
+
 IF (model(2) == 7) THEN
-    parmod(5) = X(11)
-    parmod(6) = X(12)
-    parmod(7) = X(13)
-    parmod(8) = X(14)
-    parmod(9) = X(15)
-    parmod(10) = X(16)
+    parmod(5) = X(12)
+    parmod(6) = X(13)
+    parmod(7) = X(14)
+    parmod(8) = X(15)
+    parmod(9) = X(16)
+    parmod(10) = X(17)
 END IF
 
 

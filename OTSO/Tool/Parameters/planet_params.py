@@ -12,7 +12,7 @@ MaxLong = 359
 MinLong = 0
 ################################################################################################################
 # Starting conditions for the simulations
-Alt = 20.0
+Alt = 20.0 #[km]
 ################################################################################################################
 # Picking the cutoff computation to be conducted
 # 0 = Vertical cutoff rigidity, 1 = Apparent cutoff rigidity
@@ -33,6 +33,7 @@ Vz = 0.0 #[km/s]
 By = 5 #[nT]
 Bz = 5 #[nT]
 Density = 1.0 #[cm^-2]
+Pdyn = 1.0 #[nPa]
 Dst = 0 #[nT]
 
 # G1 and G2 are only needed for TSY01 use (use external TSY01_Constants tool to calculate them)
@@ -91,7 +92,7 @@ RigidityScan = 0
 ###############################################################################################################
 # Pick the maximum percentage of the particles gyrofrequency that can be used as the max time step in the
 # computation
-MaxStepPercent = 0.1
+MaxStepPercent = 10 #[%]
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel

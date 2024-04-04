@@ -17,7 +17,7 @@ def OTSO_cone():
     Magnetopause = ConeInputArray[7]
     FileDescriptors = ConeInputArray[8]
     CoordinateSystem = ConeInputArray[9]
-    MaxStepPercent = ConeInputArray[10]
+    MaxStepPercent = ConeInputArray[10]/100
     EndParams = ConeInputArray[11]
     Station_Array = ConeInputArray[12]
     InputtedStations = ConeInputArray[13]
@@ -60,4 +60,4 @@ def OTSO_cone():
     print("Whole Program Took: " + str(Printtime) + " seconds")
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMECone(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams)
+    readme_generators.READMECone(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams)
