@@ -109,5 +109,5 @@ If the compilation process has been completed without issue OTSO should now be r
 
 ## Publications Using OTSO
 - Larsen, N., Mishev, A., & Usoskin, I. (2023). A new open-source geomagnetosphere propagation tool (OTSO) and its applications. Journal of Geophysical Research: Space Physics, 128, e2022JA031061. https://doi.org/10.1029/2022JA031061
-- Larsen, N., & Mishev, A. L. (2023). Analysis of the ground level enhancement GLE 60 on 15 April 2001, and its space weather effects: Comparison with dosimetric measurements. Space Weather, 21, e2023SW003488. https://doi.org/10.1029/2023SW003488
-- Mishev, A.L., Koldobskiy, S.A., Larsen, N. et al. (2024). Spectra and Anisotropy of Solar Energetic Protons During GLE #65 on 28 October, 2003 and GLE #66 on 29 October, 2003. Sol Phys 299, 24. https://doi.org/10.1007/s11207-024-02269-z
+- Larsen, N., & Mishev, A. (2023). Analysis of the ground level enhancement GLE 60 on 15 April 2001, and its space weather effects: Comparison with dosimetric measurements. Space Weather, 21, e2023SW003488. https://doi.org/10.1029/2023SW003488
+- Mishev, A., Koldobskiy, S., Larsen, N. et al. (2024). Spectra and Anisotropy of Solar Energetic Protons During GLE #65 on 28 October, 2003 and GLE #66 on 29 October, 2003. Sol Phys 299, 24. https://doi.org/10.1007/s11207-024-02269-z
