@@ -20,7 +20,8 @@ OTSO works on Windows, Linux, and Mac OS. Instructions for installing OTSO on ea
 In order for OTSO to be installed and operate correctly, one must have a fortran compiler and python installed.
 OTSO has been designed to work alongside the Anaconda python software as this makes OTSO much easier to use.
 
-Installation instructions for OTSO outside of the anaconda environment will be provided in an update in the near future.
+Installation instructions for OTSO outside of the Anaconda environment will be provided in the future. 
+Currently Linux is the only OS where OTSO has been reliably installed without the use of Anaconda.
 
 ## Windows OS
 
