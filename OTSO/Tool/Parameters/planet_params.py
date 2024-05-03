@@ -8,7 +8,7 @@ MaxLat = 90
 MinLat = -90
 
 # Select the range of longitude for the computation 360 and 0 will cover an entire parallel
-MaxLong = 359
+MaxLong = 360
 MinLong = 0
 ################################################################################################################
 # Starting conditions for the simulations
