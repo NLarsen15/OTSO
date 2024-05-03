@@ -414,7 +414,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     real(8) :: Geofile(3), RuMemory(9), RlMemory(9), RefMemory(9), Rigidity(3)
     real(8) :: Zenith(9), Azimuth(9), sumrl, sumru, sumref
     integer(8) :: mode(2), IntMode, Anti, AtomicNumber
-    integer(4) :: I, Limit, bool, Pause, stepNum, loop, Rcomputation, scanchoice, scan
+    integer(4) :: I, Limit, bool, Pause, stepNum, loop, Rcomputation, scanchoice, scan, LastCheck
     character(len=50) :: FileName
     character(len=3) :: CoordSystem
 
@@ -436,13 +436,15 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     sumrl = 0
     sumref = 0
     sumru = 0
+    LastCheck = 0
+    FailCheck = 0
 
     Rigidity(1) = StartRigidity
     Rigidity(2) = EndRigidity
     Rigidity(3) = RigidityStep
 
-    RigidityScan = 0.5
-    RigidityStep = 0.5
+    RigidityScan = 0.50
+    RigidityStep = 0.50
 
     Zenith(1) = 0
     Zenith(2) = 30
@@ -556,7 +558,6 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         forbiddencount = 0
         bool = 1
         RL = R
-        FailCheck = 0
         IF (Limit == 0) THEN
             RU = R
         ELSE IF (Limit == 1) THEN
@@ -573,7 +574,14 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     IF(R < EndRigidity) THEN
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
-        R = EndRigidity
+        IF(NeverFail == 0) THEN
+            IF(LastCheck == 0) THEN
+                R = Rigidity(3)
+                LastCheck = 1
+            ELSE IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
+        END IF
     END IF
     Result = 0
 
@@ -596,11 +604,17 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         Limit = 0
         Acount = 0
         Result = 0
-        NeverFail = 0
         forbiddencount = 0
         SubResult = 0
         stepNum = 0
-        GOTO 100
+        IF(NeverFail == 1) THEN
+            NeverFail = 0
+            GOTO 100
+        ELSE IF(NeverFail == 0) THEN
+            RU = 0
+            RL = 0
+            Ref = 0
+        END IF
     END IF
 
     RlMemory(loop) = Rl
@@ -610,6 +624,8 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     IF (scanchoice == 1) THEN
         scan = 0
         RigidityStep = RigidityScan
+        StartRigidity = Rigidity(1)
+        EndRigidity = Rigidity(2)
     ELSE
         scan = 1
         RigidityStep = Rigidity(3)
@@ -629,6 +645,8 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     forbiddencount = 0
     NeverFail = 0
     SubResult = 0
+    LastCheck = 0
+    FailCheck = 0
 
     sumrl = sumrl + Rl
     sumru = sumru + Ru
@@ -673,7 +691,7 @@ real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityStep, Date(6), End
 real(8) :: Wind(17), Re, Rigidity(3), GyroPercent, RigidityScan, Zenith(9), Azimuth(9)
 real(8) :: RuMemory(9), RlMemory(9), RefMemory(9), EndLoop, sumrl, sumru, sumref
 integer(8) :: mode(2), IntMode, Anti, AtomicNumber
-integer(4) :: I, Limit, bool, Pause, scan, stepNum, Rcomputation, loop, scanchoice
+integer(4) :: I, Limit, bool, Pause, scan, stepNum, Rcomputation, loop, scanchoice, LastCheck
 character(len=30) :: FileName
             
 !f2py intent(in) PositionIN, Rigidity, Date, mode, AtomicNumber, Anti, I, Wind
@@ -701,8 +719,8 @@ Azimuth(9) = 315
             
 StartRigidity = Rigidity(1)
 EndRigidity = Rigidity(2)
-RigidityScan = 0.5
-RigidityStep = 0.5
+RigidityScan = 0.50
+RigidityStep = 0.50
 
 R = StartRigidity
 Ru = StartRigidity
@@ -717,6 +735,8 @@ forbiddencount = 0
 Step = RigidityStep
 SubResult = 0
 MaxGyroPercent = GyroPercent
+LastCheck = 0
+FailCheck = 0
 
 IF (scanchoice == 1) THEN
     scan = 0
@@ -801,7 +821,6 @@ do while (loop <= EndLoop)
             forbiddencount = 0
             bool = 1
             RL = R
-            FailCheck = 0
         IF (Limit == 0) THEN
             RU = R
         ELSE IF (Limit == 1) THEN
@@ -813,11 +832,18 @@ do while (loop <= EndLoop)
 
     stepNum = stepNum + 1
             
-    R = (StartRigidity - stepNum*RigidityStep)
+    R = (StartRigidity - (stepNum*RigidityStep))
     IF(R < EndRigidity) THEN
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
-        R = EndRigidity
+        IF(NeverFail == 0) THEN
+            IF(LastCheck == 0) THEN
+                R = Rigidity(3)
+                LastCheck = 1
+            ELSE IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
+        END IF
     END IF
     Result = 0
         
@@ -840,11 +866,17 @@ IF (scan == 0) THEN
     Limit = 0
     Acount = 0
     Result = 0
-    NeverFail = 0
     forbiddencount = 0
     SubResult = 0
     stepNum = 0
-    GOTO 100
+    IF(NeverFail == 1) THEN
+        NeverFail = 0
+        GOTO 100
+    ELSE IF(NeverFail == 0) THEN
+        RU = 0
+        RL = 0
+        Ref = 0
+    END IF
 END IF
 
 RlMemory(loop) = Rl
@@ -861,10 +893,14 @@ stepNum = 0
 forbiddencount = 0
 NeverFail = 0
 SubResult = 0
+LastCheck = 0
+FailCheck = 0
 
 IF (scanchoice == 1) THEN
     scan = 0
     RigidityStep = RigidityScan
+    StartRigidity = Rigidity(1)
+    EndRigidity = Rigidity(2)
 ELSE
     scan = 1
     RigidityStep = Rigidity(3)

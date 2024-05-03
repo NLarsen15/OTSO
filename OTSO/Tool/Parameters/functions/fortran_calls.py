@@ -141,18 +141,10 @@ def fortrancallPlanet(Data, Rigidity, DateArray, model, IntModel, ParticleArray,
 
        Position = [Data[3],lat,lon,Data[4],Data[5]]
        Core = Data[6]
-       if (lat == 90 and NorthPoleCheck == 1) or (lat == -90 and SouthPoleCheck == 1):
-          pass
-       else:
-        OTSOLib.planet(Position, Rigidity, DateArray, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, MaxStepPercent, EndParams, Rcomp, Rscan)
-        now = datetime.now()
-        CurrentTime = now.strftime("%H:%M:%S")
-        print(CurrentTime)
-
-       if (lat == 90):
-         NorthPoleCheck = 1
-       if (lat == -90):
-         SouthPoleCheck = 1
+       OTSOLib.planet(Position, Rigidity, DateArray, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, MaxStepPercent, EndParams, Rcomp, Rscan)
+       now = datetime.now()
+       CurrentTime = now.strftime("%H:%M:%S")
+       print(CurrentTime)
 
 
 
