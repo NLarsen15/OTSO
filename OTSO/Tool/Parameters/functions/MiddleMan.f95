@@ -950,3 +950,93 @@ write(10,'(*(G0.6,:,","))') PositionIN(2), PositionIN(3), RU, Ref, RL
 Close(10, STATUS='KEEP') 
         
 end subroutine planet
+
+! **********************************************************************************************************************
+! Subroutine FieldTrace:
+!            subroutine that traces the magnetic field lines within different input
+!            magnetic field models. The field lines are output in csv files named within a zip file.
+! **********************************************************************************************************************
+subroutine FieldTrace(PositionIN, Rigidity, Date, mode, IntMode, & 
+    AtomicNumber, Anti, I, Wind, Pause, FileName, CoordSystem, GyroPercent, End)
+USE Particle
+USE GEOPACK1
+USE GEOPACK2
+USE SolarWind
+USE MagneticFieldFunctions
+USE MagnetopauseFunctions
+USE IntegrationFunctions
+USE Magnetopause
+USE CUSTOMGAUSS
+implicit none
+
+real(8) :: PositionIN(5), Rigidity, Date(6), End(3)
+real(8) :: Wind(17), Re, GyroPercent
+real(8) :: Xnew(3), XnewConverted(3), Bfield(3)
+integer(8) :: mode(2), IntMode, Anti, AtomicNumber
+integer(4) :: I, Limit, Pause
+character(len=50) :: FileName
+character(len=3) :: CoordSystem
+
+
+!f2py intent(in) PositionIN, Rigidity, Date, mode, AtomicNumber, Anti
+!f2py intent(out) Xnew, Vnew, XnewGDZ
+
+Re = 6371.2
+Limit = 0
+Acount = 0
+Result = 0
+SubResult = 0
+MaxGyroPercent = GyroPercent
+
+call CreateParticle(PositionIN, Rigidity, Date, AtomicNumber, Anti, mode)
+
+call initializeWind(Wind, I, mode)
+call initializeCustomGauss(mode)
+
+call MagneticFieldAssign(mode)
+call MagnetopauseAssign(Pause)
+call IntegrationAssign(IntMode)
+
+open(unit=10,file=FileName,status='replace')
+write(10,"(a)")"X,Y,Z,Bx,By,Bz"
+
+do while (Result == 0) 
+call RK4_FieldTrace(Bfield)
+call EscapeCheck()
+Xnew(1) = XnewTemp(1)/1000
+Xnew(2) = XnewTemp(2)/1000
+Xnew(3) = XnewTemp(3)/1000
+
+call CoordinateTransform("GSM", CoordSystem, year, day, secondTotal, Xnew, XnewConverted)
+
+if (model(1) == 4) then
+    if (CoordSystem == "GEO") then
+        XnewConverted = Xnew
+    else
+        call CoordinateTransform("GEO", CoordSystem, year, day, secondTotal, Xnew, XnewConverted)
+    end if
+end if
+
+IF ( DistanceTraveled/1000.0 > End(2)*Re) THEN
+    Limit = 1
+    EXIT
+END IF
+
+write(10,'(*(G0.6,:,","))') XnewConverted, Bfield
+
+IF (Position(1) < End(1) ) THEN
+    EXIT
+END IF
+
+
+
+
+IF (Result == 1)  THEN
+    EXIT
+END IF
+
+end do
+
+Close(10, STATUS='KEEP') 
+
+end subroutine FieldTrace

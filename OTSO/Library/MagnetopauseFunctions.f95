@@ -56,6 +56,37 @@ end interface
     return
   end function functionSphere
 
+  function functionLargeSphere() ! 25Re Sphere
+    integer(4) :: functionLargeSphere
+    real(8) :: GSEPosition(3), x1, y1, z1, TestResult
+
+    call CoordinateTransform("GDZ", "GSE", year, day, secondTotal, Position, GSEPosition)
+
+    if (model(1) == 4) then
+      call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, Position, GSEPosition)
+    end if
+    
+    TestResult = -1
+    Result = 0
+    x1 = GSEPosition(1)
+    y1 = GSEPosition(2)
+    z1 = GSEPosition(3)
+
+    TestResult = (z1**2 + y1**2 + x1**2)**(0.5) - (100)
+
+    IF (TestResult < 0) THEN
+      functionLargeSphere = 0
+    ELSE IF (TestResult >= 0) THEN
+      functionLargeSphere = 1
+      IF (FinalStep == 0) THEN
+        FinalStep = 1
+        TestResult = -1
+      END IF
+    END IF
+    
+    return
+  end function functionLargeSphere
+
   function functionAberratedFormisano() ! Aberrated Formisano Model
     integer(4) :: functionAberratedFormisano
     real(8) :: a11, a22, a33, a13, a23, a34, a14, a12, a24, a44
@@ -301,6 +332,8 @@ end interface
 
   IF (Pause == 0) THEN
     PausePointer => functionSphere ! 25Re Sphere
+  ELSE IF (Pause == 100) THEN
+    PausePointer => functionSphere ! 100Re Sphere
   ELSE IF (Pause == 1) THEN
     PausePointer => functionAberratedFormisano  ! Aberrated Formisano Model
   ELSE IF (Pause == 2) THEN

@@ -18,7 +18,7 @@ def OTSO_trajectory():
     Magnetopause = TrajectoryInputArray[7]
     FileDescriptors = TrajectoryInputArray[8]
     CoordinateSystem = TrajectoryInputArray[9]
-    MaxStepPercent = ConeInputArray[10]/100
+    MaxStepPercent = TrajectoryInputArray[10]/100
     EndParams = TrajectoryInputArray[11]
     Station_Array = TrajectoryInputArray[12]
     InputtedStations = TrajectoryInputArray[13]

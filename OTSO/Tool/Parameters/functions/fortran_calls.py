@@ -156,3 +156,72 @@ def fortrancallPlanet(Data, Rigidity, DateArray, model, IntModel, ParticleArray,
 
    final_directory = os.path.join(final_directory, FileName)
    shutil.move(os.path.join(current_directory, FileName), final_directory)
+
+def fortrancallTrace(Data, Core, Rigidity, DateArray, model, IntModel, ParticleArray, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent, EndParams):
+    for x in Data:
+      
+      newstart = time.time()
+      Position = [x[3],x[1],x[2],x[4],x[5]]
+      Station = x[0]
+
+      FileGLE = FileDescriptors[0]
+      final_directory = FileDescriptors[2]
+
+      AtomicNum = ParticleArray[0]
+      AntiCheck = ParticleArray[1]
+
+      NMname = Station
+
+      FileName = NMname + FileGLE + ".csv"
+      OTSOLib.fieldtrace(Position, Rigidity, DateArray, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, CoordinateSystem, MaxStepPercent, EndParams)
+      print(Station + " " + Core)
+      newstop = time.time()
+      Printtime = round((newstop-newstart),3)
+      print(Station + " - Time Taken: " + str(Printtime) + " seconds")
+
+
+      current_directory = os.getcwd()
+      result_directory = os.path.join(current_directory,"Results")
+      final_directory = os.path.join(result_directory, FileDescriptors[1])
+      if not os.path.exists(final_directory):
+       os.makedirs(final_directory)
+
+      final_directory = os.path.join(final_directory, FileName)
+      shutil.move(os.path.join(current_directory, FileName), final_directory )
+    
+    return
+
+def fortrancallTracePlanet(Data, Core, Rigidity, DateArray, model, IntModel, ParticleArray, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent, EndParams):
+    final_directory = FileDescriptors[1]
+    for x in Data:
+      
+      newstart = time.time()
+      Position = [x[3],x[1],x[2],x[4],x[5]]
+      Station = x[0]
+
+      FileGLE = FileDescriptors[0]
+      final_directory = FileDescriptors[2]
+
+      AtomicNum = ParticleArray[0]
+      AntiCheck = ParticleArray[1]
+
+      NMname = Station
+
+      FileName = str(x[0]) + ".csv"
+      OTSOLib.fieldtrace(Position, Rigidity, DateArray, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, CoordinateSystem, MaxStepPercent, EndParams)
+      #print(Station + " " + Core)
+      newstop = time.time()
+      Printtime = round((newstop-newstart),3)
+      #print(Station + " - Time Taken: " + str(Printtime) + " seconds")
+
+
+      current_directory = os.getcwd()
+      result_directory = os.path.join(current_directory,"Results")
+      final_directory = os.path.join(result_directory, FileDescriptors[1])
+      if not os.path.exists(final_directory):
+       os.makedirs(final_directory)
+
+      final_directory = os.path.join(final_directory, FileName)
+      shutil.move(os.path.join(current_directory, FileName), final_directory )
+    
+    return

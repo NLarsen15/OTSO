@@ -64,6 +64,8 @@ def READMECone(UsedStationstemp, RigidityArray, EventDate, model, IntModel, Atom
          PauseModel = "Tsyganenko 01 Storm Magnetopause Model"
       elif (model[1] == 7):
          PauseModel = "Tsyganenko 04 Magnetopause Model"
+      elif (Magnetopause == 100):
+         PauseModel = "100Re Sphere"
 
       today = date.today()
       file.write("Date of OTSO computation: " + str(today) + "\n")
@@ -596,6 +598,112 @@ def READMEPlanet(Data, Rigidity, EventDate, model, IntModel, AtomicNum, AntiChec
       
       current_directory = os.getcwd()
       final_directory = os.path.join(current_directory, FileDescriptors[1])
+      if not os.path.exists(final_directory):
+       os.makedirs(final_directory)
+
+      final_directory = os.path.join(final_directory, FileName)
+      shutil.move(os.path.join(current_directory, FileName), final_directory )
+      return
+
+def READMETrace(Alt, EventDate, model, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime):
+      FileName = "OTSO_TRACE_RUN_INFO.txt"
+      file = open(FileName, "w")
+
+      if (model[0] == 1):
+         Internal = "IGRF"
+      elif (model[0] == 2):
+         Internal = "Dipole"
+      elif (model[0] == 3):
+         Internal = "Custom Gaussian Coefficients"
+      elif (model[0] == 4):
+         Internal = "Custom Gaussian Coefficients Non-Standard Geomagnetic Field"
+
+      if (model[1] == 0):
+         External = "No External Field"
+      elif (model[1] == 1):
+         External = "Tsyganenko 87 Short"
+      elif (model[1] == 2):
+         External = "Tsyganenko 87 Long"
+      elif (model[1] == 3):
+         External = "Tsyganenko 89"
+      elif (model[1] == 4):
+         External = "Tsyganenko 96"
+      elif (model[1] == 5):
+         External = "Tsyganenko 01"
+      elif (model[1] == 6):
+         External = "Tsyganenko 01 Storm"
+      elif (model[1] == 7):
+         External = "Tsyganenko 04"
+
+      if (Magnetopause == 0):
+         PauseModel = "25Re Sphere"
+      elif (Magnetopause == 1):
+         PauseModel = "Aberrated Formisano Model"
+      elif (Magnetopause == 2):
+         PauseModel = "Sibeck Model"
+      elif (Magnetopause == 3):
+         PauseModel = "Kobel Model"
+      elif (model[1] == 4):
+         PauseModel = "Tsyganenko 96 Magnetopause Model"
+      elif (model[1] == 5):
+         PauseModel = "Tsyganenko 01 Magnetopause Model"
+      elif (model[1] == 6):
+         PauseModel = "Tsyganenko 01 Storm Magnetopause Model"
+      elif (model[1] == 7):
+         PauseModel = "Tsyganenko 04 Magnetopause Model"
+
+      today = date.today()
+      file.write("Date of OTSO computation: " + str(today) + "\n")
+      file.write("Total computation time: " + str(Printtime) + " seconds"+ "\n")
+      file.write("\n")
+      file.write("Output Coordinate System:"+ "\n")
+      file.write(str(CoordinateSystem)+ "\n")
+      file.write("\n")
+      file.write("Input Variables:"+ "\n")
+      file.write("\n")
+      file.write("Simulation Date: " + EventDate.strftime("%d/%m/%Y, %H:%M:%S")+ "\n")
+      file.write("\n")
+      file.write("Start Altitude = " + str(Alt) + "km \n")
+      file.write("\n")
+      file.write("IOPT = " + str(IOPT)+ "\n")
+      file.write("\n")
+      file.write("Solar Wind Speed [km/s]:"+ "\n")
+      file.write("Vx = " + str(WindArray[0])+ "\n")
+      file.write("Vy = " + str(WindArray[1])+ "\n")
+      file.write("Vz = " + str(WindArray[2])+ "\n")
+      file.write("\n")
+      file.write("IMF [nT]:"+ "\n")
+      file.write("By = " + str(WindArray[3])+ "\n")
+      file.write("Bz = " + str(WindArray[4])+ "\n")
+      file.write("\n")
+      file.write("Density = " + str(WindArray[5]) + " cm^-2"+ "\n")
+      file.write("Pdyn = " + str(WindArray[6]) + " nPa"+ "\n")
+      file.write("\n")
+      file.write("Dst = " + str(WindArray[7]) + " nT"+ "\n")
+      file.write("\n")
+      file.write("G1 = " + str(WindArray[8])+ "\n")
+      file.write("G2 = " + str(WindArray[9])+ "\n")
+      file.write("G3 = " + str(WindArray[10])+ "\n")
+      file.write("\n")
+      file.write("W1 = " + str(WindArray[11])+ "\n")
+      file.write("W2 = " + str(WindArray[12])+ "\n")
+      file.write("W3 = " + str(WindArray[13])+ "\n")
+      file.write("W4 = " + str(WindArray[14])+ "\n")
+      file.write("W5 = " + str(WindArray[15])+ "\n")
+      file.write("W6 = " + str(WindArray[16])+ "\n")
+      file.write("\n")
+      file.write("\n")
+      file.write("Magnetic Field Models:"+ "\n")
+      file.write("Internal Model = " + str(Internal)+ "\n")
+      file.write("External Model = " + str(External)+ "\n")
+      file.write("\n")
+      file.write("Magnetopause Model = " + str(PauseModel)+ "\n")
+      file.write("\n")
+      file.close()
+      
+      current_directory = os.getcwd()
+      result_directory = os.path.join(current_directory,"Results")
+      final_directory = os.path.join(result_directory, FileDescriptors[1])
       if not os.path.exists(final_directory):
        os.makedirs(final_directory)
 

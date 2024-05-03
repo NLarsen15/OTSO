@@ -1,30 +1,20 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
+
+
+folder_path = os.getcwd() 
+csv_files = [file for file in os.listdir(folder_path) if file.endswith('.csv')]
 
 R = 6371.2
 Re = 1
-
-data = pd.read_csv("Custom_Location_Name_Trace.csv")
-X = data["X"]
-Y = data["Y"]
-Z = data["Z"]
-
-data2 = pd.read_csv("Custom_Location_Name2_Trace.csv")
-X2 = data2["X"]
-Y2 = data2["Y"]
-Z2 = data2["Z"]
-
-data3 = pd.read_csv("Custom_Location_Name3_Trace.csv")
-X3 = data3["X"]
-Y3 = data3["Y"]
-Z3 = data3["Z"]
 
 xGSM = []
 yGSM = []
 zGSM = []
 
-fig = plt.figure(figsize=(4,4))
+fig = plt.figure(figsize=(10,10))
 
 ax = fig.add_subplot(projection='3d')
 
@@ -48,9 +38,18 @@ plt.xlim(-10000, 10000)
 plt.ylim(-10000, 10000)
 ax.set_zlim(-10000, 10000)
 
-ax.plot(X, Y, Z, color = 'black')
-ax.plot(X2, Y2, Z2, color = 'green')
-ax.plot(X3, Y3, Z3, color = 'red')
+for file in csv_files:
+        file_path = os.path.join(folder_path, file)
+        
+        # Read CSV file into a DataFrame
+        df = pd.read_csv(file_path)
+        
+        # Extract XYZ coordinates
+        X = df['X']
+        Y = df['Y']
+        Z = df['Z']
+
+        ax.plot(X, Y, Z, color = 'black', zorder = 10000)
 
 
 plt.show()
