@@ -648,15 +648,26 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     LastCheck = 0
     FailCheck = 0
 
-    sumrl = sumrl + Rl
-    sumru = sumru + Ru
-    sumref = sumref + Ref
-
     end do
 
-    RU = (sumru/EndLoop)
-    RL = (sumrl/EndLoop)
-    Ref = (sumref/EndLoop)
+    IF(Rcomputation /= 0) THEN
+        sumrl = RLMemory(1)/2.0
+        do i = 2, 9
+            sumrl = sumrl + RLMemory(i)/16.0
+        end do
+        sumru = RUMemory(1)/2.0
+        do i = 2, 9
+            sumru = sumru + RUMemory(i)/16.0
+        end do
+        sumref = RefMemory(1)/2.0
+        do i = 2, 9
+            sumref = sumref + RefMemory(i)/16.0
+        end do
+
+        RU = sumru
+        RL = sumrl
+        Ref = sumref
+    END IF
 
     print *, "Ru:", RU
     print *, "Rl:", RL
@@ -906,16 +917,26 @@ ELSE
     RigidityStep = Rigidity(3)
 END IF
 
+IF(Rcomputation /= 0) THEN
+    sumrl = RLMemory(1)/2.0
+    do i = 2, 9
+        sumrl = sumrl + RLMemory(i)/16.0
+    end do
+    sumru = RUMemory(1)/2.0
+    do i = 2, 9
+        sumru = sumru + RUMemory(i)/16.0
+    end do
+    sumref = RefMemory(1)/2.0
+    do i = 2, 9
+        sumref = sumref + RefMemory(i)/16.0
+    end do
 
-sumrl = sumrl + Rl
-sumru = sumru + Ru
-sumref = sumref + Ref
+    RU = sumru
+    RL = sumrl
+    Ref = sumref
+END IF
 
 end do
-
-RU = (sumru/EndLoop)
-RL = (sumrl/EndLoop)
-Ref = (sumref/EndLoop)
 
 sumrl = 0
 sumru = 0
