@@ -84,7 +84,7 @@ Note OTSO was tested on the Ubuntu OS and the following instructions will be for
   - Download the Python3 development tools by entering `sudo apt-get install python3-dev` into the command terminal.
   - Install the Numpy package needed to use f2py by entering `sudo apt-get install python-numpy` into the same terminal
 2. Download gfortran onto your linux system by entering `sudo apt-get install gfortran` into your command terminal.
-3. You can then compile OTSO using the same methods outlined above in the manual install instructions, however in the lasst step you must enter `f2py3 -c -m MiddleMan MiddleMan.f95 OTSOlib.a` instead. If you wish to use the `Linux_and_Mac_OTSO_Compiler.sh` compiler you will need to edit the code slightly. Open the compiler file and change the `f2py` command to `f2py3` the compiler will now work for you if you run it.
+3. You can then compile OTSO using the same methods outlined above in the manual install instructions, however in the last step you must enter `f2py3 -c -m MiddleMan MiddleMan.f95 OTSOlib.a` instead. If you wish to use the `Linux_and_Mac_OTSO_Compiler.sh` compiler you will need to edit the code slightly. Open the compiler file and change the `f2py` command to `f2py3` the compiler will now work for you if you run it.
   - You may need to grant your computer permission before you can execute the `Linux_and_Mac_OTSO_Compiler.sh` file. To do this have the terminal open in the directory containing the compiler file and enter `chmod 755`, the file should now be able to run on your system.
   
 ## Mac
@@ -114,7 +114,7 @@ If the compilation process has been completed without issue OTSO should now be r
 
 ## Troubleshooting
 - If there are errors in the compilation step for OTSO double check you have an up to date version of your fortran compiler, this may involve uninstalling your current version and re-instaling from scratch.
-- Another issue you may encounter is a python 2 and python 3 conflict. If you are using python 3 for example f2py may need you to specify python 3 by typing `f2py3` during the compilation process, instead of just f2py`.
+- Another issue you may encounter is a python 2 and python 3 conflict. If you are using python 3 for example f2py may need you to specify python 3 by typing `f2py3` during the compilation process, instead of just `f2py`.
 - (As more issues are found I will endeavour to keep this troubleshooting section up to date with any fixes for potential issues users may encounter)
 
 ## Publications Using OTSO
