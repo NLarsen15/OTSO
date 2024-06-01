@@ -15,8 +15,9 @@ def PlanetFile(final_directory):
  files = os.path.join(final_directory, "*.csv")
  files = glob.glob(files)
  df = pd.concat(map(pd.read_csv, files), ignore_index=True)
+ df_sorted = df.sort_values(by=[df.columns[0], df.columns[1]])
  os.makedirs(final_directory, exist_ok=True)  
- df.to_csv(final_directory + '/Planet.csv', index=False)
+ df_sorted.to_csv(final_directory + '/Planet.csv', index=False)
 
  for i in files:
    os.remove(i) 

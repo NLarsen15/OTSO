@@ -119,44 +119,35 @@ def fortrancallTrajectory(Data, Core, Rigidity, DateArray, model, IntModel, Part
 
 
 def fortrancallPlanet(Data, Rigidity, DateArray, model, IntModel, ParticleArray, IOPT, WindArray, Magnetopause, FileDescriptors, MaxStepPercent, EndParams, Rcomp, Rscan):
+  final_directory = FileDescriptors[1]
+  for x in Data:
+      
+      newstart = time.time()
+      Position = [x[3],x[1],x[2],x[4],x[5]]
+      Station = x[0]
 
-   final_directory = FileDescriptors[1]
-   FileName = Data[0] + ".csv"
+      FileGLE = FileDescriptors[0]
 
-   NorthPoleCheck = 0
-   SouthPoleCheck = 0
+      AtomicNum = ParticleArray[0]
+      AntiCheck = ParticleArray[1]
 
-   f = open(FileName, 'w')
-   writer = csv.writer(f)
-   header = ['Latitude', 'Longitude', 'Ru', 'Rc', 'Rl']
-   writer.writerow(header)
-   f.close()
+      NMname = Station
 
-   AtomicNum = ParticleArray[0]
-   AntiCheck = ParticleArray[1]
+      FileName = NMname + ".csv"
+      OTSOLib.planet(Position, Rigidity, DateArray, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, MaxStepPercent, EndParams, Rcomp, Rscan)
+      now = datetime.now()
+      CurrentTime = now.strftime("%H:%M:%S")
+      print(CurrentTime)
 
-
-   for lon in(Data[2]):
-      for lat in(Data[1]):
-
-       Position = [Data[3],lat,lon,Data[4],Data[5]]
-       Core = Data[6]
-       OTSOLib.planet(Position, Rigidity, DateArray, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileName, MaxStepPercent, EndParams, Rcomp, Rscan)
-       now = datetime.now()
-       CurrentTime = now.strftime("%H:%M:%S")
-       print(CurrentTime)
-
-
-
-   current_directory = os.getcwd()
-   result_directory = os.path.join(current_directory,"Results")
-   final_directory = os.path.join(result_directory, FileDescriptors[0])
-   if not os.path.exists(final_directory):
-      os.makedirs(final_directory)
-
-   final_directory = os.path.join(final_directory, FileName)
-   shutil.move(os.path.join(current_directory, FileName), final_directory)
-
+      current_directory = os.getcwd()
+      result_directory = os.path.join(current_directory,"Results")
+      final_directory = os.path.join(result_directory, FileDescriptors[0])
+      if not os.path.exists(final_directory):
+         os.makedirs(final_directory)
+   
+      final_directory = os.path.join(final_directory, FileName)
+      shutil.move(os.path.join(current_directory, FileName), final_directory)
+   
 def fortrancallTrace(Data, Core, Rigidity, DateArray, model, IntModel, ParticleArray, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, MaxStepPercent, EndParams):
     for x in Data:
       

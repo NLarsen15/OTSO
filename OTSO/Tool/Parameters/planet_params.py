@@ -1,7 +1,7 @@
 ################################################################################################################
 # Select the step size that will be taken in longitude and latitude across the entire globe
-LatStep = -1
-LongStep = 1
+LatStep = -10
+LongStep = 10
 
 # Select the range of latitudes for the computation 90 and -90 will cover an entire meridian line
 MaxLat = 90
@@ -74,33 +74,33 @@ Second = 0
 # Internal: 1 = IGRF, 2 = Dipole, 3 = Custom Gauss, 4 = Non-Standard Custom Gauss
 # External: 0 = No External Field, 1 = TSY87(short), 2 = TSY87(long), 3 = TSY89, 4 = TSY96, 5 = TSY01, 6 = TSY01(Storm), 7 = TSY04
 Internal = 1
-External = 3
+External = 0
 ###############################################################################################################
 # Pick the integration model to use
 # 1 = 4th Order Runge-Kutta, 2 = Boris Method, 3 = Vay, 4 = Higuera-Cary
-IntModel = 1
+IntModel = 3
 ###############################################################################################################
 # Pick the start and end rigidity for the computation, as well as the step
 StartRigidity = 20 #[GV]
 EndRigidity = 0 #[GV]
-RigidityStep = 0.01 #[GV]
+RigidityStep = 0.1 #[GV]
 ###############################################################################################################
 # Rigidity Scan (will quickly scan the rigidity range for an estimate of the effective cutoff, then will
 # start the main computation around the estimated effective cutoff)
 # 0 = No Scan, 1 = Scan
-RigidityScan = 0
+RigidityScan = 1
 ###############################################################################################################
 # Pick the maximum percentage of the particles gyrofrequency that can be used as the max time step in the
 # computation
-MaxStepPercent = 10 #[%]
+MaxStepPercent = 30 #[%]
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel
 Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in results directory
-FolderName = "Planet Example Folder"
+FolderName = "Planet Example Folder 2"
 ###############################################################################################################
 # Select the number of cores that the computation will be performed over
-CoreNum = 1
+CoreNum = 3
 ###############################################################################################################

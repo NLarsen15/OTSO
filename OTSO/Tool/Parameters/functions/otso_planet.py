@@ -3,9 +3,10 @@ import numpy as np
 from datetime import datetime
 import multiprocessing as mp
 import os
+import random
 from Parameters import *
 from Parameters.planet_params import *
-from . import fortran_calls, readme_generators, misc
+from . import fortran_calls, readme_generators, misc, cores
 
 
 def OTSO_planet():
@@ -31,21 +32,25 @@ def OTSO_planet():
 
     ChildProcesses = []
 
+    combined_coordinates = [(lat, lon) for lat in LatitudeList for lon in LongitudeList]
+
     NewCoreNum = misc.CheckCoreNumPlanet(CoreNum)
+    FileNamesPlanet = []
 
-    LongLists = np.array_split(LongitudeList, NewCoreNum)
-    FileNames = []
+    combined_coordinates = [(lat, lon) for lat in LatitudeList for lon in LongitudeList]
+    for list in combined_coordinates:
+        FileNamesPlanet.append(str(list[0]) + "_" + str(list[1]))
+        DataPlanet = []
+        i = 1
+        for point,name in zip(combined_coordinates, FileNamesPlanet):
+            Core = "Core " + str(i)
+            DataPlanet.append([name,point[0],point[1],Alt,0,0,Core])
+            i = i + 1
 
-    for list in LongLists:
-     FileNames.append(str(list[0]) + "-" + str(list[-1]))
- 
-     Data = []
-     i = 1
-     for long,name in zip(LongLists, FileNames):
-        Core = "Core " + str(i)
-        Data.append([name,LatitudeList,long,Alt,0,0,Core])
-        i = i + 1
-
+    shuffled_list = DataPlanet.copy()
+    random.shuffle(shuffled_list)
+    DataLists = np.array_split(shuffled_list, CoreNum)
+    CoreList = np.arange(1, CoreNum + 1)
     start = time.time()
 
     print("OTSO Planet Computation Started")
@@ -53,10 +58,9 @@ def OTSO_planet():
     mp.set_start_method('spawn')
 # Create a shared message queue for the processes to produce/consume data
     ProcessQueue = mp.Queue()
-    for RegionData in Data:
-        Child = mp.Process(target=fortran_calls.fortrancallPlanet,  args=(RegionData, RigidityArray, DateArray, Model, IntModel, ParticleArray, IOPT, WindArray, Magnetopause, FileDescriptors, MaxStepPercent, EndParams, Rcomp, Rscan))
-        ChildProcesses.append(Child)
-
+    for Data,Core in zip(DataLists, CoreList):
+            Child = mp.Process(target=fortran_calls.fortrancallPlanet,  args=(Data, RigidityArray, DateArray, Model, IntModel, ParticleArray, IOPT, WindArray, Magnetopause, FileDescriptors, MaxStepPercent, EndParams, Rcomp, Rscan))
+            ChildProcesses.append(Child)
     for a in ChildProcesses:
         a.start()
 

@@ -771,6 +771,7 @@ ELSE
 END IF
         
 open(unit=10,file=FileName,action='write',position='append')
+write(10,"(a)")"Latitude,Longitude,Ru,Rc,Rl"
 do while (loop <= EndLoop)
 100 do while (R > EndRigidity)
 
