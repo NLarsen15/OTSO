@@ -27,7 +27,7 @@ MaxDist = 100 #[Re]
 MaxTime = 0 #[s]
 ################################################################################################################
 # Solar Wind Conditions
-Vx = -500.0 #[km/s]
+Vx = -500.0 #[km/s] (value should be negative)
 Vy = 0.0 #[km/s]
 Vz = 0.0 #[km/s]
 By = 5 #[nT]
@@ -62,7 +62,7 @@ IOPT = 5
 AtomicNum = 1
 AntiCheck = 1
 ################################################################################################################
-# Enter date to be investigated as a datetime under EventDate
+# Enter date information (currently available time range 1900-2025)
 Year = 2024
 Month = 1
 Day = 1

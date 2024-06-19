@@ -18,7 +18,7 @@ MaxDist = 100 #[Re]
 MaxTime = 0 #[s]
 ################################################################################################################
 # Solar Wind Conditions
-Vx = -500.0 #[km/s]
+Vx = -500.0 #[km/s] (value should be negative)
 Vy = 0.0 #[km/s]
 Vz = 0.0 #[km/s]
 By = 5 #[nT]
@@ -53,7 +53,7 @@ IOPT = 5
 AtomicNum = 1
 AntiCheck = 1
 ################################################################################################################
-# Enter date to be investigated as a datetime under EventDate
+# Enter date information (currently available time range 1900-2025)
 Year = 2024
 Month = 1
 Day = 1
@@ -90,7 +90,7 @@ Magnetopause = 3
 ###############################################################################################################
 # Choose the name of the folder that output files will be sent to. Folder created in the current directory
 FolderName = "Cone Example Folder"
-FileName = "_Cone_Custom"
+FileName = "_Cone"
 ###############################################################################################################
 # Select the number of cores for multicore processing
 CoreNum = 1

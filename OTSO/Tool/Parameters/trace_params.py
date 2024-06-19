@@ -5,7 +5,7 @@
 List = ["Oulu"]
 Alt = 20.0 #[km]
 
-#Custom_Locations = [["Custom_Location_Name3", -70, 0]]
+#Custom_Locations = [["Custom_Location_Name", Latitude, Longitude]]
 #################################################################################################################
 # Choose if you want to trace magnetic field lines for the whole planet instead of individial stations
 # Planet: 0 = no planet computation, 1 = planet computation
@@ -23,7 +23,7 @@ MaxLong = 360
 MinLong = 0
 ################################################################################################################
 # Solar Wind Conditions
-Vx = -500.0 #[km/s]
+Vx = -500.0 #[km/s] (value should be negative)
 Vy = 0.0 #[km/s]
 Vz = 0.0 #[km/s]
 By = 5 #[nT]
@@ -53,7 +53,7 @@ W6 = 0
 # Exception if Kp>=6 IOPT = 7
 IOPT = 2
 ################################################################################################################
-# Enter date to be investigated as a datetime under EventDate
+# Enter date information (currently available time range 1900-2025)
 Year = 2024
 Month = 1
 Day = 1

@@ -22,6 +22,7 @@
 ! ************************************************************************************************************************************
 subroutine CreateParticle(StartPosition, Rigidity, Date, Atomic, Anti, mode)
 USE Particle
+USE SolarWind
 implicit none
 real(8) :: V(3), StartPosition(5), Date(6), Rigidity, Norm(3), VelocityGEO(3)
 integer(8) :: Anti, Atomic, mode(2)
@@ -43,6 +44,8 @@ hour = INT(Date(3))
 minute = INT(Date(4))
 secondINT = INT(Date(5))
 secondTotal = real(Date(6))
+
+call RECALC_08(year, day, hour, minute, secondINT, SW(1), SW(2), SW(3))
 
 IF (Anti == 1) THEN
     q_0 = -1.0 * q_0

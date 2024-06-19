@@ -33,7 +33,7 @@ def TrajectoryInputs():
 
     ParticleArray = [AtomicNum,AntiCheck]
 
-    misc.ParamCheck(Alt,EndParams)
+    misc.ParamCheck(Alt,Year,Internal,EndParams)
 
     TrajectoryInputArray = [Rigidity,DateArray,MagFieldModel,IntModel,ParticleArray,IOPT,WindArray,Magnetopause,FileArray,CoordinateSystem,MaxStepPercent,EndParams, Station_Array, InputtedStations]
 

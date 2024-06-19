@@ -22,7 +22,6 @@ USE MagneticFieldFunctions
 
 real(8) :: BfieldFinal(3), X1(3), EXTERNALGSM(3), Bfield(3), INTERNALGSM(3), xGSM(3)
 
-
 call CoordinateTransform("GDZ", "GSM", year, day, secondTotal, X1, xGSM)
 
 if (model(1) == 4) then
@@ -66,7 +65,6 @@ subroutine MagFieldCheck(xGSM, BfieldFinal)
     USE MagneticFieldFunctions
     
     real(8) :: BfieldFinal(3), EXTERNALGSM(3), Bfield(3), INTERNALGSM(3), xGSM(3)
-    
     
     INTERNALGSM = InternalMagPointer(xGSM)
     EXTERNALGSM = ExternalMagPointer(xGSM)

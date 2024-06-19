@@ -32,7 +32,7 @@ def PlanetInputs():
 
     ParticleArray = [AtomicNum,AntiCheck]
 
-    misc.ParamCheck(Alt,EndParams)
+    misc.ParamCheck(Alt,Year,Internal,EndParams)
 
     PlanetInputArray = [LongitudeList,LatitudeList,RigidityArray,DateArray,MagFieldModel,IntModel,ParticleArray,IOPT,WindArray,Magnetopause,FileArray,MaxStepPercent,EndParams, CutoffComputation, RigidityScan]
 

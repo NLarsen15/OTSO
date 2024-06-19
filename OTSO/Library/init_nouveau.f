@@ -587,7 +587,7 @@ C
         REAL*8     pi,rad
         common /rconst/rad,pi
 C
-      IF (iyr.LT.1901 .OR. iyr.GT.2099) RETURN
+      IF (iyr.LT.1900 .OR. iyr.GT.2099) RETURN
 C
       fday = secs/86400.D0
       dj   = 365.D0*(iyr-1900.D0) + INT((iyr-1901)/4)

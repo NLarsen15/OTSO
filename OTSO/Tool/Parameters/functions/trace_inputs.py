@@ -49,7 +49,7 @@ def TraceInputs():
 
     ParticleArray = [AtomicNum,AntiCheck]
 
-    misc.ParamCheck(Alt,EndParams)
+    misc.ParamCheck(Alt,Year,Internal,EndParams)
 
     TraceInputArray = [Rigidity,DateArray,MagFieldModel,IntModel,ParticleArray,IOPT,WindArray,Magnetopause,FileArray,CoordinateSystem,MaxStepPercent,EndParams, Station_Array, InputtedStations,LongitudeList,LatitudeList, Planet]
 

@@ -35,7 +35,7 @@ def ConeInputs():
 
     ParticleArray = [AtomicNum,AntiCheck]
 
-    misc.ParamCheck(Alt,EndParams)
+    misc.ParamCheck(Alt,Year,Internal,EndParams)
 
     ConeInputArray = [RigidityArray,DateArray,MagFieldModel,IntModel,ParticleArray,IOPT,WindArray,Magnetopause,FileArray,CoordinateSystem,MaxStepPercent,EndParams, Station_Array, InputtedStations]
 
