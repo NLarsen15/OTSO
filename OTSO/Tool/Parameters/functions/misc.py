@@ -17,6 +17,11 @@ def ParamCheck(Alt, Year, Internal, EndParams):
 
 
 def PlanetFile(final_directory):
+ 
+ planetfile = "Planet.csv"
+ Planetfile_path = os.path.join(final_directory, planetfile)
+ if os.path.isfile(Planetfile_path):
+    os.remove(Planetfile_path)
 
  files = os.path.join(final_directory, "*.csv")
  files = glob.glob(files)
@@ -38,3 +43,29 @@ def CheckCoreNumPlanet(x):
     if NewCore <= 0:
       NewCore = 1
   return NewCore
+
+def day_of_year_to_date(doy, year):
+    # Define days in each month for both leap and non-leap years
+    days_in_months_non_leap = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    days_in_months_leap = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+
+    # Check if the year is a leap year
+    if (year % 4 == 0 and year % 100 != 0) or year % 400 == 0:
+        days_in_months = days_in_months_leap
+    else:
+        days_in_months = days_in_months_non_leap
+
+    # Initialize variables to accumulate days and find the month
+    accumulated_days = 0
+    month = 0
+
+    # Find the month and day corresponding to the day of the year (DOY)
+    for i in range(12):
+        accumulated_days += days_in_months[i]
+        if doy <= accumulated_days:
+            month = i + 1
+            day = doy - (accumulated_days - days_in_months[i])
+            break
+
+    # Return the month and day as a tuple
+    return (month, day)

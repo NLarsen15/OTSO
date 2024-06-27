@@ -17,7 +17,7 @@ def OTSO_cutoff():
     Magnetopause = CutoffInputArray[7]
     FileDescriptors = CutoffInputArray[8]
     CoordinateSystem = CutoffInputArray[9]
-    MaxStepPercent = ConeInputArray[10]/100
+    MaxStepPercent = CutoffInputArray[10]/100
     EndParams = CutoffInputArray[11]
     Station_Array = CutoffInputArray[12]
     InputtedStations = CutoffInputArray[13]

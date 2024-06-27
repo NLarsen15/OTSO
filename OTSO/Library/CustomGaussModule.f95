@@ -1,7 +1,7 @@
 module CUSTOMGAUSS
-COMMON /CUSTGAUSS/CUSTG(105),CUSTH(105)
-REAL(8) :: CUSTG,CUSTH
-INTEGER(4) :: CUSTGAUSS
+COMMON /CUSTGAUSS/CUSTG(105),CUSTH(105),Ginput(105),Hinput(105)
+REAL(8) :: CUSTG,CUSTH,Ginput,Hinput
+INTEGER(4) :: CUSTGAUSS,Gausschoice
 
 
 !Currently set to 1970 IGRF coefficents as an example. To change, please replace
@@ -36,5 +36,6 @@ ELSE
 END IF
         
 end subroutine initializeCustomGauss
+
 end module CUSTOMGAUSS
 

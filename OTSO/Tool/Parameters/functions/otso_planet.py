@@ -22,7 +22,7 @@ def OTSO_planet():
     WindArray = PlanetInputArray[8]
     Magnetopause = PlanetInputArray[9]
     FileDescriptors = PlanetInputArray[10]
-    MaxStepPercent = ConeInputArray[10]/100
+    MaxStepPercent = PlanetInputArray[11]/100
     EndParams = PlanetInputArray[12]
     Rcomp = PlanetInputArray[13]
     Rscan = PlanetInputArray[14]
