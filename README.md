@@ -118,9 +118,11 @@ If the compilation process has been completed without issue OTSO should now be r
 - (As more issues are found I will endeavour to keep this troubleshooting section up to date with any fixes for potential issues users may encounter)
 
 ## Publications Using OTSO
+- Walter, M., Gnebner, C., Heber, B., Herbst, K., Krüger, H., Krüger, H. G., et al. (2024). Measurements of cosmic rays by a mini-neutron monitor at Neumayer III from 2014 to 2017. Space Weather, 22, e2023SW003596. https://doi.org/10.1029/2023SW003596
+- Larsen, N., & Mishev, A. (2024). Relationship between NM data and radiation dose at aviation altitudes during GLE events. Space Weather, 22, e2024SW003885. https://doi.org/10.1029/2024SW003885
+- Mishev, A., Koldobskiy, S., Larsen, N. et al. (2024). Spectra and Anisotropy of Solar Energetic Protons During GLE #65 on 28 October, 2003 and GLE #66 on 29 October, 2003. Sol Phys 299, 24. https://doi.org/10.1007/s11207-024-02269-z
+- Larsen, N., & Mishev, A. (2023). Analysis of the ground level enhancement GLE 60 on 15 April 2001, and its space weather effects: Comparison with dosimetric measurements. Space Weather, 21, e2023SW003488. https://doi.org/10.1029/2023SW003488
+- **Larsen, N., Mishev, A., & Usoskin, I. (2023). A new open-source geomagnetosphere propagation tool (OTSO) and its applications. Journal of Geophysical Research: Space Physics, 128, e2022JA031061. https://doi.org/10.1029/2022JA031061**
 - Mishev, A., Binios, A., Turunen, E. et al. (2022). Measurements of natural radiation with an MDU Liulin type device at ground and in the atmosphere at various conditions in the Arctic region, Radiation Measurements, Volume 154, 106757, ISSN 1350-4487. https://doi.org/10.1016/j.radmeas.2022.106757
 - Mishev, A., Kocharov, L., Koldobskiy, A. et al. (2022) High-Resolution Spectral and Anisotropy Characteristics of Solar Protons During the GLE N∘73 on 28 October 2021 Derived with Neutron-Monitor Data Analysis. Sol Phys 297, 88. https://doi.org/10.1007/s11207-022-02026-0
-- Larsen, N., Mishev, A., & Usoskin, I. (2023). A new open-source geomagnetosphere propagation tool (OTSO) and its applications. Journal of Geophysical Research: Space Physics, 128, e2022JA031061. https://doi.org/10.1029/2022JA031061
-- Larsen, N., & Mishev, A. (2023). Analysis of the ground level enhancement GLE 60 on 15 April 2001, and its space weather effects: Comparison with dosimetric measurements. Space Weather, 21, e2023SW003488. https://doi.org/10.1029/2023SW003488
-- Mishev, A., Koldobskiy, S., Larsen, N. et al. (2024). Spectra and Anisotropy of Solar Energetic Protons During GLE #65 on 28 October, 2003 and GLE #66 on 29 October, 2003. Sol Phys 299, 24. https://doi.org/10.1007/s11207-024-02269-z
-- Larsen, N., & Mishev, A. (2024). Relationship between NM data and radiation dose at aviation altitudes during GLE events. Space Weather, 22, e2024SW003885. https://doi.org/10.1029/2024SW003885
+
