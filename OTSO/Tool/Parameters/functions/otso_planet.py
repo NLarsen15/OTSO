@@ -40,12 +40,12 @@ def OTSO_planet():
     combined_coordinates = [(lat, lon) for lat in LatitudeList for lon in LongitudeList]
     for list in combined_coordinates:
         FileNamesPlanet.append(str(list[0]) + "_" + str(list[1]))
-        DataPlanet = []
-        i = 1
-        for point,name in zip(combined_coordinates, FileNamesPlanet):
-            Core = "Core " + str(i)
-            DataPlanet.append([name,point[0],point[1],Alt,0,0,Core])
-            i = i + 1
+    DataPlanet = []
+    i = 1
+    for point,name in zip(combined_coordinates, FileNamesPlanet):
+        Core = "Core " + str(i)
+        DataPlanet.append([name,point[0],point[1],Alt,0,0,Core])
+        i = i + 1
 
     shuffled_list = DataPlanet.copy()
     random.shuffle(shuffled_list)
