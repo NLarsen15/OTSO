@@ -117,6 +117,17 @@ If the compilation process has been completed without issue OTSO should now be r
 - Another issue you may encounter is a python 2 and python 3 conflict. If you are using python 3 for example f2py may need you to specify python 3 by typing `f2py3` during the compilation process, instead of just `f2py`.
 - (As more issues are found I will endeavour to keep this troubleshooting section up to date with any fixes for potential issues users may encounter)
 
+## Acknowledgments
+**Publication Acknowledgments**
+If you have used OTSO within your work, we kindly ask that you include it in the acknowledgement section of your publication. Two example acknowledgments are provided below depending on if you used the official release on Zenodo or GitHub repository:
+1. "We acknowledge the use of the OTSO tool, the latest official release of which can be found at [https://doi.org/10.5281/zenodo.7515928](https://doi.org/10.5281/zenodo.7515928)".
+2. We acknowledge the use of the OTSO tool, the GitHub repository of which can be found at [https://github.com/NLarsen15/OTSO](https://github.com/NLarsen15/OTSO)"
+
+**Community Acknowledgments**
+We would like to acknowledge the use of the fantastic IRBEM library in the development of OTSO, which proved an invaluable asset and greatly sped up development. The latest release of the IRBEM library can be found at [https://doi.org/10.5281/zenodo.6867552](https://doi.org/10.5281/zenodo.6867552.).
+We would also like to thank N. Tsyganenko for the development of the external magnetic field models and their code which are used within OTSO.
+A wider thanks goes to the space physics community who, through the use of OTSO, provide invaluable feedback, advice on improvements, and bug reporting. All discussions and advice have aided in the continual development and improvement of OTSO, allowing it to fullfil its aim of being a community-driven open-source tool.  
+
 ## Publications Using OTSO
 - Walter, M., Gnebner, C., Heber, B., Herbst, K., Krüger, H., Krüger, H. G., et al. (2024). Measurements of cosmic rays by a mini-neutron monitor at Neumayer III from 2014 to 2017. Space Weather, 22, e2023SW003596. https://doi.org/10.1029/2023SW003596
 - Larsen, N., & Mishev, A. (2024). Relationship between NM data and radiation dose at aviation altitudes during GLE events. Space Weather, 22, e2024SW003885. https://doi.org/10.1029/2024SW003885
