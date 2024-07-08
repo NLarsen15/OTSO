@@ -122,7 +122,7 @@ If the compilation process has been completed without issue OTSO should now be r
 
 If you have used OTSO within your work, we kindly ask that you include it in the acknowledgement section of your publication. Two example acknowledgments are provided below depending on if you used the official release on Zenodo or GitHub repository:
 1. "We acknowledge the use of the OTSO tool, the latest official release of which can be found at [https://doi.org/10.5281/zenodo.7515928](https://doi.org/10.5281/zenodo.7515928)".
-2. "We acknowledge the use of the OTSO tool, the GitHub repository of which can be found at [https://github.com/NLarsen15/OTSO](https://github.com/NLarsen15/OTSO)"
+2. "We acknowledge the use of the OTSO tool, the GitHub repository of which can be found at [https://github.com/NLarsen15/OTSO](https://github.com/NLarsen15/OTSO)".
 
 **Community Acknowledgments**
 
