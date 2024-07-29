@@ -11,7 +11,7 @@ real(8) :: M, Q, Z, A, q_0, m_0, E_0, R, lambda, c, OLDsecondTotal, Lasth
 integer(8) :: year, day, hour, minute, secondINT, model(2), Acount, forbiddencount, NeverFail, FailCheck, FinalStep
 real(8) :: secondTotal, DistanceTraveled, TimeElapsed, h, hOLD, RU, RL, Ref, MaxT, step, Firsth, MaxGyroPercent
 real(8) :: OLDPosition(3), OLDVelocity(3), NEWPosition(3), NEWVelocity(3), HALFPosition(3), HALFVelocity(3)
-integer(4) :: Result, MidLoop
+integer(4) :: Result, MidLoop, test
 SAVE
 contains
 

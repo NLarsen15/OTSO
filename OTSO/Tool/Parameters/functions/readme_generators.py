@@ -310,6 +310,126 @@ def READMECutoff(UsedStationstemp, RigidityArray, EventDate, model, IntModel, At
       shutil.move(os.path.join(current_directory, FileName), final_directory )
       return
 
+def READMEFlight(UsedStationstemp, RigidityArray, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams, Rcomp, Rscan):
+      FileName = "OTSO_Flight_RUN_INFO.txt"
+      file = open(FileName, "w")
+
+      if (Rcomp == 0):
+         CutoffComp = "Vertical Cutoff Rigidity"
+      else:
+         CutoffComp = "Apparent Cutoff Rigidity"
+
+      if (AntiCheck == 1):
+         particle = "anti-particle"
+      else:
+         particle = "Normal Particle"
+
+      if (Rscan == 0):
+         RigidityScan = "No Rigidity Scan"
+      else:
+         RigidityScan = "Rigidity Scan Used"
+
+      if (IntModel == 1):
+         IntegrationMethod = "4th Order Runge-Kutta Method"
+      elif (IntModel == 2):
+         IntegrationMethod = "Boris Method"
+      elif (IntModel == 3):
+         IntegrationMethod = "Vay Method"
+      elif (IntModel == 4):
+         IntegrationMethod = "Higuera-Cary Method"
+
+
+      if (model[0] == 1):
+         Internal = "IGRF"
+      elif (model[0] == 2):
+         Internal = "Dipole"
+      elif (model[0] == 3):
+         Internal = "Custom Gaussian Coefficients"
+      elif (model[0] == 4):
+         Internal = "Custom Gaussian Coefficients Non-Standard Geomagnetic Field"
+
+      if (model[1] == 0):
+         External = "No External Field"
+      elif (model[1] == 1):
+         External = "Tsyganenko 87 Short"
+      elif (model[1] == 2):
+         External = "Tsyganenko 87 Long"
+      elif (model[1] == 3):
+         External = "Tsyganenko 89"
+      elif (model[1] == 4):
+         External = "Tsyganenko 96"
+      elif (model[1] == 5):
+         External = "Tsyganenko 01"
+      elif (model[1] == 6):
+         External = "Tsyganenko 01 Storm"
+      elif (model[1] == 7):
+         External = "Tsyganenko 04"
+
+      if (Magnetopause == 0):
+         PauseModel = "25Re Sphere"
+      elif (Magnetopause == 1):
+         PauseModel = "Aberrated Formisano Model"
+      elif (Magnetopause == 2):
+         PauseModel = "Sibeck Model"
+      elif (Magnetopause == 3):
+         PauseModel = "Kobel Model"
+      elif (model[1] == 4):
+         PauseModel = "Tsyganenko 96 Magnetopause Model"
+      elif (model[1] == 5):
+         PauseModel = "Tsyganenko 01 Magnetopause Model"
+      elif (model[1] == 6):
+         PauseModel = "Tsyganenko 01 Storm Magnetopause Model"
+      elif (model[1] == 7):
+         PauseModel = "Tsyganenko 04 Magnetopause Model"
+
+      today = date.today()
+      file.write("Date of OTSO computation: " + str(today) + "\n")
+      file.write("Total computation time: " + str(Printtime) + " seconds"+ "\n")
+      file.write("\n")
+      file.write("Cutoff Computed: "+ str(CutoffComp) + "\n")
+      file.write("\n")
+      file.write("Output Coordinate System:"+ "\n")
+      file.write("\n")
+      file.write(str(CoordinateSystem)+ "\n")
+      file.write("Rigidity Scan:"+ "\n")
+      file.write(str(RigidityScan)+ "\n")
+      file.write("\n")
+      file.write("Integration Method:"+ "\n")
+      file.write(str(IntegrationMethod)+ "\n")
+      file.write("\n")
+      file.write("Input Variables:"+ "\n")
+      file.write("\n")
+      file.write("For Space Weather Inputs and Locations see Flight.csv"+ "\n")
+      file.write("\n")
+      file.write("Atomic Number = " + str(AtomicNum)+ "\n")
+      file.write("\n")
+      file.write("Particle Type = " + str(particle)+ "\n")
+      file.write("\n")
+      file.write("Magnetic Field Models:"+ "\n")
+      file.write("Internal Model = " + str(Internal)+ "\n")
+      file.write("External Model = " + str(External)+ "\n")
+      file.write("\n")
+      file.write("Magnetopause Model = " + str(PauseModel)+ "\n")
+      file.write("\n")
+      file.write("Rigidity"+ "\n")
+      file.write("Start = " + str(RigidityArray[0]) + " [GV]"+ "\n")
+      file.write("End = " + str(RigidityArray[1]) + " [GV]"+ "\n")
+      file.write("Step = " + str(RigidityArray[2]) + " [GV]"+ "\n")
+
+      for i in UsedStationstemp:
+         file.write(str(i[0])+"," + " Latitude: " + str(i[1])+"," + " Longitude: " + str(i[2])+ "\n")
+    
+      file.close()
+      
+      current_directory = os.getcwd()
+      result_directory = os.path.join(current_directory,"Results")
+      final_directory = os.path.join(result_directory, FileDescriptors[1])
+      if not os.path.exists(final_directory):
+       os.makedirs(final_directory)
+
+      final_directory = os.path.join(final_directory, FileName)
+      shutil.move(os.path.join(current_directory, FileName), final_directory )
+      return
 
 
 def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams):

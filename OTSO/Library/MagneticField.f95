@@ -43,6 +43,7 @@ BfieldFinal(1) = DBLE(Bfield(1))
 BfieldFinal(2) = DBLE(Bfield(2))
 BfieldFinal(3) = DBLE(Bfield(3))
 
+
 end subroutine MagneticField
 
 ! ************************************************************************************************************************************

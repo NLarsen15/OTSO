@@ -117,6 +117,16 @@ C
       BX=BBX
       BY=BBY
       BZ=BBZ
+
+      if(BX /= BX) THEN 
+            BX = 0.0
+      end if
+      if(BY /= BY) THEN 
+            BY = 0.0
+      end if
+      if(BZ /= BZ) THEN 
+            BZ = 0.0
+      end if
 C
       RETURN
       END

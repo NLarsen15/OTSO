@@ -89,7 +89,7 @@ MaxStepPercent = 10 #[%]
 Magnetopause = 3
 ###############################################################################################################
 # Choose the name of the folder that output files will be sent to. Folder created in the current directory
-FolderName = "Cone Example Folder"
+FolderName = "Example Cone Folder"
 FileName = "_Cone"
 ###############################################################################################################
 # Select the number of cores for multicore processing

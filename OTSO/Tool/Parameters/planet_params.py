@@ -1,7 +1,7 @@
 ################################################################################################################
 # Select the step size that will be taken in longitude and latitude across the entire globe
-LatStep = -1
-LongStep = 1
+LatStep = -10
+LongStep = 10
 
 # Select the range of latitudes for the computation 90 and -90 will cover an entire meridian line
 MaxLat = 90
@@ -83,7 +83,7 @@ IntModel = 3
 # Pick the start and end rigidity for the computation, as well as the step
 StartRigidity = 20 #[GV]
 EndRigidity = 0 #[GV]
-RigidityStep = 0.1 #[GV]
+RigidityStep = 0.01 #[GV]
 ###############################################################################################################
 # Rigidity Scan (will quickly scan the rigidity range for an estimate of the effective cutoff, then will
 # start the main computation around the estimated effective cutoff)
@@ -99,8 +99,8 @@ MaxStepPercent = 30 #[%]
 Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in results directory
-FolderName = "Planet Example Folder"
+FolderName = "Example Planet Folder "
 ###############################################################################################################
 # Select the number of cores that the computation will be performed over
-CoreNum = 3
+CoreNum = 1
 ###############################################################################################################

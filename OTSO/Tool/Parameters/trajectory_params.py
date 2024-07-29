@@ -4,8 +4,8 @@
 # If you just want to use custom locations leave List empty.
 List = ["Oulu"]
 Alt = 20.0 #[km]
-Zenith = 0 #[degrees]
-Azimuth = 0 #[degrees]
+Zenith = 30 #[degrees]
+Azimuth = 270 #[degrees]
 
 #Custom_Locations = [["Custom_Location_Name", Latitude, Longitude]]
 ################################################################################################################
@@ -13,7 +13,7 @@ Azimuth = 0 #[degrees]
 # Input the values for the minimum altitude and maximum distance travelled by a particle. If either condition is
 # met then the computation is terminated and the trajectory is assumed forbidden.
 # For MaxDist and MaxTime enter 0 if you wish for there to be no limit. 
-MinAlt = 20.0 #[km]
+MinAlt = 20 #[km]
 MaxDist = 100 #[Re]
 MaxTime = 0 #[s]
 ################################################################################################################
@@ -72,7 +72,7 @@ External = 3
 IntModel = 1
 ###############################################################################################################
 # Pick the rigidity for the computation
-Rigidity = 10 #[GV]
+Rigidity = 5 #[GV]
 ###############################################################################################################
 # Pick the coordinate system desired for the output
 # GDZ, GEO, GSM , GSE, SM, GEI, MAG, SPH (GEO in spherical), RLL 

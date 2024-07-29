@@ -184,6 +184,16 @@ C                      POSSIBILITY IS NOW THE CASE (3):
                 BY=real(OIMFY-QY,4)
                 BZ=real(OIMFZ-QZ,4)
          ENDIF
+
+      if(BX /= BX) THEN 
+            BX = 0.0
+      end if
+      if(BY /= BY) THEN 
+            BY = 0.0
+      end if
+      if(BZ /= BZ) THEN 
+            BZ = 0.0
+      end if
 C
        RETURN
        END

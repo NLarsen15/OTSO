@@ -136,6 +136,16 @@ c     *  HYIMF,HZIMF
       BX=real(BBX,4)
       BY=real(BBY,4)
       BZ=real(BBZ,4)
+
+      if(BX /= BX) THEN 
+            BX = 0.0
+      end if
+      if(BY /= BY) THEN 
+            BY = 0.0
+      end if
+      if(BZ /= BZ) THEN 
+            BZ = 0.0
+      end if
       
       
 c      print*,BX,BY,BZ

@@ -8,11 +8,12 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 import matplotlib.ticker as mticker
 import math
 
-#data = pd.read_csv("GLE66_TSY01_DATA.csv")
+data = pd.read_csv("Data.csv")
 
-#IMFy = data["IMFy"]
-#IMFz = data["IMFz"]
-#Speed = data["Speed"]
+IMFy = data["By"]
+IMFz = data["Bz"]
+Speed = data["Vx"]
+Density = data["Density"]
 
 #################################################################
 # Control Test
@@ -25,14 +26,18 @@ import math
 #Density = [1.47]
 #############################################################
 
-IMFy = [-2.83]
-IMFz = [0.48]
-Speed = [648.2]
-Density = [1.47]
+#IMFy = [-2.83]
+#IMFz = [0.48]
+#Speed = [648.2]
+#Density = [1.47]
 
 G1 = 0
 G2 = 0
 G3 = 0
+
+G1Lsit = []
+G3Lsit = []
+G2Lsit = []
 
 for (By, Bz, V, N) in zip(IMFy, IMFz, Speed, Density):
     By = By
@@ -59,9 +64,12 @@ for (By, Bz, V, N) in zip(IMFy, IMFz, Speed, Density):
     G1 = G1 + (W)*V*h*(math.sin(phi/2)**3)
     G2 = G2 + (0.005)*(W)*(V)*Bs
     G3 = G3 + (N*V*Bs)/2000
-    
-print("G1 = " + str(G1))
-print("G2 = " + str(G2))
-print("G3 = " + str(G3))
 
+    G1Lsit.append(G1)
+    G2Lsit.append(G2)
+    G3Lsit.append(G3)
+
+df = pd.DataFrame({'G1': G1Lsit,'G2': G2Lsit,'G3': G3Lsit})
+    
+df.to_csv('G_Params_Output.csv', index=False)
     

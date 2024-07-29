@@ -31,6 +31,12 @@ class Stations:
        NewStation = np.array([x[0], x[1], x[2], self.Altitude, self.Zenith, self.Azimuth])
        self.StationList = np.vstack((self.StationList, NewStation))
 
+ def AddLocationFlight(self, CustomList, alt):
+    
+    for x in CustomList:
+       NewStation = np.array([x[0], x[1], x[2], alt, self.Zenith, self.Azimuth])
+       self.StationList = np.vstack((self.StationList, NewStation))
+
  def CreateList(self, data):
     NewList = data[data["Name"].isin(self.Stations)]
     self.StationList = NewList.to_numpy()

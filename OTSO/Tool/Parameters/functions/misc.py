@@ -3,6 +3,7 @@ import psutil
 import pandas as pd
 import glob
 import multiprocessing as mp
+import shutil
 
 def ParamCheck(Alt, Year, Internal, EndParams):
        if EndParams[0] > Alt:
@@ -31,7 +32,33 @@ def PlanetFile(final_directory):
  df_sorted.to_csv(final_directory + '/Planet.csv', index=False)
 
  for i in files:
-   os.remove(i) 
+   os.remove(i)
+
+def FlightFile(final_directory):
+ 
+ planetfile = "Flight.csv"
+ Planetfile_path = os.path.join(final_directory, planetfile)
+ if os.path.isfile(Planetfile_path):
+    os.remove(Planetfile_path)
+
+ files = glob.glob(os.path.join(final_directory, "*.csv"))
+ files = [f for f in files if not f.endswith("Flight_Params.csv")]
+ df = pd.concat(map(pd.read_csv, files), ignore_index=True)
+ df['Time'] = pd.to_datetime(df['Time'], format='%d-%m-%Y %H-%M-%S')
+ df_sorted = df.sort_values(by=[df.columns[0]])
+ os.makedirs(final_directory, exist_ok=True)  
+ df_sorted.to_csv(final_directory + '/Flight.csv', index=False)
+
+ for i in files:
+   os.remove(i)
+
+def FlightCopy(final_directory):
+ 
+ current_directory = os.getcwd()
+ planetfile = "Parameters\\Flight_Params.csv"
+ Planetfile_path = os.path.join(current_directory, planetfile)
+ 
+ shutil.copy2(Planetfile_path, final_directory)
 
 def CheckCoreNumPlanet(x):
   NewCore = x

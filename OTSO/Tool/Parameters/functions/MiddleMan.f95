@@ -649,9 +649,6 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     Azimuth(8) = 270
     Azimuth(9) = 315
 
-    PositionIN(4) = Zenith(loop)
-    PositionIN(5) = Azimuth(loop)
-
     IF (scanchoice == 1) THEN
         scan = 0
         RigidityStep = RigidityScan
@@ -676,10 +673,15 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
    
     100 do while (R > EndRigidity)
 
+    PositionIN(4) = Zenith(loop)
+    PositionIN(5) = Azimuth(loop)
+
     R = real(R, kind = selected_real_kind(10,307))
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
-
+    
+    !print *, PositionIN(5)
     call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
+    !print *, PositionIN(5)
     
     call initializeWind(Wind, I, mode)
     call initializeCustomGauss(mode)
@@ -689,8 +691,19 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     call IntegrationAssign(IntMode)
 
     call FirstTimeStep()
+    test = 0
+
+    do while (Result == 0)
     
-    do while (Result == 0) 
+
+    !IF (loop == 9) THEN
+    !    IF (R <= 12.5) THEN
+    !        test = test + 1
+    !    END IF
+    !    IF (test < 100) THEN
+    !        print *, R, " ", Position
+    !    END IF
+    !END IF
     
     call IntegrationPointer()
 
@@ -706,6 +719,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         FailCheck = 1
         call AsymptoticDirection(Lat, Long)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
+        !print *, R, " ", "Returned to Earth"
         EXIT
     END IF
 
@@ -719,6 +733,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         FailCheck = 1
         call AsymptoticDirection(Lat, Long)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
+        !print *, R, " ", "Trapped"
         EXIT
     END IF
 
@@ -732,6 +747,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         FailCheck = 1
         call AsymptoticDirection(Lat, Long)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
+        !print *, R, " ", "Time Elapsed"
         EXIT
     END IF
     
@@ -741,6 +757,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         forbiddencount = 0
         bool = 1
         RL = R
+        !print *, R, " ", "Escaped"
         IF (Limit == 0) THEN
             RU = R
         ELSE IF (Limit == 1) THEN
@@ -803,6 +820,9 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     RlMemory(loop) = Rl
     RefMemory(loop) = Ref
     RuMemory(loop) = Ru
+    
+    !print *, PositionIN(4), " ", PositionIN(5)
+    !print *, Rl, " ", Ref, " ", Ru
 
     IF (scanchoice == 1) THEN
         scan = 0
@@ -819,6 +839,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     loop = loop + 1
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
+    !print *, PositionIN
     R = real(StartRigidity, kind = selected_real_kind(15,307))
     Re = 6371.2
     Limit = 0
@@ -861,6 +882,320 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     Close(10, STATUS='KEEP') 
 
 end subroutine cutoff
+
+! **********************************************************************************************************************
+! Subroutine Cutoff:
+!            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
+!            within different input magnetic field models and determines the Asymptotic Latitude and
+!            Longitude. Will create a csv file in which the asymptotic cone data is stored.
+!            Accepted Condition: cosmic ray encounters the model magnetopause
+!            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
+!                                  - cosmic ray travels over 100Re without escaping or encountering Earth
+!
+! **********************************************************************************************************************
+subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, IntMode, & 
+    AtomicNumber, Anti, I, Wind, Pause, FileName, CoordSystem, GyroPercent, End, Rcomputation, scanchoice)
+    USE Particle
+    USE SolarWind
+    USE MagneticFieldFunctions
+    USE MagnetopauseFunctions
+    USE IntegrationFunctions
+    USE GEOPACK1
+    USE GEOPACK2
+    USE Magnetopause
+    USE CUSTOMGAUSS
+    implicit none
+    
+    real(8) :: PositionIN(5), StartRigidity, EndRigidity, RigidityScan, RigidityStep, Date(6), End(3)
+    real(8) :: Wind(17), Re, Lat, Long, GyroPercent, EndLoop
+    real(8) :: Geofile(3), RuMemory(9), RlMemory(9), RefMemory(9), Rigidity(3)
+    real(8) :: Zenith(9), Azimuth(9), sumrl, sumru, sumref
+    integer(8) :: mode(2), IntMode, Anti, AtomicNumber, FileNamePosition
+    integer(4) :: I, Limit, bool, Pause, stepNum, loop, Rcomputation, scanchoice, scan, LastCheck
+    character(len=50) :: FileName
+    character(len=3) :: CoordSystem
+    character(len=19) :: datetime_string
+
+    !f2py intent(in) PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, AtomicNumber, Anti, I, Wind, Type, FileName
+    !f2py intent(out) Xnew, Vnew, XnewGDZ
+    
+    R = real(StartRigidity, kind = selected_real_kind(15,307))
+    Re = 6371.2
+    Limit = 0
+    Acount = 0
+    Result = 0
+    stepNum = 0
+    loop = 1
+    forbiddencount = 0
+    NeverFail = 0
+    Step = RigidityStep
+    SubResult = 0
+    MaxGyroPercent = GyroPercent
+    sumrl = 0
+    sumref = 0
+    sumru = 0
+    LastCheck = 0
+    FailCheck = 0
+
+    Rigidity(1) = StartRigidity
+    Rigidity(2) = EndRigidity
+    Rigidity(3) = RigidityStep
+
+    RigidityScan = 0.50
+    RigidityStep = 0.50
+
+    Zenith(1) = 0
+    Zenith(2) = 30
+    Zenith(3) = 30
+    Zenith(4) = 30
+    Zenith(5) = 30
+    Zenith(6) = 30
+    Zenith(7) = 30
+    Zenith(8) = 30
+    Zenith(9) = 30
+
+    Azimuth(1) = 0
+    Azimuth(2) = 0
+    Azimuth(3) = 45
+    Azimuth(4) = 90
+    Azimuth(5) = 135
+    Azimuth(6) = 180
+    Azimuth(7) = 225
+    Azimuth(8) = 270
+    Azimuth(9) = 315
+
+    IF (scanchoice == 1) THEN
+        scan = 0
+        RigidityStep = RigidityScan
+    ELSE
+        scan = 1
+        RigidityStep = Rigidity(3)
+    END IF
+
+
+    IF (Rcomputation == 0) THEN
+        EndLoop = 1.0
+    ELSE
+        EndLoop = 9.0
+    END IF
+
+    RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
+
+    open(unit=10,file=FileName,status='replace')
+    write(10,"(a)")"Time,Latitude,Longitude,Altitude,Rl,Rc,Ru"
+
+    do while (loop <= EndLoop)
+   
+    100 do while (R > EndRigidity)
+
+    PositionIN(4) = Zenith(loop)
+    PositionIN(5) = Azimuth(loop)
+
+    R = real(R, kind = selected_real_kind(10,307))
+    RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
+    
+    !print *, PositionIN(5)
+    call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
+    !print *, PositionIN(5)
+    
+    call initializeWind(Wind, I, mode)
+    call initializeCustomGauss(mode)
+
+    call MagneticFieldAssign(mode)
+    call MagnetopauseAssign(Pause)
+    call IntegrationAssign(IntMode)
+
+    call FirstTimeStep()
+    test = 0
+
+    do while (Result == 0)
+    
+
+    !IF (loop == 9) THEN
+    !    IF (R <= 12.5) THEN
+    !        test = test + 1
+    !    END IF
+    !    IF (test < 100) THEN
+    !        print *, R, " ", Position
+    !    END IF
+    !END IF
+    
+    call IntegrationPointer()
+
+    call EscapeCheck()
+
+    call FinalStepCheck()
+    
+    IF (Position(1) < End(1) ) THEN
+        bool = -1
+        Limit = 1
+        forbiddencount = forbiddencount + 1
+        NeverFail = 1
+        FailCheck = 1
+        call AsymptoticDirection(Lat, Long)
+        call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
+        !print *, R, " ", "Returned to Earth"
+        EXIT
+    END IF
+
+    IF (End(2) == 0) THEN
+        
+    ELSE IF (DistanceTraveled/1000.0 > End(2) * Re) THEN
+        bool = 0
+        Limit = 1
+        forbiddencount = forbiddencount + 1
+        NeverFail = 1
+        FailCheck = 1
+        call AsymptoticDirection(Lat, Long)
+        call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
+        !print *, R, " ", "Trapped"
+        EXIT
+    END IF
+
+    IF (End(3) == 0) THEN
+        
+    ELSE IF (TimeElapsed > End(3)) THEN
+        bool = 0
+        Limit = 1
+        forbiddencount = forbiddencount + 1
+        NeverFail = 1
+        FailCheck = 1
+        call AsymptoticDirection(Lat, Long)
+        call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
+        !print *, R, " ", "Time Elapsed"
+        EXIT
+    END IF
+    
+    IF (Result == 1) THEN
+        call AsymptoticDirection(Lat, Long)
+        call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
+        forbiddencount = 0
+        bool = 1
+        RL = R
+        !print *, R, " ", "Escaped"
+        IF (Limit == 0) THEN
+            RU = R
+        ELSE IF (Limit == 1) THEN
+            Acount = Acount + 1
+        END IF
+        EXIT
+    END IF
+    
+    end do
+    
+    stepNum = stepNum + 1
+
+    R = (StartRigidity - (stepNum*RigidityStep))
+    IF(R < EndRigidity) THEN
+        R = EndRigidity
+    ELSE IF (R < RigidityStep) THEN
+        IF(NeverFail == 0) THEN
+            IF(LastCheck == 0) THEN
+                R = Rigidity(3)
+                LastCheck = 1
+            ELSE IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
+        END IF
+    END IF
+    Result = 0
+
+    PositionIN(4) = Zenith(loop)
+    PositionIN(5) = Azimuth(loop)
+
+    end do
+
+    call EffectiveRigidity(RigidityStep)
+
+    IF (scan == 0) THEN
+        scan = 1
+        StartRigidity = RU + 2.0*RigidityScan
+        EndRigidity = RL - 2.0*RigidityScan
+        IF (EndRigidity < 0) THEN
+            EndRigidity = 0
+        END IF
+        R = StartRigidity
+        RigidityStep = Rigidity(3)
+        Limit = 0
+        Acount = 0
+        Result = 0
+        forbiddencount = 0
+        SubResult = 0
+        stepNum = 0
+        IF(NeverFail == 1) THEN
+            NeverFail = 0
+            GOTO 100
+        ELSE IF(NeverFail == 0) THEN
+            RU = 0
+            RL = 0
+            Ref = 0
+        END IF
+    END IF
+
+    RlMemory(loop) = Rl
+    RefMemory(loop) = Ref
+    RuMemory(loop) = Ru
+    
+    !print *, PositionIN(4), " ", PositionIN(5)
+    !print *, Rl, " ", Ref, " ", Ru
+
+    IF (scanchoice == 1) THEN
+        scan = 0
+        RigidityStep = RigidityScan
+        StartRigidity = Rigidity(1)
+        EndRigidity = Rigidity(2)
+    ELSE
+        scan = 1
+        RigidityStep = Rigidity(3)
+    END IF
+
+    loop = loop + 1
+    PositionIN(4) = Zenith(loop)
+    PositionIN(5) = Azimuth(loop)
+    !print *, PositionIN
+    R = real(StartRigidity, kind = selected_real_kind(15,307))
+    Re = 6371.2
+    Limit = 0
+    Acount = 0
+    Result = 0
+    stepNum = 0
+    forbiddencount = 0
+    NeverFail = 0
+    SubResult = 0
+    LastCheck = 0
+    FailCheck = 0
+
+    end do
+
+    IF(Rcomputation /= 0) THEN
+        sumrl = RLMemory(1)/2.0
+        do i = 2, 9
+            sumrl = sumrl + RLMemory(i)/16.0
+        end do
+        sumru = RUMemory(1)/2.0
+        do i = 2, 9
+            sumru = sumru + RUMemory(i)/16.0
+        end do
+        sumref = RefMemory(1)/2.0
+        do i = 2, 9
+            sumref = sumref + RefMemory(i)/16.0
+        end do
+
+        RU = sumru
+        RL = sumrl
+        Ref = sumref
+    END IF
+
+    FileName = trim(FileName )
+    FileNamePosition = index(FileName , ".csv")
+    datetime_string = FileName(1:FileNamePosition-1)
+
+    write(10,'(*(G0.6,:""))') datetime_string, "," , PositionIN(2), "," , PositionIN(3), "," ,PositionIN(1), &
+    ",", RU, ",", Ref, "," , RL 
+
+    Close(10, STATUS='KEEP') 
+
+end subroutine flight
 
 ! **********************************************************************************************************************
 ! Subroutine CutoffGauss:

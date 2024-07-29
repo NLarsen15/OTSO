@@ -36,17 +36,17 @@ External = 3
 ###############################################################################################################
 # Pick the integration model to use
 # 1 = 4th Order Runge-Kutta, 2 = Boris, 3 = Vay, 4 = Higuera-Cary
-IntModel = 1
+IntModel = 3
 ###############################################################################################################
 # Pick the start and end rigidity for the computation, as well as the step
 StartRigidity = 20 #[GV]
 EndRigidity = 0 #[GV]
-RigidityStep = 0.01 #[GV]
+RigidityStep = 0.1 #[GV]
 ###############################################################################################################
 # Rigidity Scan (will quickly scan the rigidity range for an estimate of the effective cutoff, then will
 # start the main computation around the estimated effective cutoff)
 # 0 = No Scan, 1 = Scan
-RigidityScan = 0
+RigidityScan = 1
 ###############################################################################################################
 # Pick the coordinate system desired for the output
 # GDZ, GEO, GSM, GSE, SM, GEI, MAG, SPH (GEO in spherical), RLL 
@@ -61,9 +61,9 @@ MaxStepPercent = 10 #[%]
 Magnetopause = 3
 ###############################################################################################################
 # Choose the name of the folder that output files will be sent to. Folder created in the current directory
-FolderName = "Cutoff Example Folder"
+FolderName = "Example Cutoff Folder "
 FileName = "_Vertical"
 ###############################################################################################################
 # Select the number of cores for multicore processing
-CoreNum = 3
+CoreNum = 1
 ###############################################################################################################
