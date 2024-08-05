@@ -676,6 +676,11 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
 
+    IF (R < RigidityStep) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
+
     R = real(R, kind = selected_real_kind(10,307))
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
     
@@ -783,7 +788,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
             END IF
         END IF
     END IF
-    Result = 0
+    50 Result = 0
 
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
@@ -820,6 +825,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     RlMemory(loop) = Rl
     RefMemory(loop) = Ref
     RuMemory(loop) = Ru
+
     
     !print *, PositionIN(4), " ", PositionIN(5)
     !print *, Rl, " ", Ref, " ", Ru
@@ -991,6 +997,11 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
 
+    IF (R < RigidityStep) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
+
     R = real(R, kind = selected_real_kind(10,307))
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
     
@@ -1098,7 +1109,7 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
             END IF
         END IF
     END IF
-    Result = 0
+    50 Result = 0
 
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
@@ -1314,6 +1325,11 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
     R = real(R, kind = selected_real_kind(10,307))
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
 
+    IF (R < RigidityStep) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
+
     call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
     
     call initializeWind(Wind, I, mode)
@@ -1401,7 +1417,7 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
             END IF
         END IF
     END IF
-    Result = 0
+    50 Result = 0
 
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
@@ -1582,6 +1598,7 @@ sumru = 0
 PositionIN(4) = Zenith(loop)
 PositionIN(5) = Azimuth(loop)
 
+
 IF (Rcomputation == 0) THEN
     EndLoop = 1.0
 ELSE
@@ -1597,8 +1614,13 @@ do while (loop <= EndLoop)
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
-    call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
-            
+
+    IF (R < RigidityStep) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
+
+    call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)        
     call initializeWind(Wind, I, mode)
     call initializeCustomGauss(mode)
 
@@ -1675,12 +1697,12 @@ do while (loop <= EndLoop)
             END IF
         END IF
     END IF
-    Result = 0
-        
-end do
+    50 Result = 0
 
-PositionIN(4) = Zenith(loop)
-PositionIN(5) = Azimuth(loop)
+    PositionIN(4) = Zenith(loop)
+    PositionIN(5) = Azimuth(loop)
+
+end do
         
 call EffectiveRigidity(RigidityStep)
 
@@ -1712,6 +1734,9 @@ END IF
 RlMemory(loop) = Rl
 RefMemory(loop) = Ref
 RuMemory(loop) = Ru
+
+!print *, PositionIN(4), " ", PositionIN(5)
+!print *, Rl, " ", Ref, " ", Ru
 
 loop = loop + 1
 R = real(StartRigidity, kind = selected_real_kind(15,307))
@@ -1967,6 +1992,11 @@ do while (loop <= EndLoop)
    RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
    PositionIN(4) = Zenith(loop)
    PositionIN(5) = Azimuth(loop)
+
+    IF (R < RigidityStep) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
    call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
            
    call initializeWind(Wind, I, mode)
@@ -2045,7 +2075,7 @@ do while (loop <= EndLoop)
            END IF
        END IF
    END IF
-   Result = 0
+   50 Result = 0
        
 end do
 
