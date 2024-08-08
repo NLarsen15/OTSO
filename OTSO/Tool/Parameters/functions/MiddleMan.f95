@@ -675,8 +675,8 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
 
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
-
-    IF (R < RigidityStep) THEN
+    
+    IF (R < Rigidity(3)) THEN
         R = EndRigidity
         GOTO 50
     END IF
@@ -699,16 +699,6 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     test = 0
 
     do while (Result == 0)
-    
-
-    !IF (loop == 9) THEN
-    !    IF (R <= 12.5) THEN
-    !        test = test + 1
-    !    END IF
-    !    IF (test < 100) THEN
-    !        print *, R, " ", Position
-    !    END IF
-    !END IF
     
     call IntegrationPointer()
 
@@ -780,11 +770,13 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
         IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
             IF(LastCheck == 0) THEN
                 R = Rigidity(3)
                 LastCheck = 1
-            ELSE IF(LastCheck == 1) THEN
-                R = EndRigidity
+                stepNum = stepNum - 1
             END IF
         END IF
     END IF
@@ -799,8 +791,8 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
 
     IF (scan == 0) THEN
         scan = 1
-        StartRigidity = RU + 2.0*RigidityScan
-        EndRigidity = RL - 2.0*RigidityScan
+        StartRigidity = RU + 1.0*RigidityScan
+        EndRigidity = RL - 1.0*RigidityScan
         IF (EndRigidity < 0) THEN
             EndRigidity = 0
         END IF
@@ -997,7 +989,7 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
 
-    IF (R < RigidityStep) THEN
+    IF (R < Rigidity(3)) THEN
         R = EndRigidity
         GOTO 50
     END IF
@@ -1020,16 +1012,6 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     test = 0
 
     do while (Result == 0)
-    
-
-    !IF (loop == 9) THEN
-    !    IF (R <= 12.5) THEN
-    !        test = test + 1
-    !    END IF
-    !    IF (test < 100) THEN
-    !        print *, R, " ", Position
-    !    END IF
-    !END IF
     
     call IntegrationPointer()
 
@@ -1101,11 +1083,13 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
         IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
             IF(LastCheck == 0) THEN
                 R = Rigidity(3)
                 LastCheck = 1
-            ELSE IF(LastCheck == 1) THEN
-                R = EndRigidity
+                stepNum = stepNum - 1
             END IF
         END IF
     END IF
@@ -1325,7 +1309,7 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
     R = real(R, kind = selected_real_kind(10,307))
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
 
-    IF (R < RigidityStep) THEN
+    IF (R < Rigidity(3)) THEN
         R = EndRigidity
         GOTO 50
     END IF
@@ -1409,11 +1393,13 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
         IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
             IF(LastCheck == 0) THEN
                 R = Rigidity(3)
                 LastCheck = 1
-            ELSE IF(LastCheck == 1) THEN
-                R = EndRigidity
+                stepNum = stepNum - 1
             END IF
         END IF
     END IF
@@ -1615,7 +1601,7 @@ do while (loop <= EndLoop)
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
 
-    IF (R < RigidityStep) THEN
+    IF (R < Rigidity(3)) THEN
         R = EndRigidity
         GOTO 50
     END IF
@@ -1689,11 +1675,13 @@ do while (loop <= EndLoop)
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
         IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
             IF(LastCheck == 0) THEN
                 R = Rigidity(3)
                 LastCheck = 1
-            ELSE IF(LastCheck == 1) THEN
-                R = EndRigidity
+                stepNum = stepNum - 1
             END IF
         END IF
     END IF
@@ -1993,10 +1981,11 @@ do while (loop <= EndLoop)
    PositionIN(4) = Zenith(loop)
    PositionIN(5) = Azimuth(loop)
 
-    IF (R < RigidityStep) THEN
+    IF (R < Rigidity(3)) THEN
         R = EndRigidity
         GOTO 50
     END IF
+
    call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
            
    call initializeWind(Wind, I, mode)
@@ -2062,19 +2051,21 @@ do while (loop <= EndLoop)
 
    stepNum = stepNum + 1
            
-   R = (StartRigidity - (stepNum*RigidityStep))
-   IF(R < EndRigidity) THEN
-       R = EndRigidity
-   ELSE IF (R < RigidityStep) THEN
-       IF(NeverFail == 0) THEN
-           IF(LastCheck == 0) THEN
-               R = Rigidity(3)
-               LastCheck = 1
-           ELSE IF(LastCheck == 1) THEN
-               R = EndRigidity
-           END IF
-       END IF
-   END IF
+    R = (StartRigidity - (stepNum*RigidityStep))
+    IF(R < EndRigidity) THEN
+        R = EndRigidity
+    ELSE IF (R < RigidityStep) THEN
+        IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
+            IF(LastCheck == 0) THEN
+                R = Rigidity(3)
+                LastCheck = 1
+                stepNum = stepNum - 1
+            END IF
+        END IF
+    END IF
    50 Result = 0
        
 end do
