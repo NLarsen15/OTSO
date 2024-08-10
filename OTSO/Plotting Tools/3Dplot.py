@@ -5,20 +5,10 @@ import matplotlib.pyplot as plt
 R = 6371.2
 Re = 1
 
-data = pd.read_csv("Custom_Location_Name_Trace.csv")
+data = pd.read_csv("Trajectory.csv")
 X = data["X"]
 Y = data["Y"]
 Z = data["Z"]
-
-data2 = pd.read_csv("Custom_Location_Name2_Trace.csv")
-X2 = data2["X"]
-Y2 = data2["Y"]
-Z2 = data2["Z"]
-
-data3 = pd.read_csv("Custom_Location_Name3_Trace.csv")
-X3 = data3["X"]
-Y3 = data3["Y"]
-Z3 = data3["Z"]
 
 xGSM = []
 yGSM = []
@@ -49,8 +39,6 @@ plt.ylim(-10000, 10000)
 ax.set_zlim(-10000, 10000)
 
 ax.plot(X, Y, Z, color = 'black')
-ax.plot(X2, Y2, Z2, color = 'green')
-ax.plot(X3, Y3, Z3, color = 'red')
 
 
 plt.show()

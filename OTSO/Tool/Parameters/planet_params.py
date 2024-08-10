@@ -92,7 +92,7 @@ RigidityScan = 1
 ###############################################################################################################
 # Pick the maximum percentage of the particles gyrofrequency that can be used as the max time step in the
 # computation
-MaxStepPercent = 30 #[%]
+MaxStepPercent = 10 #[%]
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel
