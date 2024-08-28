@@ -771,8 +771,8 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
 
     IF (scan == 0) THEN
         scan = 1
-        StartRigidity = RU + 1.0*RigidityScan
-        EndRigidity = RL - 1.0*RigidityScan
+        StartRigidity = RU + 2.0*RigidityScan
+        EndRigidity = RL - 2.0*RigidityScan
         IF (EndRigidity < 0) THEN
             EndRigidity = 0
         END IF
