@@ -38,7 +38,8 @@ The easiest way to install OTSO on windows is outlined below.
 3. In order to run on your computer, OTSO needs to be compiled. This can either be done automatically or manually. We suggest using the automatic compilation first and only attempting the manual way if the former method fails.
 
 **Automatic**
-  - Run the `Windows_OTSO_Compiler.cmd` file located within the OTSO folder downloaded. If the previous steps have been completed correctly this should compile OTSO and it will be usable.
+  - Run the `Windows_OTSO_Compiler.cmd` file located within the OTSO folder (the folder containing user manual) downloaded. If the previous steps have been completed correctly this should compile OTSO and it will be usable.
+  - Alternatively, you may instead run the `makefile` using the command `make` within the same terminal if you have make installed on your system. 
 
 **Manual**
   - Open up an anaconda prompt to the Library folder directory.
@@ -70,7 +71,8 @@ Note OTSO was tested on the Ubuntu OS and the following instructions will be for
 3. OTSO must now be compiled in order to run. This can be done automatically via the provided bash file or manually.
 
 **Automatic**
-  - Open a terminal to the main OTSO directory and run the bash `Linux_and_Mac_OTSO_Compiler.sh` file. Enter `bash Linux_and_Mac_OTSO_Compiler.sh` in the terminal and run. 
+  - Open a terminal to the main OTSO directory (the folder containing user manual) and run the bash `Linux_and_Mac_OTSO_Compiler.sh` file. Enter `bash Linux_and_Mac_OTSO_Compiler.sh` in the terminal and run.
+  - Alternatively, you may instead run the `makefile` using the command `make` within the same terminal if you have make installed on your system. 
 
 **Manual**
   - Open a terminal in the Library folder within OTSO. Enter `gfortran -c *Module.f95 *Functions.f95 *.for *.f95 *.f -fPIC` into the terminal and run.
@@ -101,7 +103,8 @@ Note OTSO was tested on the Monterey, Ventura, and Sonoma OS releases, as such t
 3. OTSO must now be compiled in order to run. This can be done automatically via the provided bash file or manually.
 
 **Automatic**
-  - Open a terminal to the main OTSO directory and run the bash `Linux_and_Mac_OTSO_Compiler.sh` file. Enter `bash Linux_and_Mac_OTSO_Compiler.sh` in the terminal and run. 
+  - Open a terminal to the main OTSO directory (the folder containing user manual) and run the bash `Linux_and_Mac_OTSO_Compiler.sh` file. Enter `bash Linux_and_Mac_OTSO_Compiler.sh` in the terminal and run. 
+  - Alternatively, you may instead run the `makefile` using the command `make` within the same terminal if you have make installed on your system. 
 
 **Manual**
   - Open a terminal in the Library folder within OTSO. Enter `gfortran -c *Module.f95 *Functions.f95 *.for *.f95 *.f -fPIC` into the terminal and run.
@@ -126,9 +129,8 @@ If you have used OTSO within your work, we kindly ask that you include it in the
 
 **Community Acknowledgments**
 
-We would like to acknowledge the use of the fantastic IRBEM library in the development of OTSO, which proved an invaluable asset and greatly sped up development. The latest release of the IRBEM library can be found at [https://doi.org/10.5281/zenodo.6867552](https://doi.org/10.5281/zenodo.6867552.).
-We would also like to thank N. Tsyganenko for the development of the external magnetic field models and their code which are used within OTSO.
-A wider thanks goes to the space physics community who, through the use of OTSO, provide invaluable feedback, advice on improvements, and bug reporting. All discussions and advice have aided in the continual development and improvement of OTSO, allowing it to fullfil its aim of being a community-driven open-source tool.  
+We would like to acknowledge the use of the fantastic IRBEM library in the development of OTSO, which proved an invaluable asset and greatly sped up development. The latest release of the IRBEM library can be found at [https://doi.org/10.5281/zenodo.6867552](https://doi.org/10.5281/zenodo.6867552.). We would also like to thank N. Tsyganenko for the development of the external magnetic field models and their code which are used within OTSO.
+A wider thanks goes to the space physics community who, through the use of OTSO, provide invaluable feedback, advice on improvements, and bug reporting. All discussions and advice have aided in the continual development and improvement of OTSO, allowing it to fulfil its aim of being a community-driven open-source tool. We express our gratitude to Dr. Christian Steigies of the University of Kiel for creating and generously sharing a custom makefile for OTSO for ease of installation that has been adapted and incorporated into this tool. 
 
 ## Publications Using OTSO
 - Walter, M., Gnebner, C., Heber, B., Herbst, K., Krüger, H., Krüger, H. G., et al. (2024). Measurements of cosmic rays by a mini-neutron monitor at Neumayer III from 2014 to 2017. Space Weather, 22, e2023SW003596. https://doi.org/10.1029/2023SW003596

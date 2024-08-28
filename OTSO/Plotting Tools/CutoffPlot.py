@@ -4,8 +4,11 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.patches as mpatches
 
+################################################################################################
+# Change csv file to desired csv file
 data = pd.read_csv("Oulu.csv")
-
+################################################################################################
+# Plotting
 last_row = data.iloc[-1].copy()
 
 row_string = ','.join(str(value) for value in last_row if pd.notna(value))

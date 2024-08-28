@@ -1,62 +1,65 @@
-import numpy as np
 import pandas as pd
-import sys
+import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import cartopy.crs as ccrs
-from cartopy.feature.nightshade import Nightshade
-from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
-from datetime import datetime
+import cartopy.feature as cfeature
+from scipy.interpolate import griddata
+import matplotlib.ticker as mticker
 
-Date = datetime(2006, 12, 13, 3, 00, 00)
+################################################################################################
+# Change csv file to desired csv file
+df = pd.read_csv('Planet.csv')
+###############################################################################################
 
-# Oulu
-Planet = pd.read_csv("Planet_GLE65_TSY89.csv")
 
-PlanetLat = Planet["Latitude"]
-PlanetLong = Planet["Longitude"]
-PlanetR = Planet["Rc"]
+lats = df['Latitude'].values
+lons = df['Longitude'].values
+totals = df['Rc'].values
 
-PlanetLat = np.array([PlanetLat])
-PlanetLong = np.array([PlanetLong])
-PlanetR = np.array([PlanetR])
+grid_lon, grid_lat = np.meshgrid(
+    np.linspace(lons.min(), lons.max(), 100),
+    np.linspace(lats.min(), lats.max(), 100)
+)
 
-PlanetLat = np.ndarray.flatten(PlanetLat)
-PlanetLong = np.ndarray.flatten(PlanetLong)
-PlanetR = np.ndarray.flatten(PlanetR)
+grid_total = griddata((lats, lons), totals, (grid_lat, grid_lon), method='linear')
 
-##############################################################
-
-fig = plt.figure(figsize=(12,9))
-
-ax = fig.add_subplot(1, 1, 1,projection=ccrs.PlateCarree())
+fig, ax = plt.subplots(subplot_kw={'projection': ccrs.PlateCarree()},figsize=(10, 8))
 ax.set_global()
-gl = ax.gridlines(crs=ccrs.PlateCarree(), linewidth=1, color='black', alpha=0.5, linestyle='-', draw_labels=True)
+
+# Add coastlines and other features
 ax.coastlines()
-#ax.add_feature(Nightshade(Date, alpha=0.2))
-gl.xlabels_top = None
-gl.xlabels_bottom = None
-gl.ylabels_left = None
+#ax.add_feature(cfeature.BORDERS, linestyle=':')
+#ax.add_feature(cfeature.LAND, edgecolor='black')
+#ax.add_feature(cfeature.OCEAN, edgecolor='black')
+#ax.add_feature(cfeature.LAKES, alpha=0.65)
+#ax.add_feature(cfeature.RIVERS)
+
+################################################################################################
+# Change the colour bar range as desired
+contour_levels = np.arange(0, 20.5, 0.5)
+################################################################################################
+
+contour = ax.contourf(grid_lon, grid_lat, grid_total, levels = contour_levels, transform=ccrs.PlateCarree(), cmap = 'viridis', vmin = 0, vmax = 20)
+
+gl = ax.gridlines(crs=ccrs.PlateCarree(), draw_labels=True,
+                  linewidth=2,  color='grey', alpha=0.2, linestyle='--', zorder = 100)
+
+
+gl.xlocator = mticker.FixedLocator([-180, -120, -60, 0, 60, 120, 180])
+gl.ylocator = mticker.FixedLocator([-90, -60, -30, 0, 30, 60, 90])
+
+gl.xlabel_style = {'size': 15}
+gl.ylabel_style = {'size': 15}
+
+gl.xformatter = plt.FuncFormatter(lambda x, _: f"{int(x)}°")
+gl.yformatter = plt.FuncFormatter(lambda y, _: f"{int(y)}°")
+
+gl.bottom_labels = gl.right_labels = False
 gl.ylabels_right = None
-gl.xlines = True
-ax.set_extent([-180, 180, -90, 90]) 
 
-ax.set_xticks([-180,-150,-120,-90,-60,-30,0,30,60,90,120,150,180])
-ax.set_yticks([-90,-60,-30,0,30,60,90])
+cbar = plt.colorbar(contour, ax=ax, orientation='horizontal', pad=0.03, aspect=40, shrink=1.0)
+cbar.set_ticks([0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
+cbar.set_label('Pc [GV]', fontsize=20)
+cbar.ax.tick_params(labelsize=15)
 
-vmin = PlanetR.min()
-vmax = PlanetR.max()
-
-PlanetDf = pd.DataFrame({'x':PlanetLong, 'y':PlanetLat, 'z':PlanetR})
-
-Z = PlanetDf.pivot_table(index='x', columns='y', values='z').T.values
-
-X_unique = np.sort(PlanetDf.x.unique())
-Y_unique = np.sort(PlanetDf.y.unique())
-X, Y = np.meshgrid(X_unique, Y_unique)
-
-plt.contourf(X, Y, Z, np.linspace(0.0, 20.0, 20), cmap="plasma", transform=ccrs.PlateCarree())
-
-#plt.title('GLE 65 Planetary Vertical Rigidity Cutoff', fontsize=15)
-plt.colorbar(ticks=[0, 4, 8, 12, 16, 20], label='Cutoff Rigidity [GV]')
 plt.show()

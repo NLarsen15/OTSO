@@ -8,15 +8,8 @@ from cartopy.mpl.gridliner import LONGITUDE_FORMATTER, LATITUDE_FORMATTER
 import matplotlib.ticker as mticker
 from datetime import datetime, timedelta
 
-#row = TOulu.iloc[10000]
-#OuluLat = row["Latitude"]
-#OuluLat = pd.to_numeric(OuluLat, errors='coerce')
-#OuluLong = row["Longitude"]
-
-#if (OuluLong > 180):
-#    OuluLong = OuluLong - 360
+# Defining the Figure
 ##############################################################
-
 fig = plt.figure(figsize=(12,9))
 
 Date = datetime(2006, 12, 13, 3, 00, 00)
@@ -35,8 +28,7 @@ ax.set_extent([-180, 180, -90, 90])
 ax.set_xticks([-180,-150,-120,-90,-60,-30,0,30,60,90,120,150,180])
 ax.set_yticks([-90,-60,-30,0,30,60,90])
 
-# Plotting
-
+# Plotting (Change read in csv files as desired)
 ###############################################################################################
 # Oulu
 

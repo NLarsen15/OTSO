@@ -28,9 +28,6 @@ subroutine MagStrength(Pin, Date, CoordIN, mode, I, Wind, Bfield)
     integer(4) :: I
     integer(8) :: mode(2)
 
-    !f2py intent(in) Pin, Date, CoordIN, I, Wind
-    !f2py intent(out) Bfield
-
     year = INT(Date(1))
     day = INT(Date(2))
     hour = INT(Date(3))
@@ -66,9 +63,6 @@ subroutine CoordTrans(Pin, year, day, sec, CoordIN, CoordOUT, Pout)
     character(len = 3) :: CoordIN, CoordOUT 
     integer(8) :: year, day
     
-    !f2py intent(in) Pin, sec, year, day, CoordIN, CoordOUT
-    !f2py intent(out) Pout
-    
     call CoordinateTransform(CoordIN, CoordOUT, year, day, sec, Pin, Pout)
     
     end subroutine CoordTrans
@@ -76,12 +70,14 @@ subroutine CoordTrans(Pin, year, day, sec, CoordIN, CoordOUT, Pout)
 ! **********************************************************************************************************************
 ! Subroutine Trajectory:
 !            subroutine that calculates the trajectory of a cosmic ray within different input
-!            magnetic field models. The trajectory is output in a csv file named "Trajectory".
-!            The output data is in the Cartesian Geocentric coordinate system.
+!            magnetic field models.
+!            The output data is in the user given coordinate system.
 !            Will also state if the cosmic ray has an allowed or forbidden trajectory.
 !            Accepted Condition: cosmic ray encounters the magnetopause
 !            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
 !                                  - cosmic ray travels over 100Re without escaping or encountering Earth
+!                                  - cosmic ray is simulated for a given period of time
+!
 ! **********************************************************************************************************************
 subroutine trajectory(PositionIN, Rigidity, Date, mode, IntMode, & 
     AtomicNumber, Anti, I, Wind, Pause, FileName, CoordSystem, GyroPercent, End)
@@ -103,10 +99,6 @@ integer(8) :: mode(2), IntMode, Anti, AtomicNumber
 integer(4) :: I, Limit, Pause
 character(len=50) :: FileName
 character(len=3) :: CoordSystem
-
-
-!f2py intent(in) PositionIN, Rigidity, Date, mode, AtomicNumber, Anti
-!f2py intent(out) Xnew, Vnew, XnewGDZ
 
 Re = 6371.2
 Limit = 0
@@ -217,6 +209,7 @@ end subroutine trajectory
 !            Accepted Condition: cosmic ray encounters the model magnetopause
 !            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
 !                                  - cosmic ray travels over 100Re without escaping or encountering Earth
+!                                  - cosmic ray is simulated for a given period of time
 !
 ! **********************************************************************************************************************
 subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, IntMode, & 
@@ -239,9 +232,6 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
     integer(4) :: I, Limit, bool, Pause, stepNum
     character(len=50) :: FileName
     character(len=3) :: CoordSystem
-
-    !f2py intent(in) PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, AtomicNumber, Anti, I, Wind, Type, FileName
-    !f2py intent(out) Xnew, Vnew, XnewGDZ
     
     R = real(StartRigidity, kind = selected_real_kind(15,307))
     Re = 6371.2
@@ -298,7 +288,6 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
     call EscapeCheck()
 
     call FinalStepCheck()
-    !call MidCheck()
     
     IF (Position(1) < End(1) ) THEN
         bool = -1
@@ -389,11 +378,12 @@ end subroutine cone
 ! **********************************************************************************************************************
 ! Subroutine ConeGauss:
 !            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
-!            within different input magnetic field models and determines the Asymptotic Latitude and
+!            using custom Gaussian coefficients for the IGRF model and determines the Asymptotic Latitude and
 !            Longitude. Will create a csv file in which the asymptotic cone data is stored.
 !            Accepted Condition: cosmic ray encounters the model magnetopause
 !            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
 !                                  - cosmic ray travels over 100Re without escaping or encountering Earth
+!                                  - cosmic ray is simulated for a given period of time
 !
 ! **********************************************************************************************************************
 subroutine conegauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, IntMode, & 
@@ -417,9 +407,6 @@ subroutine conegauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date,
     integer(4) :: I, Limit, bool, Pause, stepNum
     character(len=50) :: FileName
     character(len=3) :: CoordSystem
-
-    !f2py intent(in) PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, AtomicNumber, Anti, I, Wind, Type, FileName
-    !f2py intent(out) Xnew, Vnew, XnewGDZ
     
     R = real(StartRigidity, kind = selected_real_kind(15,307))
     Re = 6371.2
@@ -481,7 +468,6 @@ subroutine conegauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date,
     call EscapeCheck()
 
     call FinalStepCheck()
-    !call MidCheck()
     
     IF (Position(1) < End(1) ) THEN
         bool = -1
@@ -572,11 +558,10 @@ end subroutine conegauss
 ! **********************************************************************************************************************
 ! Subroutine Cutoff:
 !            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
-!            within different input magnetic field models and determines the Asymptotic Latitude and
-!            Longitude. Will create a csv file in which the asymptotic cone data is stored.
-!            Accepted Condition: cosmic ray encounters the model magnetopause
-!            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
-!                                  - cosmic ray travels over 100Re without escaping or encountering Earth
+!            within different input magnetic field models and determines the cutoff rigidity.
+!            Will create a csv file in which the asymptotic cone data is stored.
+!            Output can be the vertical cutoff or apparent cutoff
+!            Apparent cutoff computation is roughly 9 times as long as vertical
 !
 ! **********************************************************************************************************************
 subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, IntMode, & 
@@ -600,9 +585,6 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     integer(4) :: I, Limit, bool, Pause, stepNum, loop, Rcomputation, scanchoice, scan, LastCheck
     character(len=50) :: FileName
     character(len=3) :: CoordSystem
-
-    !f2py intent(in) PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, AtomicNumber, Anti, I, Wind, Type, FileName
-    !f2py intent(out) Xnew, Vnew, XnewGDZ
     
     R = real(StartRigidity, kind = selected_real_kind(15,307))
     Re = 6371.2
@@ -675,13 +657,16 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
 
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
+    
+    IF (R < Rigidity(3)) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
 
     R = real(R, kind = selected_real_kind(10,307))
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
     
-    !print *, PositionIN(5)
     call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
-    !print *, PositionIN(5)
     
     call initializeWind(Wind, I, mode)
     call initializeCustomGauss(mode)
@@ -694,16 +679,6 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     test = 0
 
     do while (Result == 0)
-    
-
-    !IF (loop == 9) THEN
-    !    IF (R <= 12.5) THEN
-    !        test = test + 1
-    !    END IF
-    !    IF (test < 100) THEN
-    !        print *, R, " ", Position
-    !    END IF
-    !END IF
     
     call IntegrationPointer()
 
@@ -767,7 +742,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     END IF
     
     end do
-    
+
     stepNum = stepNum + 1
 
     R = (StartRigidity - (stepNum*RigidityStep))
@@ -775,15 +750,17 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
         IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
             IF(LastCheck == 0) THEN
                 R = Rigidity(3)
                 LastCheck = 1
-            ELSE IF(LastCheck == 1) THEN
-                R = EndRigidity
+                stepNum = stepNum - 1
             END IF
         END IF
     END IF
-    Result = 0
+    50 Result = 0
 
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
@@ -820,9 +797,6 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     RlMemory(loop) = Rl
     RefMemory(loop) = Ref
     RuMemory(loop) = Ru
-    
-    !print *, PositionIN(4), " ", PositionIN(5)
-    !print *, Rl, " ", Ref, " ", Ru
 
     IF (scanchoice == 1) THEN
         scan = 0
@@ -839,7 +813,6 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     loop = loop + 1
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
-    !print *, PositionIN
     R = real(StartRigidity, kind = selected_real_kind(15,307))
     Re = 6371.2
     Limit = 0
@@ -884,13 +857,12 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
 end subroutine cutoff
 
 ! **********************************************************************************************************************
-! Subroutine Cutoff:
-!            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
-!            within different input magnetic field models and determines the Asymptotic Latitude and
-!            Longitude. Will create a csv file in which the asymptotic cone data is stored.
-!            Accepted Condition: cosmic ray encounters the model magnetopause
-!            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
-!                                  - cosmic ray travels over 100Re without escaping or encountering Earth
+! Subroutine Flight:
+!            subroutine that calculates the cutoff rigidity along a given flight path under given
+!            magnetic field models.
+!            Will create a csv file in which the time, latitude, longitude, altitude, and cutoff rigidity is stored.
+!            Can compute either vertical cutoff or apparent cutoff.
+!            Apparent cutoff computation is roughly 9 times as long as vertical
 !
 ! **********************************************************************************************************************
 subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, IntMode, & 
@@ -915,9 +887,6 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     character(len=50) :: FileName
     character(len=3) :: CoordSystem
     character(len=19) :: datetime_string
-
-    !f2py intent(in) PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, AtomicNumber, Anti, I, Wind, Type, FileName
-    !f2py intent(out) Xnew, Vnew, XnewGDZ
     
     R = real(StartRigidity, kind = selected_real_kind(15,307))
     Re = 6371.2
@@ -991,12 +960,15 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
 
+    IF (R < Rigidity(3)) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
+
     R = real(R, kind = selected_real_kind(10,307))
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
     
-    !print *, PositionIN(5)
     call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
-    !print *, PositionIN(5)
     
     call initializeWind(Wind, I, mode)
     call initializeCustomGauss(mode)
@@ -1009,16 +981,6 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     test = 0
 
     do while (Result == 0)
-    
-
-    !IF (loop == 9) THEN
-    !    IF (R <= 12.5) THEN
-    !        test = test + 1
-    !    END IF
-    !    IF (test < 100) THEN
-    !        print *, R, " ", Position
-    !    END IF
-    !END IF
     
     call IntegrationPointer()
 
@@ -1090,15 +1052,17 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
         IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
             IF(LastCheck == 0) THEN
                 R = Rigidity(3)
                 LastCheck = 1
-            ELSE IF(LastCheck == 1) THEN
-                R = EndRigidity
+                stepNum = stepNum - 1
             END IF
         END IF
     END IF
-    Result = 0
+    50 Result = 0
 
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
@@ -1135,9 +1099,6 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     RlMemory(loop) = Rl
     RefMemory(loop) = Ref
     RuMemory(loop) = Ru
-    
-    !print *, PositionIN(4), " ", PositionIN(5)
-    !print *, Rl, " ", Ref, " ", Ru
 
     IF (scanchoice == 1) THEN
         scan = 0
@@ -1152,7 +1113,6 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     loop = loop + 1
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
-    !print *, PositionIN
     R = real(StartRigidity, kind = selected_real_kind(15,307))
     Re = 6371.2
     Limit = 0
@@ -1200,11 +1160,10 @@ end subroutine flight
 ! **********************************************************************************************************************
 ! Subroutine CutoffGauss:
 !            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
-!            within different input magnetic field models and determines the Asymptotic Latitude and
-!            Longitude. Will create a csv file in which the asymptotic cone data is stored.
-!            Accepted Condition: cosmic ray encounters the model magnetopause
-!            Forbidden Conditions: - cosmic ray encounters the Earth (20km above Earth's surface)
-!                                  - cosmic ray travels over 100Re without escaping or encountering Earth
+!            using custom Gaussian coefficients for the IGRF model and determines the cutoff rigidity.
+!            Will create a csv file in which the cutoff data is stored.
+!            Output can be the vertical cutoff or apparent cutoff
+!            Apparent cutoff computation is roughly 9 times as long as vertical
 !
 ! **********************************************************************************************************************
 subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, IntMode, & 
@@ -1230,9 +1189,6 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
     integer(4) :: I, Limit, bool, Pause, stepNum, loop, Rcomputation, scanchoice, scan, LastCheck
     character(len=50) :: FileName
     character(len=3) :: CoordSystem
-
-    !f2py intent(in) PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode, AtomicNumber, Anti, I, Wind, Type, FileName
-    !f2py intent(out) Xnew, Vnew, XnewGDZ
     
     R = real(StartRigidity, kind = selected_real_kind(15,307))
     Re = 6371.2
@@ -1314,6 +1270,11 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
     R = real(R, kind = selected_real_kind(10,307))
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
 
+    IF (R < Rigidity(3)) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
+
     call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
     
     call initializeWind(Wind, I, mode)
@@ -1393,15 +1354,17 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
         IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
             IF(LastCheck == 0) THEN
                 R = Rigidity(3)
                 LastCheck = 1
-            ELSE IF(LastCheck == 1) THEN
-                R = EndRigidity
+                stepNum = stepNum - 1
             END IF
         END IF
     END IF
-    Result = 0
+    50 Result = 0
 
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
@@ -1504,6 +1467,7 @@ end subroutine cutoffgauss
 !            a range of latitude and longitudes. Typically done over the entire planet.
 !            Will create a csv file with the calculated rigidities for the locations.
 !            This code works with the Planet.py tool to assign large amounts of locations across multiple cores.
+!            A planet.csv file will be produced storing the data for latitude, longitude, and cutoff
 !
 ! **********************************************************************************************************************
 subroutine planet(PositionIN, Rigidity, Date, mode, IntMode, AtomicNumber, Anti, I, Wind, Pause, &
@@ -1522,9 +1486,6 @@ real(8) :: RuMemory(9), RlMemory(9), RefMemory(9), EndLoop, sumrl, sumru, sumref
 integer(8) :: mode(2), IntMode, Anti, AtomicNumber
 integer(4) :: I, Limit, bool, Pause, scan, stepNum, Rcomputation, loop, scanchoice, LastCheck
 character(len=30) :: FileName
-            
-!f2py intent(in) PositionIN, Rigidity, Date, mode, AtomicNumber, Anti, I, Wind
-!f2py intent(out) Xnew, Vnew, XnewGDZ
 
 Zenith(1) = 0
 Zenith(2) = 30
@@ -1582,6 +1543,7 @@ sumru = 0
 PositionIN(4) = Zenith(loop)
 PositionIN(5) = Azimuth(loop)
 
+
 IF (Rcomputation == 0) THEN
     EndLoop = 1.0
 ELSE
@@ -1597,8 +1559,13 @@ do while (loop <= EndLoop)
     RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
     PositionIN(4) = Zenith(loop)
     PositionIN(5) = Azimuth(loop)
-    call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
-            
+
+    IF (R < Rigidity(3)) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
+
+    call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)        
     call initializeWind(Wind, I, mode)
     call initializeCustomGauss(mode)
 
@@ -1667,20 +1634,22 @@ do while (loop <= EndLoop)
         R = EndRigidity
     ELSE IF (R < RigidityStep) THEN
         IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
             IF(LastCheck == 0) THEN
                 R = Rigidity(3)
                 LastCheck = 1
-            ELSE IF(LastCheck == 1) THEN
-                R = EndRigidity
+                stepNum = stepNum - 1
             END IF
         END IF
     END IF
-    Result = 0
-        
-end do
+    50 Result = 0
 
-PositionIN(4) = Zenith(loop)
-PositionIN(5) = Azimuth(loop)
+    PositionIN(4) = Zenith(loop)
+    PositionIN(5) = Azimuth(loop)
+
+end do
         
 call EffectiveRigidity(RigidityStep)
 
@@ -1772,7 +1741,7 @@ end subroutine planet
 
 ! **********************************************************************************************************************
 ! Subroutine FieldTrace:
-!            subroutine that traces the magnetic field lines within different input
+!            subroutine that traces the magnetic field lines within different inputted
 !            magnetic field models. The field lines are output in csv files named within a zip file.
 ! **********************************************************************************************************************
 subroutine FieldTrace(PositionIN, Rigidity, Date, mode, IntMode, & 
@@ -1795,10 +1764,6 @@ integer(8) :: mode(2), IntMode, Anti, AtomicNumber
 integer(4) :: I, Limit, Pause
 character(len=50) :: FileName
 character(len=3) :: CoordSystem
-
-
-!f2py intent(in) PositionIN, Rigidity, Date, mode, AtomicNumber, Anti
-!f2py intent(out) Xnew, Vnew, XnewGDZ
 
 Re = 6371.2
 Limit = 0
@@ -1847,9 +1812,6 @@ IF (Position(1) < End(1) ) THEN
     EXIT
 END IF
 
-
-
-
 IF (Result == 1)  THEN
     EXIT
 END IF
@@ -1863,10 +1825,11 @@ end subroutine FieldTrace
 ! **********************************************************************************************************************
 ! Subroutine PlanetGauss:
 !            subroutine that calculates the trajectory of a cosmic ray across a range of rigidities
-!            within different input magnetic field models and determines the effective cutoff rigidity for
+!            using custom Gaussian coefficients for the IGRF model and determines the cutoff rigidity for
 !            a range of latitude and longitudes. Typically done over the entire planet.
 !            Will create a csv file with the calculated rigidities for the locations.
 !            This code works with the Planet.py tool to assign large amounts of locations across multiple cores.
+!            A planet.csv file will be produced storing the data for latitude, longitude, and cutoff
 !
 ! **********************************************************************************************************************
 subroutine planetgauss(PositionIN, Rigidity, Date, mode, IntMode, AtomicNumber, Anti, I, Wind, Pause, &
@@ -1886,9 +1849,6 @@ real(8) :: gOTSO(105), hOTSO(105)
 integer(8) :: mode(2), IntMode, Anti, AtomicNumber
 integer(4) :: I, Limit, bool, Pause, scan, stepNum, Rcomputation, loop, scanchoice, LastCheck
 character(len=30) :: FileName
-           
-!f2py intent(in) PositionIN, Rigidity, Date, mode, AtomicNumber, Anti, I, Wind
-!f2py intent(out) Xnew, Vnew, XnewGDZ
 
 Ginput = gOTSO
 Hinput = hOTSO
@@ -1967,6 +1927,12 @@ do while (loop <= EndLoop)
    RigidityStep = real(RigidityStep, kind = selected_real_kind(10,307))
    PositionIN(4) = Zenith(loop)
    PositionIN(5) = Azimuth(loop)
+
+    IF (R < Rigidity(3)) THEN
+        R = EndRigidity
+        GOTO 50
+    END IF
+
    call CreateParticle(PositionIN, R, Date, AtomicNumber, Anti, mode)
            
    call initializeWind(Wind, I, mode)
@@ -2032,20 +1998,22 @@ do while (loop <= EndLoop)
 
    stepNum = stepNum + 1
            
-   R = (StartRigidity - (stepNum*RigidityStep))
-   IF(R < EndRigidity) THEN
-       R = EndRigidity
-   ELSE IF (R < RigidityStep) THEN
-       IF(NeverFail == 0) THEN
-           IF(LastCheck == 0) THEN
-               R = Rigidity(3)
-               LastCheck = 1
-           ELSE IF(LastCheck == 1) THEN
-               R = EndRigidity
-           END IF
-       END IF
-   END IF
-   Result = 0
+    R = (StartRigidity - (stepNum*RigidityStep))
+    IF(R < EndRigidity) THEN
+        R = EndRigidity
+    ELSE IF (R < RigidityStep) THEN
+        IF(NeverFail == 0) THEN
+            IF(LastCheck == 1) THEN
+                R = EndRigidity
+            END IF
+            IF(LastCheck == 0) THEN
+                R = Rigidity(3)
+                LastCheck = 1
+                stepNum = stepNum - 1
+            END IF
+        END IF
+    END IF
+   50 Result = 0
        
 end do
 

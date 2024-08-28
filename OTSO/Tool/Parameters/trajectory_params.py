@@ -46,7 +46,7 @@ W6 = 0
 # IOPT is Picked depending on the Kp index at the time picked
 # Take IOPT = kp + 1
 # Exception if Kp>=6 IOPT = 7
-IOPT = 5
+IOPT = 2
 ###############################################################################################################
 # Choose the atomic number of particle you want to test e.g 0 = electron, 1 = proton, 2 = helium
 # Choose if you want to reverse the charge 0 = particle, 1 = anti-particle
