@@ -31,15 +31,16 @@ Density = data["Density"]
 #Speed = [648.2]
 #Density = [1.47]
 
-G1 = 0
-G2 = 0
-G3 = 0
-
 G1Lsit = []
 G3Lsit = []
 G2Lsit = []
 
 for (By, Bz, V, N) in zip(IMFy, IMFz, Speed, Density):
+
+    G1 = 0
+    G2 = 0
+    G3 = 0
+    
     By = By
     Bz = Bz
     V = V

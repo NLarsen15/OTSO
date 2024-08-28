@@ -89,7 +89,7 @@ CoordinateSystem  = "GEO"
 ###############################################################################################################
 # Pick the maximum percentage of the particle's gyrofrequency that can be used as the max time step in the
 # computation
-MaxStepPercent = 30 #[%]
+MaxStepPercent = 10 #[%]
 ###############################################################################################################
 # Choose model magnetopause
 # 0 = 25Re Sphere, 1 = Aberrated Formisano, 2 = Sibeck, 3 = Kobel

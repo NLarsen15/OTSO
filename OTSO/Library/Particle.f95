@@ -88,6 +88,8 @@ IF (Atomic == 0) THEN ! Electron
 
  if (model(1) /= 4) then
    call CoordinateTransform("GSM", "GEO", year, day, secondTotal, Velocity, VelocityGEO)
+ ELSE
+   VelocityGEO = Velocity
  end if
 
  call Vector_Geo2Local(VelocityGEO, StartPosition(2), StartPosition(3), LocalVector)
@@ -98,6 +100,8 @@ IF (Atomic == 0) THEN ! Electron
 
  if (model(1) /= 4) then
    call CoordinateTransform("GEO", "GSM", year, day, secondTotal, GEOVelocity, Velocity)
+ ELSE
+   Velocity = GEOVelocity
  end if
 
  w = (velocity(1)*velocity(1) + velocity(2)*velocity(2) + velocity(3)*velocity(3))**(0.5)

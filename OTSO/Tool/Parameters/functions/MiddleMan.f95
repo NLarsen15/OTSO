@@ -771,8 +771,8 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
 
     IF (scan == 0) THEN
         scan = 1
-        StartRigidity = RU + 2.0*RigidityScan
-        EndRigidity = RL - 2.0*RigidityScan
+        StartRigidity = RU + 1.0*RigidityScan
+        EndRigidity = RL - 1.0*RigidityScan
         IF (EndRigidity < 0) THEN
             EndRigidity = 0
         END IF
@@ -1681,6 +1681,9 @@ END IF
 RlMemory(loop) = Rl
 RefMemory(loop) = Ref
 RuMemory(loop) = Ru
+
+!print *, PositionIN(4), " ", PositionIN(5)
+!print *, Rl, " ", Ref, " ", Ru
 
 loop = loop + 1
 R = real(StartRigidity, kind = selected_real_kind(15,307))

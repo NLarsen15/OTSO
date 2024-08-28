@@ -11,7 +11,6 @@ import matplotlib.ticker as mticker
 df = pd.read_csv('Planet.csv')
 ###############################################################################################
 
-
 lats = df['Latitude'].values
 lons = df['Longitude'].values
 totals = df['Rc'].values
