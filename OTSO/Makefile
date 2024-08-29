@@ -1,7 +1,7 @@
+#! /usr/bin/make
 # Original Author: Christian Steigies (28/6/2024)
 # Slightly modified by Nicholas Larsen to work easier within the existing OTSO framework (28/08/2024)
 
-#! /usr/bin/make
 SHELL := bash
 .ONESHELL:
 .SHELLFLAGS := -eu -o pipefail -c
