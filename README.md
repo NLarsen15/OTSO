@@ -23,6 +23,12 @@ OTSO has been designed to work alongside the Anaconda python software as this ma
 Installation instructions for OTSO outside of the Anaconda environment will be provided in the future. 
 Currently Linux is the only OS where OTSO has been reliably installed without the use of Anaconda.
 
+## Current Issues
+
+OTSO is designed around the Anaconda framework and utilises numpy distutils with f2py for compilation. Numpy has moved on from distutils in favor of meson as a compilation tool when using f2py, and this new version of numpy is provided as default in newer anaconda releases. Currently, attempts to compile OTSO with the new numpy and anaconda have been unsuccessful. A temporary solution is to download an older release of Anaconda with the old numpy distribution included. To do this, go to [the old Anaconda releases repository](https://repo.anaconda.com/archive/) and download an older version of Anaconda. OTSO was developed on the 2022 release, so finding and installing anaconda via the installer labelled `Anaconda3-2022.10` will fix this issue.
+
+Once a successful install of OTSO has been conducted using the new meson f2py the instructions will be added to this repository so users may use whatever version of anaconda they desire.
+
 ## Windows OS
 
 The easiest way to install OTSO on windows is outlined below.
