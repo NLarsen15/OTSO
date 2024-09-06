@@ -25,7 +25,7 @@ Currently Linux is the only OS where OTSO has been reliably installed without th
 
 ## Current Issues
 
-OTSO is designed around the Anaconda framework and utilises numpy distutils with f2py for compilation. Numpy has moved on from distutils in favor of meson as a compilation tool when using f2py, and this new version of numpy is provided as default in newer anaconda releases. Currently, attempts to compile OTSO with the new numpy and Anaconda have been unsuccessful. A temporary solution is to download an older release of Anaconda with the old numpy distribution included. To do this, go to [the old Anaconda releases repository](https://repo.anaconda.com/archive/) and download an older version of Anaconda. OTSO was developed on the 2022 release, so finding and installing anaconda via the installer labelled `Anaconda3-2022.10` will fix this issue.
+OTSO is designed around the Anaconda framework and utilises numpy distutils with f2py for compilation. Numpy has moved on from distutils in favor of meson as a compilation tool when using f2py, and this new version of numpy is provided as default in newer anaconda releases. Currently, attempts to compile OTSO with the new numpy and Anaconda have been unsuccessful. A temporary solution is to download an older release of Anaconda with the old numpy distribution included. To do this, go to [the old Anaconda releases repository](https://repo.anaconda.com/archive/) and download an older version of Anaconda. OTSO was developed on the 2022 release, so finding and installing anaconda via the installer labelled `Anaconda3-2022.10` will fix this issue. Ensure that numpy version 1.21.5 is installed.
 
 Once a successful install of OTSO has been conducted using the new meson f2py the instructions will be added to this repository so users may use whatever version of Anaconda they desire.
 
@@ -90,7 +90,7 @@ Note OTSO was tested on the Ubuntu OS and the following instructions will be for
 1. If Python is not already on your system follow these steps
   - Enter `sudo apt-get install python` into your terminal to get the latest Python verison installed. (note this will install Python3)
   - Download the Python3 development tools by entering `sudo apt-get install python3-dev` into the command terminal.
-  - Install the Numpy package needed to use f2py by entering `sudo apt-get install python-numpy` into the same terminal
+  - Install the Numpy package needed to use f2py by entering `sudo apt-get install python3-numpy` into the same terminal
 2. Download gfortran onto your linux system by entering `sudo apt-get install gfortran` into your command terminal.
 3. You can then compile OTSO using the same methods outlined above in the manual install instructions, however in the last step you must enter `f2py3 -c -m MiddleMan MiddleMan.f95 OTSOlib.a` instead. If you wish to use the `Linux_and_Mac_OTSO_Compiler.sh` compiler you will need to edit the code slightly. Open the compiler file and change the `f2py` command to `f2py3` the compiler will now work for you if you run it.
   - You may need to grant your computer permission before you can execute the `Linux_and_Mac_OTSO_Compiler.sh` file. To do this have the terminal open in the directory containing the compiler file and enter `chmod 755`, the file should now be able to run on your system.
