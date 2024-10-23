@@ -23,6 +23,13 @@ MaxLong = 360
 MinLong = 0
 ################################################################################################################
 # Solar Wind Conditions
+
+# LiveData will use space weather variables obtained from online databases (NOAA, WDC Kyoto, GFZ-Potsdam)
+# Will override custom space weather inputs. 
+# Only available for the last 7 days. Currently not compatible with TSY04.
+# 0 = OFF, 1 = ON
+LiveData = 0
+
 Vx = -500.0 #[km/s] (value should be negative)
 Vy = 0.0 #[km/s]
 Vz = 0.0 #[km/s]

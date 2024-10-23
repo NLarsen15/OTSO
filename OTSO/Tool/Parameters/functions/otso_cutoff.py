@@ -4,9 +4,12 @@ import multiprocessing as mp
 import os
 from Parameters import *
 from Parameters.cutoff_params import *
-from . import fortran_calls, readme_generators,cores
+from . import fortran_calls, readme_generators,cores, misc
 
 def OTSO_cutoff():
+
+    CutoffInputArray = cutoff_inputs.CutoffInputs()
+
     RigidityArray = CutoffInputArray[0]
     DateArray = CutoffInputArray[1]
     Model = CutoffInputArray[2]
@@ -63,4 +66,7 @@ def OTSO_cutoff():
     print("Whole Program Took: " + str(Printtime) + " seconds")
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMECutoff(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, Rcomp, Rscan)
+    readme_generators.READMECutoff(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, Rcomp, Rscan, LiveData)
+    
+    if LiveData == 1:
+        misc.remove_folder('./Parameters/data_files')

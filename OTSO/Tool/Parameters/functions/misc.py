@@ -4,6 +4,7 @@ import pandas as pd
 import glob
 import multiprocessing as mp
 import shutil
+from datetime import datetime,timedelta
 
 def ParamCheck(Alt, Year, Internal, EndParams):
        if EndParams[0] > Alt:
@@ -96,3 +97,29 @@ def day_of_year_to_date(doy, year):
 
     # Return the month and day as a tuple
     return (month, day)
+
+def DateCheck(Date):
+     current_date = datetime.utcnow()
+     seven_days_ago = current_date - timedelta(days=7)
+
+     if Date < seven_days_ago:
+         print("ERROR: Inputed date is over 7 days ago from current time (" + str(current_date) + ").\nOTSO is currently unable to use live data from over a week ago. \nOTSO will now terminate.")
+         exit()
+
+     return
+
+def Pdyn_comp(Density,Vx):
+    Pressure = ((((Density))*10**6)*(1.672621898e-27)*((Vx*1000)**2))*10**(9)
+    Pressure = round(Pressure,3)
+    return Pressure
+
+def remove_folder(folder_path):
+    try:
+        shutil.rmtree(folder_path)
+        #print("Folder deleted successfully.")
+    except FileNotFoundError:
+        print("The folder does not exist.")
+    except PermissionError:
+        print("You do not have permission to delete this folder.")
+    except Exception as e:
+        print(f"Error: {e}")

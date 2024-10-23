@@ -11,6 +11,8 @@ from . import fortran_calls, readme_generators, cores, misc
 
 def OTSO_trace():
 
+    TraceInputArray = trace_inputs.TraceInputs()
+
     Rigidity = TraceInputArray[0]
     DateArray = TraceInputArray[1]
     Model = TraceInputArray[2]
@@ -92,4 +94,7 @@ def OTSO_trace():
 
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMETrace(Alt, EventDate, Model, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime)
+    readme_generators.READMETrace(Alt, EventDate, Model, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, LiveData)
+
+    if LiveData == 1:
+        misc.remove_folder('./Parameters/data_files')

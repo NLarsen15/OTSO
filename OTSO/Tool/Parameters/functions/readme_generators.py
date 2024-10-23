@@ -3,9 +3,14 @@ from datetime import date
 import os
 import shutil
 
-def READMECone(UsedStationstemp, RigidityArray, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams):
+def READMECone(UsedStationstemp, RigidityArray, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams, LiveData):
       FileName = "OTSO_CONE_RUN_INFO.txt"
       file = open(FileName, "w")
+
+      if LiveData == 1:
+         OnlineData = "Online Space Weather Data Used"
+      else:
+         OnlineData = "User Inputted Space Weather Data Used "
 
       if (AntiCheck == 1):
          particle = "anti-particle"
@@ -79,6 +84,8 @@ def READMECone(UsedStationstemp, RigidityArray, EventDate, model, IntModel, Atom
       file.write("\n")
       file.write("Input Variables:"+ "\n")
       file.write("\n")
+      file.write("Custom or Live Data: " + str(OnlineData) + "\n")
+      file.write("\n")
       file.write("Simulation Date: " + EventDate.strftime("%d/%m/%Y, %H:%M:%S")+ "\n")
       file.write("\n")
       file.write("Max Time Step [% of gyrofrequency]: " + str(MaxStepPercent)+ "\n")
@@ -150,9 +157,14 @@ def READMECone(UsedStationstemp, RigidityArray, EventDate, model, IntModel, Atom
       shutil.move(os.path.join(current_directory, FileName), final_directory )
       return
 
-def READMECutoff(UsedStationstemp, RigidityArray, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams, Rcomp, Rscan):
+def READMECutoff(UsedStationstemp, RigidityArray, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams, Rcomp, Rscan, LiveData):
       FileName = "OTSO_CUTOFF_RUN_INFO.txt"
       file = open(FileName, "w")
+
+      if LiveData == 1:
+         OnlineData = "Online Space Weather Data Used"
+      else:
+         OnlineData = "User Inputted Space Weather Data Used "
 
       if (Rcomp == 0):
          CutoffComp = "Vertical Cutoff Rigidity"
@@ -238,6 +250,8 @@ def READMECutoff(UsedStationstemp, RigidityArray, EventDate, model, IntModel, At
       file.write(str(IntegrationMethod)+ "\n")
       file.write("\n")
       file.write("Input Variables:"+ "\n")
+      file.write("\n")
+      file.write("Custom or Live Data: " + str(OnlineData) + "\n")
       file.write("\n")
       file.write("Simulation Date: " + EventDate.strftime("%d/%m/%Y, %H:%M:%S")+ "\n")
       file.write("\n")
@@ -432,9 +446,14 @@ def READMEFlight(UsedStationstemp, RigidityArray, EventDate, model, IntModel, At
       return
 
 
-def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams):
+def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent, EndParams, LiveData):
       FileName = "OTSO_TRAJECTORY_RUN_INFO.txt"
       file = open(FileName, "w")
+
+      if LiveData == 1:
+         OnlineData = "Online Space Weather Data Used"
+      else:
+         OnlineData = "User Inputted Space Weather Data Used "
 
       if (AntiCheck == 1):
          particle = "anti-particle"
@@ -505,6 +524,8 @@ def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, IntModel, Ato
       file.write("\n")
       file.write("Input Variables:"+ "\n")
       file.write("\n")
+      file.write("Custom or Live Data: " + str(OnlineData) + "\n")
+      file.write("\n")
       file.write("Simulation Date: " + EventDate.strftime("%d/%m/%Y, %H:%M:%S")+ "\n")
       file.write("\n")
       file.write("Max Time Step [% of gyrofrequency]: " + str(MaxStepPercent)+ "\n")
@@ -574,9 +595,14 @@ def READMETrajectory(UsedStationstemp, Rigidity, EventDate, model, IntModel, Ato
       shutil.move(os.path.join(current_directory, FileName), final_directory )
       return
 
-def READMEPlanet(Data, Rigidity, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent, EndParams, Rcomp, Rscan):
+def READMEPlanet(Data, Rigidity, EventDate, model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent, EndParams, Rcomp, Rscan, LiveData):
       FileName = "OTSO_PLANET_RUN_INFO.txt"
       file = open(FileName, "w")
+
+      if LiveData == 1:
+         OnlineData = "Online Space Weather Data Used"
+      else:
+         OnlineData = "User Inputted Space Weather Data Used "
 
       if (Rcomp == 0):
          CutoffComp = "Vertical Cutoff Rigidity"
@@ -659,6 +685,8 @@ def READMEPlanet(Data, Rigidity, EventDate, model, IntModel, AtomicNum, AntiChec
       file.write("\n")
       file.write("Input Variables:"+ "\n")
       file.write("\n")
+      file.write("Custom or Live Data: " + str(OnlineData) + "\n")
+      file.write("\n")
       file.write("Simulation Date: " + EventDate.strftime("%d/%m/%Y, %H:%M:%S")+ "\n")
       file.write("\n")
       file.write("Max Time Step [% of gyrofrequency]: " + str(MaxStepPercent)+ "\n")
@@ -725,9 +753,14 @@ def READMEPlanet(Data, Rigidity, EventDate, model, IntModel, AtomicNum, AntiChec
       shutil.move(os.path.join(current_directory, FileName), final_directory )
       return
 
-def READMETrace(Alt, EventDate, model, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime):
+def READMETrace(Alt, EventDate, model, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, LiveData):
       FileName = "OTSO_TRACE_RUN_INFO.txt"
       file = open(FileName, "w")
+
+      if LiveData == 1:
+         OnlineData = "Online Space Weather Data Used"
+      else:
+         OnlineData = "User Inputted Space Weather Data Used "
 
       if (model[0] == 1):
          Internal = "IGRF"
@@ -780,6 +813,8 @@ def READMETrace(Alt, EventDate, model, IOPT, WindArray, Magnetopause, FileDescri
       file.write(str(CoordinateSystem)+ "\n")
       file.write("\n")
       file.write("Input Variables:"+ "\n")
+      file.write("\n")
+      file.write("Custom or Live Data: " + str(OnlineData) + "\n")
       file.write("\n")
       file.write("Simulation Date: " + EventDate.strftime("%d/%m/%Y, %H:%M:%S")+ "\n")
       file.write("\n")

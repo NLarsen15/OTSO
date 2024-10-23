@@ -159,6 +159,9 @@ write(10,'(*(G0.6,:,","))') XnewConverted
 IF (Position(1) < End(1) ) THEN
     print *, "This is Forbidden", "      Encountered Earth"
     call AsymptoticDirection(Lat, Long)
+    print *, "Final Position (Latitude, Longitude)"
+    print *, Position
+    print *, "Asymptotic Directions (Latitude, Longitude)"
     print *, Lat, Long
     Limit = 1
     EXIT
@@ -168,8 +171,11 @@ IF (End(2) == 0) THEN
     
 ELSE IF ( DistanceTraveled/1000.0 > End(2)*Re) THEN
     print *, "This is Forbidden", "      Exceeded Travel Distance Without Escape"
-    print *, DistanceTraveled
+    !print *, DistanceTraveled
     call AsymptoticDirection(Lat, Long)
+    print *, "Final Position (Latitude, Longitude)"
+    print *, Position
+    print *, "Asymptotic Directions (Latitude, Longitude)"
     print *, Lat, Long
     Limit = 1
     EXIT
@@ -179,8 +185,11 @@ IF (End(3) == 0) THEN
 
 ELSE IF ( TimeElapsed > End(3)) THEN
     print *, "This is Forbidden", "      Exceeded Maximum Time"
-    print *, TimeElapsed
+    !print *, TimeElapsed
     call AsymptoticDirection(Lat, Long)
+    print *, "Final Position (Latitude, Longitude)"
+    print *, Position
+    print *, "Asymptotic Directions (Latitude, Longitude)"
     print *, Lat, Long
     Limit = 1
     EXIT
@@ -190,7 +199,9 @@ END IF
 IF (Result == 1)  THEN
     print *, "This is Allowed", "      Successfully Escaped"
     call AsymptoticDirection(Lat, Long)
-    print *, "Escape Position"
+    print *, "Escape Position (Altitude [km], Latitude, Longitude)"
+    print *, Position
+    print *, "Asymptotic Directions (Latitude, Longitude)"
     print *, Lat, Long
     EXIT
 END IF

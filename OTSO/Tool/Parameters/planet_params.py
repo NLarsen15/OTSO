@@ -27,6 +27,13 @@ MaxDist = 100 #[Re]
 MaxTime = 0 #[s]
 ################################################################################################################
 # Solar Wind Conditions
+
+# LiveData will use space weather variables obtained from online databases (NOAA, WDC Kyoto, GFZ-Potsdam)
+# Will override custom space weather inputs. 
+# Only available for the last 7 days. Currently not compatible with TSY04.
+# 0 = OFF, 1 = ON
+LiveData = 0
+
 Vx = -500.0 #[km/s] (value should be negative)
 Vy = 0.0 #[km/s]
 Vz = 0.0 #[km/s]
@@ -78,12 +85,12 @@ External = 0
 ###############################################################################################################
 # Pick the integration model to use
 # 1 = 4th Order Runge-Kutta, 2 = Boris Method, 3 = Vay, 4 = Higuera-Cary
-IntModel = 3
+IntModel = 1
 ###############################################################################################################
 # Pick the start and end rigidity for the computation, as well as the step
 StartRigidity = 20 #[GV]
 EndRigidity = 0 #[GV]
-RigidityStep = 0.01 #[GV]
+RigidityStep = 0.1 #[GV]
 ###############################################################################################################
 # Rigidity Scan (will quickly scan the rigidity range for an estimate of the effective cutoff, then will
 # start the main computation around the estimated effective cutoff)
@@ -99,7 +106,7 @@ MaxStepPercent = 10 #[%]
 Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in results directory
-FolderName = "Example Planet Folder "
+FolderName = "Example Planet Folder"
 ###############################################################################################################
 # Select the number of cores that the computation will be performed over
 CoreNum = 1

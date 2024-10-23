@@ -11,6 +11,8 @@ from . import fortran_calls, readme_generators, misc, cores
 
 def OTSO_planet():
 
+    PlanetInputArray = planet_inputs.PlanetInputs()
+
     LongitudeList = PlanetInputArray[0]
     LatitudeList = PlanetInputArray[1]
     RigidityArray = PlanetInputArray[2]
@@ -80,4 +82,7 @@ def OTSO_planet():
     misc.PlanetFile(FileDescriptors[1])
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent*100, EndParams, Rcomp, Rscan)
+    readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, Printtime, LatStep, LongStep, MaxStepPercent*100, EndParams, Rcomp, Rscan, LiveData)
+
+    if LiveData == 1:
+        misc.remove_folder('./Parameters/data_files')

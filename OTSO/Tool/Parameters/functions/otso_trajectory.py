@@ -4,9 +4,11 @@ import multiprocessing as mp
 import os
 from Parameters import *
 from Parameters.trajectory_params import *
-from . import fortran_calls, readme_generators, cores
+from . import fortran_calls, readme_generators, cores, misc
 
 def OTSO_trajectory():
+
+    TrajectoryInputArray = trajectory_inputs.TrajectoryInputs()
 
     Rigidity = TrajectoryInputArray[0]
     DateArray = TrajectoryInputArray[1]
@@ -62,4 +64,7 @@ def OTSO_trajectory():
 
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMETrajectory(Station_Array, Rigidity, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams)
+    readme_generators.READMETrajectory(Station_Array, Rigidity, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, LiveData)
+
+    if LiveData == 1:
+        misc.remove_folder('./Parameters/data_files')

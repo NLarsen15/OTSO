@@ -4,9 +4,12 @@ import multiprocessing as mp
 import os
 from Parameters import *
 from Parameters.cone_params import *
-from . import fortran_calls, readme_generators,cores
+from . import fortran_calls, readme_generators,cores,misc
 
 def OTSO_cone():
+
+    ConeInputArray = cone_inputs.ConeInputs()
+
     RigidityArray = ConeInputArray[0]
     DateArray = ConeInputArray[1]
     Model = ConeInputArray[2]
@@ -60,4 +63,7 @@ def OTSO_cone():
     print("Whole Program Took: " + str(Printtime) + " seconds")
     
     EventDate = datetime(Year,Month,Day,Hour,Minute,Second)
-    readme_generators.READMECone(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams)
+    readme_generators.READMECone(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPT, WindArray, Magnetopause, FileDescriptors, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, LiveData)
+
+    if LiveData == 1:
+        misc.remove_folder('./Parameters/data_files')

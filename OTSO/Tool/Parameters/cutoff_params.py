@@ -20,6 +20,13 @@ MaxDist = 100 #[Re]
 MaxTime = 0 #[s]
 ################################################################################################################
 # Solar Wind Conditions
+
+# LiveData will use space weather variables obtained from online databases (NOAA, WDC Kyoto, GFZ-Potsdam)
+# Will override custom space weather inputs. 
+# Only available for the last 7 days. Currently not compatible with TSY04.
+# 0 = OFF, 1 = ON
+LiveData = 1
+
 Vx = -500.0 #[km/s] (value should be negative)
 Vy = 0.0 #[km/s]
 Vz = 0.0 #[km/s]
@@ -76,7 +83,7 @@ IntModel = 1
 # Pick the start and end rigidity for the computation, as well as the step
 StartRigidity = 20 #[GV]
 EndRigidity = 0 #[GV]
-RigidityStep = 0.1 #[GV]
+RigidityStep = 0.01 #[GV]
 ###############################################################################################################
 # Rigidity Scan (will quickly scan the rigidity range for an estimate of the effective cutoff, then will
 # start the main computation around the estimated effective cutoff)
@@ -97,7 +104,7 @@ Magnetopause = 3
 ###############################################################################################################
 # Choose the name of the folder that output files will be sent to. Folder created in the current directory
 FolderName = "Cutoff Example Folder"
-FileName = "_Vertical"
+FileName = "_Cutoff"
 ###############################################################################################################
 # Select the number of cores for multicore processing
 CoreNum = 1
