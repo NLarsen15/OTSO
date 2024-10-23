@@ -25,7 +25,7 @@ MaxTime = 0 #[s]
 # Will override custom space weather inputs. 
 # Only available for the last 7 days. Currently not compatible with TSY04.
 # 0 = OFF, 1 = ON
-LiveData = 1
+LiveData = 0
 
 Vx = -500.0 #[km/s] (value should be negative)
 Vy = 0.0 #[km/s]
