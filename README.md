@@ -39,6 +39,7 @@ The easiest way to install OTSO on windows is outlined below.
    - First enter `pacman -Syu` into the MSYS2 terminal to update the packages
    - After this is finished MSYS2 will close, open up the terminal again and repeat the first step until no more updates are needed.
    - To install the fortran compiler, enter `pacman -S --needed base-devel mingw-w64-x86_64-toolchain` into the MSYS2 terminal. Select the default option of `all` when prompted.
+   - To insure gfortran is installed, enter `pacman -S mingw-w64-x86_64-gcc-fortran` into the MSYS2 terminal and run. 
    - The last step for installing the fortran compiler is to add the directory where the `.exe` file for gfortran is to the environment path variables. The file is typically found at `C:\msys64\mingw64\bin`, but this can vary depending on where you decided to install MSYS2. To add this directory to the environment path variables you can follow these [instructions](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/ee537574(v=office.14)).
 
 3. In order to run on your computer, OTSO needs to be compiled. This can either be done automatically or manually. We suggest using the automatic compilation first and only attempting the manual way if the former method fails.
@@ -54,6 +55,7 @@ The easiest way to install OTSO on windows is outlined below.
   - Copy all files that end with `.mod` and the `OTSOlib.a` file into the functions folder which can be found in the Parameters folder within the Tool directory.
   - Find the location of the `f2py-script.py` file on your computer and copy the complete path to this file (it should be located in your anaconda3 directory similar to `c:\User\anaconda3\Scripts\f2py-script.py`). We recommend copying this path to a `.txt` file within the OTSO folder for future reference. 
   - Open a new anaconda prompt, or change the directory in the already open one, to the Tool folder within OTSO and run the command `python [YOUR F2PY FILE PATH] -c --fcompiler=gnu95 --compiler=mingw32 -m MiddleMan MiddleMan.f95 OTSOlib.a`, replacing [YOUR F2PY FILE PATH] with the path to the `f2py-script.py` file on your computer.
+  - It is also possible to run `f2py -c --fcompiler=gnu95 --compiler=mingw32 -m MiddleMan MiddleMan.f95 OTSOlib.a` instead and the compilations should complete.
   
 ## Linux
 
