@@ -11,6 +11,8 @@ from . import fortran_calls, readme_generators, misc, cores
 
 def OTSO_planet_bulk():
 
+    BulkPlanetInputArraySpace, BulkPlanetInputArrayGauss = bulk_planet_inputs.BulkPlanetInputs()
+
     LongitudeList = BulkPlanetInputArraySpace[0]
     LatitudeList = BulkPlanetInputArraySpace[1]
     RigidityArray = BulkPlanetInputArraySpace[2]
