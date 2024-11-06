@@ -7,6 +7,9 @@ from Parameters.bulk_cone_params import *
 from . import fortran_calls, readme_generators, cores, misc
 
 def OTSO_cone_bulk():
+
+    BulkConeInputArraySpace, BulkConeInputArrayGauss = bulk_cone_inputs.BulkConeInputs()
+
     RigidityArray = BulkConeInputArraySpace[0]
     DateArrayList = BulkConeInputArraySpace[1]
     Model = BulkConeInputArraySpace[2]

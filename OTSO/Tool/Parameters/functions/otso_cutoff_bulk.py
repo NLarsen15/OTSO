@@ -7,6 +7,9 @@ from Parameters.bulk_cutoff_params import *
 from . import fortran_calls, readme_generators, cores, misc
 
 def OTSO_cutoff_bulk():
+
+    BulkCutoffInputArraySpace, BulkCutoffInputArrayGauss = bulk_cutoff_inputs.BulkCutoffInputs()
+
     RigidityArray = BulkCutoffInputArraySpace[0]
     DateArrayList = BulkCutoffInputArraySpace[1]
     Model = BulkCutoffInputArraySpace[2]
