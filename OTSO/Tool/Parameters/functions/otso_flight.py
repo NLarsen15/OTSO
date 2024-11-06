@@ -7,6 +7,9 @@ from Parameters.flight_params import *
 from . import fortran_calls, readme_generators, cores, misc
 
 def OTSO_Flight():
+
+    FlightInputArray = flight_inputs.FlightInputs()
+
     RigidityArray = FlightInputArray[0]
     DateArrayList = FlightInputArray[1]
     Model = FlightInputArray[2]
@@ -54,7 +57,8 @@ def OTSO_Flight():
     print("Compuation Took: " + str(Printtime) + " Seconds")
     month, day = misc.day_of_year_to_date(Date[1], Date[0])
     EventDate = datetime(int(Date[0]),int(month),int(day),int(Date[2]),int(Date[3]),int(Date[4]))
-    readme_generators.READMECutoff(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, I, Wind, Magnetopause, File, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, Rcomp, Rscan)
+    LiveData = 0
+    readme_generators.READMECutoff(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, I, Wind, Magnetopause, File, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, Rcomp, Rscan, LiveData)
     misc.FlightFile(File[2])
     misc.FlightCopy(FileDescriptorsList[0][2])
     finalstop = time.time()
