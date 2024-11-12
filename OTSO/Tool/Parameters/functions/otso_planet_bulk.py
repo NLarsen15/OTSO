@@ -90,7 +90,8 @@ def OTSO_planet_bulk():
             month, day = misc.day_of_year_to_date(Date[1], Date[0])
             
             EventDate = datetime(int(Date[0]),int(month),int(day),int(Date[2]),int(Date[3]),int(Date[4]))
-            readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, I, Wind, Magnetopause, File, Printtime, LatStep, LongStep, MaxStepPercent*100, EndParams, Rcomp, Rscan)
+            LiveData = 0
+            readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, I, Wind, Magnetopause, File, Printtime, LatStep, LongStep, MaxStepPercent*100, EndParams, Rcomp, Rscan, LiveData)
     elif Bulkcomp == 1:
             for File, Gauss in zip(FileDescriptorsListGauss, GaussCoeffs):
                 start = time.time()
@@ -121,9 +122,9 @@ def OTSO_planet_bulk():
                 misc.PlanetFile(File[1])
         
                 month, day = misc.day_of_year_to_date(DateArrayGauss[1], DateArrayGauss[0])
-                
+                LiveData = 0
                 EventDate = datetime(int(DateArrayGauss[0]),int(month),int(day),int(DateArrayGauss[2]),int(DateArrayGauss[3]),int(DateArrayGauss[4]))
-                readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPTGauss, WindGauss, Magnetopause, File, Printtime, LatStep, LongStep, MaxStepPercent*100, EndParams, Rcomp, Rscan)
+                readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPTGauss, WindGauss, Magnetopause, File, Printtime, LatStep, LongStep, MaxStepPercent*100, EndParams, Rcomp, Rscan, LiveData)
 
     finalstop = time.time()
     Printtime = round((finalstop-truestart),3)

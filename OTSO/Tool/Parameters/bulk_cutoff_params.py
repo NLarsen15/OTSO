@@ -41,7 +41,7 @@ IntModel = 3
 # Pick the start and end rigidity for the computation, as well as the step
 StartRigidity = 20 #[GV]
 EndRigidity = 0 #[GV]
-RigidityStep = 0.1 #[GV]
+RigidityStep = 0.01 #[GV]
 ###############################################################################################################
 # Rigidity Scan (will quickly scan the rigidity range for an estimate of the effective cutoff, then will
 # start the main computation around the estimated effective cutoff)
