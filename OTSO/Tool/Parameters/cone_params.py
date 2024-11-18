@@ -19,6 +19,13 @@ MaxTime = 0 #[s]
 ################################################################################################################
 # Solar Wind Conditions
 
+# ServerData will use space weather variables downloaded from the OMNI database and stored within OTSO.
+# Will override custom space weather inputs.
+# If variable file not found in OTSO you will be asked if you want to download variables for input year.
+# Downloading variables can take up to 30 minutes per year (due to TSY04 computations).
+# 0 = OFF, 1 = ON
+ServerData = 0
+
 # LiveData will use space weather variables obtained from online databases (NOAA, WDC Kyoto, GFZ-Potsdam)
 # Will override custom space weather inputs. 
 # Only available for the last 7 days. Currently not compatible with TSY04.
