@@ -248,6 +248,9 @@ def Combine(TSYfile, Dstfile, year):
     hourly_resampled = hourly_df.resample('5T').ffill()
     combined_df = five_min_df.combine_first(hourly_resampled).reset_index()
 
+    if 'V' in combined_df.columns:
+        combined_df['V'] = combined_df['V'].abs()
+
 
     if dst_value is not None and kp_value is not None:
         mask = (combined_df['Date'].dt.year == year) & \
@@ -270,7 +273,6 @@ def Combine(TSYfile, Dstfile, year):
     os.makedirs(destination_folder, exist_ok=True)
     destination_file = os.path.join(destination_folder, os.path.basename(source_file))
     shutil.move(source_file, destination_file)
-
 
 def Omnidelete(OMNIYEAR):
 
