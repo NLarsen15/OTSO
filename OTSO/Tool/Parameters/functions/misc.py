@@ -16,6 +16,20 @@ def ParamCheck(Alt, Year, Internal, EndParams):
           print("ERROR: IGRF 13 model currently only works for dates between 1900 to 2025. Please select a date within this range to use the IGRF model")
           exit()
 
+def DataCheck(ServerData, LiveData, EventDate):
+       current_date = datetime.utcnow()
+       if (ServerData == 1 or LiveData == 1) and EventDate > current_date:
+        print("ERROR: Future date entered. No valid data available. \nOTSO program will now terminate.")
+        exit()
+       if ServerData == 1 and EventDate.year < 1981:
+        print("ERROR: OMNI data only goes back to 1981. No valid data for entered date. \nOTSO program will now terminate.")
+        exit()
+       if ServerData == 1 and LiveData == 1:
+        print("ERROR: You have requested live and server data. Only one can be selected. \nOTSO program will now terminate.")
+        exit()
+
+
+
 
 
 def PlanetFile(final_directory):
@@ -103,7 +117,7 @@ def DateCheck(Date):
      seven_days_ago = current_date - timedelta(days=7)
 
      if Date < seven_days_ago:
-         print("ERROR: Inputed date is over 7 days ago from current time (" + str(current_date) + ").\nOTSO is currently unable to use live data from over a week ago. \nOTSO will now terminate.")
+         print("ERROR: Inputed date is over 7 days ago from current time (" + str(current_date) + ").\n live data only available for the last week. \nOTSO will now terminate.")
          exit()
 
      return
@@ -123,3 +137,11 @@ def remove_folder(folder_path):
         print("You do not have permission to delete this folder.")
     except Exception as e:
         print(f"Error: {e}")
+
+def IOPTprocess(Kp):
+    if Kp >= 6:
+        IOPT = 7
+    else:
+        IOPT = Kp + 1
+
+    return IOPT

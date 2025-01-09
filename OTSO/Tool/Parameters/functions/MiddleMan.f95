@@ -2121,3 +2121,21 @@ write(10,'(*(G0.6,:,","))') PositionIN(2), PositionIN(3), RU, Ref, RL
 Close(10, STATUS='KEEP') 
        
 end subroutine planetgauss
+
+
+subroutine GETTSY04DATA(OMNIYEAR)
+USE GEOPACK1
+implicit none
+
+integer(4) :: OMNIYEAR,inputyear
+
+inputyear = OMNIYEAR
+
+
+CALL FILLIMFGAPS(inputyear)
+CALL FILLSWGAPS(inputyear)
+CALL PREPAREINTERVALS1(inputyear)
+CALL PREPAREINPUT4(inputyear)
+
+
+end subroutine GETTSY04DATA

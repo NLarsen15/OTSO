@@ -114,8 +114,8 @@ def Get_Data(current_time):
 
     os.makedirs(output_directory, exist_ok=True)
 
-    current_time = datetime.utcnow()
-    current_time = current_time - timedelta(hours=3)
+    #current_time = datetime.utcnow()
+    #current_time = current_time - timedelta(hours=3)
     current_month = f"{current_time.month:02d}"
     current_year = current_time.year
     curretnt_year_two_digits = current_year % 100

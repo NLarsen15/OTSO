@@ -67,8 +67,8 @@ def OTSO_cutoff_bulk():
             Printtime = round((stop-start),3)
             print("Compuation Took: " + str(Printtime) + " Seconds")
             month, day = misc.day_of_year_to_date(Date[1], Date[0])
-            EventDate = datetime(int(Date[0]),int(month),int(day),int(Date[2]),int(Date[3]),int(Date[4]))
             LiveData = 0
+            EventDate = datetime(int(Date[0]),int(month),int(day),int(Date[2]),int(Date[3]),int(Date[4]))
             readme_generators.READMECutoff(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, I, Wind, Magnetopause, File, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, Rcomp, Rscan, LiveData)
     elif Bulkcomp == 1:
         for File, Gauss in zip(FileDescriptorsListGauss, GaussCoeffs):

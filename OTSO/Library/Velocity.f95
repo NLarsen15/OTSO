@@ -67,7 +67,7 @@ subroutine NormalVector(StartPosition, NormOUT)
 USE particle
 implicit none
     
-real(8) :: Earth, StartPosition(3)
+real(8) :: Earth, StartPosition(5)
 real(8) :: NormOUT(3), xDT(3), xDTConvert(3), xINConvert(3)
     
 !f2py intent(in) xIN, year, day, sec

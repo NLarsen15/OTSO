@@ -106,18 +106,18 @@ end subroutine LatGDZ2GEO
 
 subroutine Rotate(Vector, Zenith, Azimuth, NewVector)
 implicit none
-real(8) :: Vector(3), Zenith, Azimuth, NewVector(3), TempVector(3)
+real(8) :: Vector(3), Zenith, Azimuth, NewVector(3), TempVector(3), NewZenith, NewAzimuth
 real(8), parameter :: pi  = 4 * atan(1.0_8)
 
-Zenith = -(pi / 180.0)*Zenith
-Azimuth = (pi / 180.0)*Azimuth
+NewZenith = -(pi / 180.0)*Zenith
+NewAzimuth = (pi / 180.0)*Azimuth
 
-TempVector(1) = Vector(1)*cos(Zenith) + Vector(3)*sin(Zenith)
+TempVector(1) = Vector(1)*cos(NewZenith) + Vector(3)*sin(NewZenith)
 TempVector(2) = Vector(2)
-TempVector(3) = -Vector(1)*sin(Zenith) + Vector(3)*cos(Zenith)
+TempVector(3) = -Vector(1)*sin(NewZenith) + Vector(3)*cos(NewZenith)
 
-NewVector(1) = TempVector(1)*cos(Azimuth) - TempVector(2)*sin(Azimuth)
-NewVector(2) = TempVector(1)*sin(Azimuth) + TempVector(2)*cos(Azimuth)
+NewVector(1) = TempVector(1)*cos(NewAzimuth) - TempVector(2)*sin(NewAzimuth)
+NewVector(2) = TempVector(1)*sin(NewAzimuth) + TempVector(2)*cos(NewAzimuth)
 NewVector(3) = TempVector(3)
 
 end subroutine Rotate

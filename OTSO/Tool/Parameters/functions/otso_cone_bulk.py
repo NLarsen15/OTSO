@@ -64,8 +64,8 @@ def OTSO_cone_bulk():
             print("Computation Took: " + str(Printtime) + " Seconds")
 
             month, day = misc.day_of_year_to_date(Date[1], Date[0])
-            EventDate = datetime(int(Date[0]),int(month),int(day),int(Date[2]),int(Date[3]),int(Date[4]))
             LiveData = 0
+            EventDate = datetime(int(Date[0]),int(month),int(day),int(Date[2]),int(Date[3]),int(Date[4]))
             readme_generators.READMECone(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, I, Wind, Magnetopause, File, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, LiveData)
     elif Bulkcomp == 1:
         for File, Gauss in zip(FileDescriptorsListGauss, GaussCoeffs):
@@ -91,8 +91,8 @@ def OTSO_cone_bulk():
             print("Computation Took: " + str(Printtime) + " Seconds")
 
             month, day = misc.day_of_year_to_date(DateArrayGauss[1], DateArrayGauss[0])
-            EventDate = datetime(int(DateArrayGauss[0]),int(month),int(day),int(DateArrayGauss[2]),int(DateArrayGauss[3]),int(DateArrayGauss[4]))
             LiveData = 0
+            EventDate = datetime(int(DateArrayGauss[0]),int(month),int(day),int(DateArrayGauss[2]),int(DateArrayGauss[3]),int(DateArrayGauss[4]))
             readme_generators.READMECone(Station_Array, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPTGauss, WindGauss, Magnetopause, File, CoordinateSystem, Printtime, MaxStepPercent*100, EndParams, LiveData)
 
     finalstop = time.time()

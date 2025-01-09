@@ -122,6 +122,7 @@ def OTSO_planet_bulk():
                 misc.PlanetFile(File[1])
         
                 month, day = misc.day_of_year_to_date(DateArrayGauss[1], DateArrayGauss[0])
+                
                 LiveData = 0
                 EventDate = datetime(int(DateArrayGauss[0]),int(month),int(day),int(DateArrayGauss[2]),int(DateArrayGauss[3]),int(DateArrayGauss[4]))
                 readme_generators.READMEPlanet(Data, RigidityArray, EventDate, Model, IntModel, AtomicNum, AntiCheck, IOPTGauss, WindGauss, Magnetopause, File, Printtime, LatStep, LongStep, MaxStepPercent*100, EndParams, Rcomp, Rscan, LiveData)

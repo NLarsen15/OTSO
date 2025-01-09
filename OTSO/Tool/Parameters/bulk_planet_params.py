@@ -64,7 +64,7 @@ MaxStepPercent = 10 #[%]
 Magnetopause = 3
 ###############################################################################################################
 # Choose name of folder that output files will be sent to. Folder created in results directory
-FolderName = "Example Planet Bulk Folder "
+FolderName = "Example Planet Bulk Folder"
 ###############################################################################################################
 # Select the number of cores that the computation will be performed over
 CoreNum = 1
