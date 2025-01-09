@@ -12,8 +12,8 @@ def ParamCheck(Alt, Year, Internal, EndParams):
         exit()
 
        if Internal == 1:
-         if Year<1900 or Year>2025:
-          print("ERROR: IGRF 13 model currently only works for dates between 1900 to 2025. Please select a date within this range to use the IGRF model")
+         if Year<1900 or Year>2030:
+          print("ERROR: IGRF 14 model currently only works for dates between 1900 to 2030. Please select a date within this range to use the IGRF model")
           exit()
 
 def DataCheck(ServerData, LiveData, EventDate):
