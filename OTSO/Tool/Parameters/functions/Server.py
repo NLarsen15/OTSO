@@ -6,9 +6,14 @@ import pandas as pd
 import numpy as np
 import sys
 
+def round_to_nearest_five_minutes(date):
+    if date.minute % 5 == 0 and date.second == 0 and date.microsecond == 0:
+        return date.replace(second=0, microsecond=0)
+    return (date + timedelta(minutes=5 - date.minute % 5)).replace(second=0, microsecond=0)
+
 def GetServerData(Date, External):
     OMNIYEAR = int(Date.year)
-    RoundedDate = (Date + timedelta(minutes=5 - Date.minute % 5)).replace(second=0, microsecond=0)
+    RoundedDate = round_to_nearest_five_minutes(Date)
     Date, By, Bz, V, Density, Pdyn, Kp, Dst, G1, G2, G3, W1, W2, W3, W4, W5, W6 = ExtractServerData(RoundedDate, External)
 
     return By, Bz, V, Density, Pdyn, Kp, Dst, G1, G2, G3, W1, W2, W3, W4, W5, W6
