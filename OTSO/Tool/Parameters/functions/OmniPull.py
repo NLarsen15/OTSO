@@ -193,7 +193,7 @@ def TSY01_Constants(data):
 
     IMFy = data["By"]
     IMFz = data["Bz"]
-    Speed = -1*data["V"]
+    Speed = data["V"]
     Density = data["Density"]
     G1 = 0
     G2 = 0
@@ -202,7 +202,8 @@ def TSY01_Constants(data):
     for (By, Bz, V, N) in zip(IMFy, IMFz, Speed, Density):
         By = By
         Bz = Bz
-        V = V
+        if V < 0:
+            V = -1*V
         W = 1/len(IMFy)
     
     
