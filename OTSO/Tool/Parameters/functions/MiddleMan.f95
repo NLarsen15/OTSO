@@ -1162,7 +1162,7 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
     datetime_string = FileName(1:FileNamePosition-1)
 
     write(10,'(*(G0.6,:""))') datetime_string, "," , PositionIN(2), "," , PositionIN(3), "," ,PositionIN(1), &
-    ",", RU, ",", Ref, "," , RL 
+    ",", RL, ",", Ref, "," , RU 
 
     Close(10, STATUS='KEEP') 
 
