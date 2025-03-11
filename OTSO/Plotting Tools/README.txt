@@ -1,3 +1,0 @@
-The provided plotting scripts are simple skeleton code compatible with the OTSO outputs, allowing users to quickly and easily visualise their results without writing their own scripts.
-
-The intention of these scripts is for them to be edited by the user to meet their plotting needs. You may also wish to create your own plotting code from scratch using these codes as guides on how to read in the OTSO outputs.
