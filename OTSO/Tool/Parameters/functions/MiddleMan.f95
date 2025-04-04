@@ -158,7 +158,7 @@ write(10,'(*(G0.6,:,","))') XnewConverted
 
 IF (Position(1) < End(1) ) THEN
     print *, "This is Forbidden", "      Encountered Earth"
-    call AsymptoticDirection(Lat, Long)
+    call AsymptoticDirection(Lat, Long, CoordSystem)
     print *, "Final Position (Latitude, Longitude)"
     print *, Position
     print *, "Asymptotic Directions (Latitude, Longitude)"
@@ -172,7 +172,7 @@ IF (End(2) == 0) THEN
 ELSE IF ( DistanceTraveled/1000.0 > End(2)*Re) THEN
     print *, "This is Forbidden", "      Exceeded Travel Distance Without Escape"
     !print *, DistanceTraveled
-    call AsymptoticDirection(Lat, Long)
+    call AsymptoticDirection(Lat, Long, CoordSystem)
     print *, "Final Position (Latitude, Longitude)"
     print *, Position
     print *, "Asymptotic Directions (Latitude, Longitude)"
@@ -186,7 +186,7 @@ IF (End(3) == 0) THEN
 ELSE IF ( TimeElapsed > End(3)) THEN
     print *, "This is Forbidden", "      Exceeded Maximum Time"
     !print *, TimeElapsed
-    call AsymptoticDirection(Lat, Long)
+    call AsymptoticDirection(Lat, Long, CoordSystem)
     print *, "Final Position (Latitude, Longitude)"
     print *, Position
     print *, "Asymptotic Directions (Latitude, Longitude)"
@@ -198,7 +198,7 @@ END IF
 
 IF (Result == 1)  THEN
     print *, "This is Allowed", "      Successfully Escaped"
-    call AsymptoticDirection(Lat, Long)
+    call AsymptoticDirection(Lat, Long, CoordSystem)
     print *, "Escape Position (Altitude [km], Latitude, Longitude)"
     print *, Position
     print *, "Asymptotic Directions (Latitude, Longitude)"
@@ -306,7 +306,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, lat, Long, "Forbidden", "      Encountered Earth" !(Prints the outputs to the command module while running (Can lead to delays with multi-core proccessing))
         write(10,'(*(G0.6,:,","))') R, bool, Lat, Long, GEOfile(1), GEOfile(2), GEOfile(3)
@@ -321,7 +321,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, lat, Long, "Forbidden",  "      Exceeded Travel Distance Without Escape" !(Prints the outputs to the command module while running (Can lead to delays with multi-core proccessing))
         write(10,'(*(G0.6,:,","))') R, bool, Lat, Long, GEOfile(1), GEOfile(2), GEOfile(3)
@@ -336,7 +336,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, lat, Long, "Forbidden",  "      Maximum Time Exceeded" !(Prints the outputs to the command module while running (Can lead to delays with multi-core proccessing))
         write(10,'(*(G0.6,:,","))') R, bool, Lat, Long, GEOfile(1), GEOfile(2), GEOfile(3)
@@ -344,7 +344,7 @@ subroutine cone(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mode
     END IF
     
     IF (Result == 1) THEN
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         forbiddencount = 0
         bool = 1
@@ -486,7 +486,7 @@ subroutine conegauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date,
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, lat, Long, "Forbidden", "      Encountered Earth" !(Prints the outputs to the command module while running (Can lead to delays with multi-core proccessing))
         write(10,'(*(G0.6,:,","))') R, bool, Lat, Long, GEOfile(1), GEOfile(2), GEOfile(3)
@@ -501,7 +501,7 @@ subroutine conegauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date,
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, lat, Long, "Forbidden",  "      Exceeded Travel Distance Without Escape" !(Prints the outputs to the command module while running (Can lead to delays with multi-core proccessing))
         write(10,'(*(G0.6,:,","))') R, bool, Lat, Long, GEOfile(1), GEOfile(2), GEOfile(3)
@@ -516,7 +516,7 @@ subroutine conegauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date,
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, lat, Long, "Forbidden",  "      Maximum Time Exceeded" !(Prints the outputs to the command module while running (Can lead to delays with multi-core proccessing))
         write(10,'(*(G0.6,:,","))') R, bool, Lat, Long, GEOfile(1), GEOfile(2), GEOfile(3)
@@ -524,7 +524,7 @@ subroutine conegauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date,
     END IF
     
     IF (Result == 1) THEN
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         forbiddencount = 0
         bool = 1
@@ -703,7 +703,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, " ", "Returned to Earth"
         EXIT
@@ -717,7 +717,7 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, " ", "Trapped"
         EXIT
@@ -731,14 +731,14 @@ subroutine cutoff(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, " ", "Time Elapsed"
         EXIT
     END IF
     
     IF (Result == 1) THEN
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         forbiddencount = 0
         bool = 1
@@ -1005,7 +1005,7 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, " ", "Returned to Earth"
         EXIT
@@ -1019,7 +1019,7 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, " ", "Trapped"
         EXIT
@@ -1033,14 +1033,14 @@ subroutine flight(PositionIN, StartRigidity, EndRigidity, RigidityStep, Date, mo
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         !print *, R, " ", "Time Elapsed"
         EXIT
     END IF
     
     IF (Result == 1) THEN
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         forbiddencount = 0
         bool = 1
@@ -1311,7 +1311,7 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         EXIT
     END IF
@@ -1324,7 +1324,7 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         EXIT
     END IF
@@ -1337,13 +1337,13 @@ subroutine cutoffgauss(PositionIN, StartRigidity, EndRigidity, RigidityStep, Dat
         forbiddencount = forbiddencount + 1
         NeverFail = 1
         FailCheck = 1
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         EXIT
     END IF
     
     IF (Result == 1) THEN
-        call AsymptoticDirection(Lat, Long)
+        call AsymptoticDirection(Lat, Long, CoordSystem)
         call CoordinateTransform("GDZ", CoordSystem, year, day, secondTotal, Position, GEOfile)
         forbiddencount = 0
         bool = 1

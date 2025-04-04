@@ -13,19 +13,29 @@
 ! long - asymptotic longitude
 !
 ! ************************************************************************************************************************************
-subroutine AsymptoticDirection(Lat, Long)
+subroutine AsymptoticDirection(Lat, Long,CoordSystem)
 USE Particle
 implicit none
-real(8) :: Lat, Long, E, top, bottom
-real(8) :: GSW(3), GEO(3), XGEO(3), theta
-real(8) :: GEOsph(3), NewLat, tr, tTHETA, tPHI
+real(8) :: Lat, Long, E, top, bottom, GSE(3)
+real(8) :: GSW(3), GEO(3), XGEO(3), theta, XGSE(3)
+real(8) :: GEOsph(3), NewLat, tr, tTHETA, tPHI, tempposition(3)
 real(8), parameter :: pi  = 4 * atan(1.0_8)
+character(len=3) :: CoordSystem
 
+
+IF (CoordSystem=="GSE") THEN
+call CoordinateTransform("GDZ", "GSE", year, day, secondTotal, Position, XGEO)
+ELSE
 call CoordinateTransform("GDZ", "GEO", year, day, secondTotal, Position, XGEO)
+ENDIF
 
 call GSWGSM_08 (Velocity(1),Velocity(2),Velocity(3),GSW(1),GSW(2),GSW(3),-1)
 
-call GEOGSW_08 (GEO(1),GEO(2),GEO(3),GSW(1),GSW(2),GSW(3),-1)
+IF (CoordSystem=="GSE") THEN
+call GSWGSE_08(GEO(1),GEO(2),GEO(3),GSW(1),GSW(2),GSW(3),1)
+ELSE
+call GEOGSW_08(GEO(1),GEO(2),GEO(3),GSW(1),GSW(2),GSW(3),-1)
+END IF
 
 call SPHCAR_08(GEOsph(1),GEOsph(2),GEOsph(3),XGEO(1), XGEO(2), XGEO(3), -1)
 
@@ -38,7 +48,6 @@ end if
 call BCARSP_08(XGEO(1),XGEO(2),XGEO(3),GEO(1),GEO(2),GEO(3),tr,tTHETA,tPHI)
 
 theta = GEOsph(2)
-NewLat = 90 - (theta / (pi/180))
 
 top = -tTHETA*sin(theta) + tr*cos(theta)
 bottom = (tPHI**2 + (tTHETA*cos(theta) + tr*sin(theta))**2)**(0.5)
