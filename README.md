@@ -1,3 +1,6 @@
+# IMPORTANT UPDATE!
+This version of OTSO is now deprecated. While it still works, we recommend using the new [OTSOpy](https://github.com/NLarsen15/OTSOpy) tool. OTSOpy is a Python package for OTSO that has many improvements and extra functionality in comparison to this initial release. It is available via pip or through the repository, making it significantly easier for users to set up and use.
+
 # OTSO
 Oulu - Open-source geomagneToSphere prOpagation tool
 
